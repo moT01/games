@@ -1,0 +1,40 @@
+.square {
+  width: min(100px, calc(90vw / 3));
+  height: min(100px, calc(90vw / 3));
+  font-family: var(--font-mono);
+  font-size: min(2.5rem, calc(90vw / 3 * 0.45));
+  font-weight: var(--weight-bold);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.square:hover:not(:disabled) {
+  background-color: var(--color-surface-raised);
+}
+
+.square:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.square:disabled {
+  cursor: default;
+}
+
+.square--x {
+  color: var(--blue-light);
+}
+
+.square--o {
+  color: var(--color-accent);
+}
+
+.square--winner {
+  background-color: var(--blue-light-translucent);
+  box-shadow: inset var(--shadow-accent);
+}

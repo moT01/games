@@ -1,0 +1,33 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, min(100px, calc(90vw / 3)));
+  gap: 0;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.board .square:nth-child(1),
+.board .square:nth-child(2),
+.board .square:nth-child(3) {
+  border-top: none;
+}
+
+.board .square:nth-child(1),
+.board .square:nth-child(4),
+.board .square:nth-child(7) {
+  border-left: none;
+}
+
+.board .square:nth-child(3),
+.board .square:nth-child(6),
+.board .square:nth-child(9) {
+  border-right: none;
+}
+
+.board .square:nth-child(7),
+.board .square:nth-child(8),
+.board .square:nth-child(9) {
+  border-bottom: none;
+}
