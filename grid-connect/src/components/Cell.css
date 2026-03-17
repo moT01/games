@@ -1,0 +1,50 @@
+.cell {
+  width: min(60px, calc(88vw / 7));
+  height: min(60px, calc(88vw / 7));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.cell--interactable {
+  cursor: pointer;
+}
+
+.cell__piece {
+  width: 82%;
+  height: 82%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg);
+  transition: background-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.cell__piece--red {
+  background-color: var(--player-red);
+  animation: piece-in 140ms ease-out;
+}
+
+.cell__piece--yellow {
+  background-color: var(--player-yellow);
+  animation: piece-in 140ms ease-out;
+}
+
+@keyframes piece-in {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cell__piece--preview {
+  opacity: 0.35;
+}
+
+.cell__piece--winner {
+  box-shadow: 0 0 0 3px #fff, 0 0 16px 4px rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,51 @@
+.game-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 4rem;
+}
+
+.game-status__turn {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+}
+
+.game-status__turn--red {
+  color: var(--player-red);
+}
+
+.game-status__turn--yellow {
+  color: var(--player-yellow);
+}
+
+.game-status__message {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+}
+
+.game-status__play-again {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-accent);
+  color: var(--gray-90);
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.game-status__play-again:hover {
+  background-color: var(--color-accent-hover);
+  box-shadow: var(--shadow-accent);
+}
+
+.game-status__play-again:active {
+  transform: scale(0.97);
+}

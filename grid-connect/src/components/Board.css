@@ -1,0 +1,9 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(7, min(60px, calc(88vw / 7)));
+  gap: var(--space-1);
+  background-color: var(--gray-80);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-md);
+}
