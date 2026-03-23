@@ -1,0 +1,38 @@
+.square {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.square--light {
+  background-color: var(--board-light);
+}
+
+.square--dark {
+  background-color: var(--board-dark);
+  cursor: pointer;
+}
+
+.square--dark:hover:not(.square--selected):not(.square--valid-destination) {
+  background-color: #5a7a50;
+}
+
+.square--selected {
+  background-color: var(--board-selected);
+}
+
+.square--valid-destination {
+  background-color: var(--board-dark);
+}
+
+.square__highlight {
+  position: absolute;
+  width: 34%;
+  height: 34%;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 191, 0, 0.65);
+  pointer-events: none;
+}

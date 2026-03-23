@@ -1,0 +1,25 @@
+:root {
+  --player-red: #e03c2e;
+  --player-black: #1a1a3e;
+  --board-light: #c4a46b;
+  --board-dark: #4a6741;
+  --board-selected: #7ab54a;
+  --cell-size: min(56px, calc(90vw / 8));
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 520px;
+}
+
+.app__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  letter-spacing: -0.5px;
+  line-height: var(--line-height-tight);
+}
