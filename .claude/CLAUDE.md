@@ -4,74 +4,15 @@
 
 At the start of every session:
 1. Read this file (CLAUDE.md) fully before doing anything
-2. Read PLAN.md if it exists in the repo root
 3. Read UI.md before writing any CSS or designing any UI - otherwise, ignore it
 4. Ask the user what they want to work on — do not assume or start anything unprompted
-
----
-
-## Plan a New Game
-
-When Tom asks you to plan a new game:
-
-1. Think through the full design before writing anything:
-   - What are the core mechanics and win/lose conditions?
-   - What UI states and screens are needed?
-   - What game logic functions will be required?
-   - What components make sense?
-   - What edge cases exist?
-   - What needs unit vs. component tests?
-2. Create `.claude/<GAME_NAME>_PLAN.md` using `.claude/NEW_GAME_TEMPLATE.md` as the structure
-3. Fill in **every section** — do not leave placeholder `...` text:
-   - Write a concrete **What we're building** description
-   - List actual modes/variants or remove that field
-   - Write out the real **UI flow** steps
-   - List specific **edge cases** for this game
-   - Fill in real **Game Logic** checklist items (specific functions/modules)
-   - Fill in real **Components** checklist items (specific component names + responsibilities)
-   - Fill in real **Styling** checklist items
-   - Fill in real **Polish** checklist items
-   - Write specific **unit test** cases for the game logic
-   - Write specific **component test** cases
-4. Add anything else to the plan that might be missing in order to create a functional game.
-5. Present the plan to Tom and ask for feedback before doing anything else
-
-## Bootstrapping a New Game
-
-When starting a new game:
-
-1. Run `npm create vite@latest <game-name> -- --template react-ts` from the repo root
-2. Add to `devDependencies` in `<game-name>/package.json`:
-   - `"vitest": "^3.0.0"`
-   - `"jsdom": "^26.0.0"`
-   - `"@testing-library/react": "^16.0.0"`
-   - `"@testing-library/user-event": "^14.0.0"`
-3. Add `"test": "vitest"` to the `scripts` block
-4. Replace `vite.config.ts` with:
-   ```ts
-   import { defineConfig } from 'vitest/config'
-   import react from '@vitejs/plugin-react'
-   export default defineConfig({
-     plugins: [react()],
-     test: { environment: 'jsdom', globals: true },
-   })
-   ```
-   Note: VS Code may show a TS type error in `vite.config.ts` about Plugin type incompatibility between vite@8 (rolldown) and vitest@3 (bundled rollup). This is a known false positive — ignore it, tests run fine.
-5. Copy `tic-tac-toe/src/global.css` into `<game-name>/src/global.css`
-6. In `<game-name>/src/main.tsx`, replace the default CSS import with `import './global.css'`
-7. Run `npm install` inside `<game-name>/`
-8. Clean up Vite boilerplate: remove `src/assets/`, clear `App.css`, remove counter/logo code from `App.tsx`
-9. Copy the `tic-tac-toe/public/favicon-32x32.png` icon file to `<game-name>/public/favicon-32x32.png` and update the icon filename in `index.html` to use `favicon-32x32.png`
-10. Delete the other two unused icons in `<game-name>/public/`
 
 ---
 
 ## Project Structure
 
 ```
-games/
-├── CLAUDE.md
-├── PLAN.md
+freecodecamp-games/
 ├── tic-tac-toe/
 │   ├── src/
 │   │   ├── components/
@@ -84,8 +25,6 @@ games/
 
 - Each game lives in its own self-contained folder with its own `package.json`
 - Games do not share code with each other for now — keep them independent
-- A `/common` folder for shared UI components is a future consideration; do not create it
-  unless explicitly asked
 
 ---
 
@@ -106,10 +45,6 @@ games/
   does, and any decisions being made
 - Wait for explicit approval before proceeding
 - If scope is unclear, ask questions first — do not make assumptions and start building
-
-### Ask before creating files
-- Do not create new files without stating what you're about to create and why
-- If a new file wasn't part of the agreed plan, flag it before creating it
 
 ### When stuck or uncertain
 - Do not guess and proceed — stop and ask
