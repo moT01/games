@@ -6,14 +6,24 @@
       "Write(.env)",
       "Edit(.env)"
     ],
-    "defaultMode": "dontAsk"
+    "defaultMode": "dontAsk",
+    "allow": [
+      "WebFetch(domain:registry.npmjs.org)",
+      "Read(/Users/mot/.npm)",
+      "Write(/Users/mot/.npm)",
+      "Bash(npm create vite@latest *)",
+      "Bash(npm install *)",
+      "Bash(npm install)",
+      "Bash(cp *)",
+      "Bash(mkdir *)"
+    ]
   },
   "sandbox": {
-    "enabled": true,
+    "enabled": false,
     "autoAllowBashIfSandboxed": true,
     "allowUnsandboxedCommands": false,
     "network": {
-      "allowedDomains": [],
+      "allowedDomains": ["registry.npmjs.org"],
       "allowUnixSockets": [],
       "allowAllUnixSockets": false,
       "allowLocalBinding": false
@@ -21,7 +31,9 @@
   },
   "spinnerVerbs": {
     "mode": "replace",
-    "verbs": [""]
+    "verbs": [
+      ""
+    ]
   },
   "skipDangerousModePermissionPrompt": true
 }

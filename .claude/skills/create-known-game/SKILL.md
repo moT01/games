@@ -75,12 +75,10 @@ Replace `<game-name>` with the actual game name throughout.
 6. In `<game-name>/src/main.tsx` replace the default CSS import with `import './global.css'`
 7. Run `npm install` inside `<game-name>/`
 8. Clean up Vite boilerplate:
-   - Remove `src/assets/`
    - Clear `App.css`
    - Remove counter/logo code from `App.tsx`
 9. Copy `tic-tac-toe/public/favicon-32x32.png` to `<game-name>/public/favicon-32x32.png`
 10. Update `index.html` to reference `favicon-32x32.png`
-11. Delete the other two unused icons in `<game-name>/public/`
 
 Stop and surface any errors before continuing. Ignore the TS type error in `vite.config.ts` about Plugin type incompatibility between vite@8 (rolldown) and vitest@3 (bundled rollup) — this is a known false positive, tests run fine.
 
