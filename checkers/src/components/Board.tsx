@@ -12,7 +12,7 @@ interface Props {
 
 export function Board({ board, selectedIndex, validMoveDestinations, onSquareClick, disabled }: Props) {
   return (
-    <div className="board">
+    <div className={`board${disabled ? ' board--disabled' : ''}`}>
       {board.map((piece, index) => {
         const row = Math.floor(index / 8)
         const col = index % 8

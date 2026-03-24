@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(sudo:*)",
+      "Read(.env)",
+      "Write(.env)",
+      "Edit(.env)"
+    ],
+    "defaultMode": "dontAsk"
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false,
+    "network": {
+      "allowedDomains": [],
+      "allowUnixSockets": [],
+      "allowAllUnixSockets": false,
+      "allowLocalBinding": false
+    }
+  },
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [""]
+  },
+  "skipDangerousModePermissionPrompt": true
+}

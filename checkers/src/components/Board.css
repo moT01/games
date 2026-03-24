@@ -7,3 +7,11 @@
   box-shadow: var(--shadow-md);
   border: 3px solid #111e11;
 }
+
+.board--disabled .square--dark {
+  cursor: default;
+}
+
+.board--disabled .square--dark:hover:not(.square--selected):not(.square--valid-destination) {
+  background-color: var(--board-dark);
+}

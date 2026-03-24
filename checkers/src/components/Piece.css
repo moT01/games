@@ -25,6 +25,11 @@
     0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
+.piece--king {
+  outline: 2.5px solid rgba(255, 215, 0, 0.6);
+  outline-offset: 2px;
+}
+
 .piece__crown {
   font-size: 1.1rem;
   line-height: 1;
