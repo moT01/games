@@ -1,0 +1,89 @@
+.card {
+  width: 70px;
+  height: 100px;
+  border-radius: var(--radius-md);
+  border: var(--border-default);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card-face {
+  background-color: var(--gray-00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-red {
+  color: #c0392b;
+}
+
+.card-black {
+  color: #1a1a2e;
+}
+
+.card-corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: var(--weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.card-top-left {
+  top: var(--space-1);
+  left: var(--space-2);
+}
+
+.card-bottom-right {
+  bottom: var(--space-1);
+  right: var(--space-2);
+  transform: rotate(180deg);
+}
+
+.card-rank {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+.card-suit-small {
+  font-size: 10px;
+}
+
+.card-center-suit {
+  font-size: var(--text-xl);
+}
+
+.card-back {
+  background-color: #2563a8;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 2px,
+    transparent 2px,
+    transparent 8px
+  ),
+  repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+}
+
+.card.selected {
+  border: var(--border-accent);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-4px);
+}
+
+.card:active {
+  transform: scale(0.97);
+}

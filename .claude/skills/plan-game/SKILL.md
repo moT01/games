@@ -1,5 +1,5 @@
 ---
-name: create-known-game
+name: plan-game
 description: Scaffolds and plans a well-known game from scratch. Only invoked explicitly as /create-known-game <game-name> — do not trigger from natural language.
 ---
 
@@ -61,7 +61,7 @@ Stop and surface any errors before continuing. Ignore the TS type error in `vite
 
 ---
 
-## Step 3 — Create the plan file
+## Step 3 — Create the plan files
 
 1. Create `artifacts/<game-name>/` folder
 2. Copy the plan template from `.claude/templates/PLAN_TEMPLATE.md` to `artifacts/<game-name>/PLAN.md`
@@ -103,36 +103,7 @@ Read the first line of `artifacts/<game-name>/PLAN-REVIEW.md`:
 
 ---
 
-## Step 5 — Complete PLAN.md Setup checklist
-
-Check off the complete task in the Setup section of the `artifacts/<game-name>/PLAN-REVIEW.md` file. We already set up the project and created those things.
-
-## Step 6 — Create CODER-LOG.md and CODE-REVIEW.md
-
-- Create an empty `artifacts/<game-name>/CODER-LOG.md` file. This is where the coder will log their work in the next phase.
-- Create an empty `artifacts/<game-name>/CODE-REVIEW.md` file. This is where the code reviewer will log their feedback.
-
-## Step 7 — Coding loop
-
-### 7a — Launch coder
-
-```
-Task: "Read and follow `.claude/skills/coder/SKILL.md`.
-Game name: <game-name>
-Known game: <known-game>"
-```
-
-### 7b — Check progress
-
-Read `artifacts/<game-name>/PLAN.md`. Are there any unchecked items remaining?
-
-**If yes:** return to Step 7a.
-**If no:** proceed to Step 8.
-
----
-
-## Step 8 — Done
+## Step 5 — Done
 
 Tell the user:
-"Game complete. The finished code is in `<game-name>/` and the updated
-plan checklist is at `artifacts/<game-name>/PLAN.md`."
+"Plan complete. The plan checklist is at `artifacts/<game-name>/PLAN.md`."

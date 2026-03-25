@@ -15,7 +15,8 @@
       "Edit(/Users/mot/Documents/fcc-repos/freecodecamp-games/**/*)",
       "Bash(npm test:*)",
       "Bash(cp:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)"
     ],
     "deny": [
       "Bash(sudo:*)",

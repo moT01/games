@@ -322,6 +322,182 @@ body {
 
 ---
 
+## Expert Polish
+
+These are the micro-details that separate a polished UI from a basic one. Apply all of
+these by default — they are not optional extras.
+
+---
+
+### Depth on Interactive Elements
+
+Flat solid colors look amateur. Every button and interactive surface needs subtle depth:
+```css
+/* On dark buttons/surfaces — adds a highlight on the top edge */
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            var(--shadow-sm);
+
+/* On hover — lift the element */
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            var(--shadow-md);
+transform: translateY(-1px);
+
+/* On active/press — push it back down */
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+transform: translateY(0) scale(0.97);
+```
+
+Update `.btn-primary` and `.btn-secondary` to include these.
+
+---
+
+### Surface Depth
+
+Surfaces should never be completely flat. Use a very subtle gradient on cards and panels
+to suggest light hitting from above:
+```css
+.card, .game-board, .panel {
+  background: linear-gradient(
+    160deg,
+    var(--color-surface-raised) 0%,
+    var(--color-surface) 100%
+  );
+}
+```
+
+Also add a faint inner border to dark surfaces to give a glass-like edge:
+```css
+/* Add as an inner ring using box-shadow so it doesn't affect layout */
+box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+            var(--shadow-md);
+```
+
+---
+
+### Typography Refinements
+```css
+/* Headings — tighter, heavier */
+h1, h2, .title {
+  letter-spacing: -0.02em;
+  line-height: var(--line-height-tight);
+}
+
+/* Uppercase labels — need breathing room */
+.label, .badge, .status {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+/* Body text on dark backgrounds — slightly off-white reads better than pure white */
+/* Already handled by --color-text-secondary (--gray-15) — use it for body copy,
+   reserve --color-text-primary (white) for headings and emphasis only */
+```
+
+---
+
+### Color Depth on Accent Elements
+
+Never use a flat solid accent color for primary buttons. Add a subtle gradient:
+```css
+.btn-primary {
+  background: linear-gradient(
+    160deg,
+    var(--yellow-light) 0%,
+    var(--color-accent) 100%
+  );
+  color: var(--gray-90);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(
+    160deg,
+    #ffd54f 0%,   /* slightly lighter yellow */
+    var(--yellow-light) 100%
+  );
+}
+```
+
+---
+
+### Focus States
+
+Browser default focus outlines look unfinished. Replace them:
+```css
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(153, 201, 255, 0.5); /* --blue-light at 50% */
+}
+```
+
+---
+
+### Hover Feedback on Game Pieces / Board Squares
+
+Hoverable game squares should feel responsive — not just a color swap:
+```css
+.square:hover, .cell:hover, .piece:hover {
+  background-color: var(--blue-light-translucent);
+  box-shadow: inset 0 0 0 2px var(--blue-mid);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+```
+
+Selected/active pieces should glow, not just change color:
+```css
+.selected, .active-piece {
+  box-shadow: 0 0 0 2px var(--color-accent),
+              var(--shadow-accent);
+}
+```
+
+---
+
+### Smooth State Transitions
+
+Never let UI regions snap — everything that changes should ease in:
+```css
+/* Apply to any element whose content, visibility, or size changes */
+transition: opacity var(--transition-default),
+            transform var(--transition-default),
+            background-color var(--transition-fast);
+```
+
+Result/overlay screens should animate in, not just appear:
+```css
+/* Start state (add via class or keyframe) */
+opacity: 0;
+transform: scale(0.96) translateY(4px);
+
+/* End state */
+opacity: 1;
+transform: scale(1) translateY(0);
+transition: opacity var(--transition-slow),
+            transform var(--transition-slow);
+```
+
+---
+
+### Empty and Loading States
+
+Every region that can be empty or waiting must have an explicit style. No blank white
+boxes or unstyled gaps:
+
+- Empty areas: use a dashed `--border-default` border + centered muted text (`--color-text-muted`)
+- Loading: a pulsing opacity animation is enough — no spinner needed unless it's a long wait
+```css
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.loading {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+```
+
 ## Checklist Before Submitting Any UI
 
 - [ ] All colors use semantic variables (`--color-bg`, not `--gray-90`)
@@ -331,3 +507,13 @@ body {
 - [ ] Numbers/scores use `--font-mono`
 - [ ] Game container has `max-width` and is centered
 - [ ] Tested at mobile width (375px)
+- [ ] Buttons have inset highlight shadow and lift on hover
+- [ ] No surface is a completely flat solid color
+- [ ] Headings use tight letter-spacing, uppercase labels use wide letter-spacing
+- [ ] Primary buttons use a subtle gradient, not flat gold
+- [ ] Focus states are custom, not browser default
+- [ ] Hoverable game squares have inset border feedback
+- [ ] Selected pieces glow with `--shadow-accent`
+- [ ] All state changes animate — nothing snaps
+- [ ] Result/overlay screens animate in with fade + scale
+- [ ] Empty states are explicitly styled

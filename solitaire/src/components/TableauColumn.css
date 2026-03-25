@@ -1,0 +1,26 @@
+.tableau-column {
+  position: relative;
+  width: 70px;
+  min-height: 100px;
+}
+
+.tableau-column-target > .tableau-empty,
+.tableau-column-target {
+  outline: var(--border-accent);
+  box-shadow: var(--shadow-accent);
+  border-radius: var(--radius-md);
+}
+
+.tableau-empty {
+  width: 70px;
+  height: 100px;
+  border-radius: var(--radius-md);
+  border: var(--border-default);
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.tableau-card-slot {
+  position: absolute;
+  left: 0;
+}

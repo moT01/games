@@ -1,0 +1,92 @@
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--gray-90-translucent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fade-in var(--transition-slow) ease forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.win-panel {
+  background-color: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-7);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  animation: scale-in var(--transition-slow) ease forwards;
+  min-width: 260px;
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.win-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-success);
+  line-height: var(--line-height-tight);
+}
+
+.win-scores {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.win-score-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.win-score-label {
+  color: var(--color-text-secondary);
+  font-size: var(--text-md);
+}
+
+.win-score-value {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}
+
+.win-score-total {
+  border-top: var(--border-default);
+  padding-top: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.win-score-total .win-score-value {
+  color: var(--color-accent);
+  font-size: var(--text-lg);
+}
+
+.win-session {
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}

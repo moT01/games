@@ -40,6 +40,22 @@ Check if `artifacts/<game-name>/PLAN-REVIEW.md` exists:
 
 Read `artifacts/<game-name>/PLAN.md`.
 
+Before writing anything, mentally enumerate the non-obvious rules and mechanics
+of this specific game. Ask yourself:
+
+- What behaviors surprise first-time implementers of this game?
+- What state changes are easy to forget or get wrong?
+- What happens at edge transitions — deck exhausted, board full, turn wrap-around?
+- Are there any "resets" or "reshuffles" that don't preserve order?
+- Does any piece, card, or token have dual state (e.g. face-up vs face-down)?
+- Are there cascading effects when something changes?
+- What interactions feel simple but have hidden complexity?
+
+Write these down mentally, then make sure every one of them appears somewhere
+in the plan — either in Special Rules, Edge Cases, Data Model state flags,
+or Game Logic functions. If a non-obvious mechanic has no corresponding test
+case, add one.
+
 Fill out every section completely using your own knowledge of the game:
 - Write a concrete **What we're building** description
 - Fill in real rules, players, modes, win/draw conditions:

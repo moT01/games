@@ -6,18 +6,15 @@ description: Writes a section of the game code based on the approved plan. Calle
 # coder
 
 ## Purpose
-
 Implement a section of the game based on the approved plan. Write the code for the section, have it reviewed, fix any issues, then check off completed items.
 
 ## Invocation
-
 Called by `create-known-game` as part of the pipeline, or invoked directly
 as `/coder <game-name>` or `/coder <game-name> (<known-game>)` when a plan already exists.
 
 ---
 
 ## Inputs
-
 - `<game-name>` — passed in via Task call
 - `<known-game>` — passed in via Task call (may be same as game name)
 
@@ -26,7 +23,6 @@ All file paths are derived from the game name:
 - Coder log: `artifacts/<game-name>/CODER-LOG.md`
 
 ## Important
-
 Use `<game-name>` for all variable names, file names, function names, and
 references in code. Do not use `<known-game>` in code — it is only used
 for rules and game knowledge. For example, if the game name is `five-dice`
@@ -48,13 +44,11 @@ Only implement the specific checklist items in the current section of the plan. 
 ---
 
 ## Step 1 — Read the plan
-
 Read `artifacts/<game-name>/PLAN.md` fully before writing any code. Understand the rules, logic, components, and every checklist item.
 
 ---
 
 ## Step 2 — Implement the next incomplete section
-
 Identify the first section in the plan with unchecked items — this is the section you will implement. Skip any section where all items are already checked off.
 
 Follow the conventions in `CLAUDE.md`:
@@ -67,7 +61,6 @@ Follow the conventions in `CLAUDE.md`:
 ---
 
 ## Step 3 — Write the coder log
-
 The coder log is for the code-reviewer — write it clearly and include
 anything that would help the reviewer understand what was built and why.
 This includes decisions made, tradeoffs, anything uncertain, and anything
@@ -108,7 +101,6 @@ When the Task completes, continue to Step 5.
 ---
 
 ## Step 5 — Read reviewer feedback
-
 Read `artifacts/<game-name>/CODE-REVIEW.md`.
 
 **If `STATUS: APPROVED`:** proceed to Step 6.
@@ -122,7 +114,6 @@ Then proceed to Step 6.
 ---
 
 ## Step 6 — Check off completed items
-
 Read `artifacts/<game-name>/CODER-LOG.md` to remind yourself which items
 were implemented in this section. In `artifacts/<game-name>/PLAN.md`,
 check off every item that was implemented and not flagged as still broken

@@ -1,0 +1,35 @@
+.game-board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* Top row: stock+waste area | spacer | foundations */
+.board-top-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.board-spacer {
+  min-width: var(--space-3);
+}
+
+.foundations-row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* 7 tableau columns in a row */
+.tableau-row {
+  display: grid;
+  grid-template-columns: repeat(7, 70px);
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.auto-complete-btn {
+  align-self: flex-start;
+}
