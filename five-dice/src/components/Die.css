@@ -1,0 +1,60 @@
+@keyframes die-shake {
+  0%   { transform: rotate(0deg) scale(1); }
+  20%  { transform: rotate(-10deg) scale(0.9); }
+  40%  { transform: rotate(10deg) scale(1.07); }
+  60%  { transform: rotate(-6deg) scale(0.96); }
+  80%  { transform: rotate(4deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.die {
+  width: 72px;
+  height: 72px;
+  padding: 8px;
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.die:hover:not(:disabled) {
+  border-color: var(--color-accent);
+}
+
+.die--held {
+  background: var(--yellow-dark);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.die--disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.die--rolling {
+  animation: die-shake 0.35s ease-in-out;
+}
+
+.die__pips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.die__pip {
+  border-radius: 50%;
+}
+
+.die__pip--active {
+  background: currentColor;
+}

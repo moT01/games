@@ -47,6 +47,13 @@ structure, or optimization. Ask yourself:
 - Was anything in the section's checklist missed?
 - Do any of the coder's flagged uncertainties need to be addressed?
 
+**Also verify:**
+- All imports reference exports that actually exist in the target file
+- All exports referenced elsewhere are actually exported
+- Type imports use `import type`
+- No unused variables, functions, or imports that TypeScript would flag
+- Would this code actually run in the browser without errors?
+
 ---
 
 ## Step 3 — Write the review file

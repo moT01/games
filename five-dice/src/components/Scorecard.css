@@ -1,0 +1,37 @@
+.scorecard {
+  flex: 1;
+}
+
+.scorecard__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.scorecard__section-header td {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.scorecard__bonus-row td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-default);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.scorecard__total-row td {
+  padding: var(--space-3);
+  border-top: 2px solid var(--color-accent);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-md);
+  color: var(--color-accent);
+}

@@ -116,40 +116,40 @@ Not applicable. Single-player game only.
 
 All logic lives in `src/gameLogic.ts`.
 
-- [ ] `rollDice(dice: Die[]): Die[]` — re-rolls all unheld dice, returns new dice array with random values 1–6
-- [ ] `toggleHold(dice: Die[], id: number): Die[]` — flips the `held` flag on the die with matching id
-- [ ] `scoreOnes(dice: Die[]): number` — sum of all dice showing 1
-- [ ] `scoreTwos(dice: Die[]): number` — sum of all dice showing 2
-- [ ] `scoreThrees(dice: Die[]): number` — sum of all dice showing 3
-- [ ] `scoreFours(dice: Die[]): number` — sum of all dice showing 4
-- [ ] `scoreFives(dice: Die[]): number` — sum of all dice showing 5
-- [ ] `scoreSixes(dice: Die[]): number` — sum of all dice showing 6
-- [ ] `scoreThreeOfAKind(dice: Die[]): number` — sum of all dice if three or more share a value, else 0
-- [ ] `scoreFourOfAKind(dice: Die[]): number` — sum of all dice if four or more share a value, else 0
-- [ ] `scoreFullHouse(dice: Die[]): number` — 25 if dice show a three-of-a-kind and a pair, else 0
-- [ ] `scoreSmallStraight(dice: Die[]): number` — 30 if dice contain four sequential values (1-2-3-4, 2-3-4-5, or 3-4-5-6), else 0
-- [ ] `scoreLargeStraight(dice: Die[]): number` — 40 if dice are exactly 1-2-3-4-5 or 2-3-4-5-6, else 0
-- [ ] `scoreYahtzee(dice: Die[]): number` — 50 if all five dice show the same value, else 0
-- [ ] `scoreChance(dice: Die[]): number` — sum of all five dice
-- [ ] `calculateScore(category: ScoreCategory, dice: Die[]): number` — dispatcher that calls the correct scorer; also used directly for scorecard preview display (no separate `getPotentialScore` wrapper needed)
-- [ ] `getUpperSectionTotal(scores: Scores): number` — sum of ones through sixes (excluding nulls)
-- [ ] `getUpperBonus(scores: Scores): number` — 35 if upper section total >= 63, else 0
-- [ ] `getLowerSectionTotal(scores: Scores): number` — sum of lower section categories (excluding nulls)
-- [ ] `getYahtzeeBonusTotal(bonusCount: number): number` — bonusCount * 100
-- [ ] `getGrandTotal(scores: Scores, bonusCount: number): number` — upper total + upper bonus + lower total + yahtzee bonus total
-- [ ] `isGameOver(turn: number): boolean` — returns true when turn > 13
-- [ ] `initialDice(): Die[]` — returns array of 5 dice all with value 1 and `held: false`; these are placeholder values used before the first roll. Dice with `rollCount === 0` are rendered greyed out to signal they have not been rolled yet — their face values are not meaningful.
+- [x] `rollDice(dice: Die[]): Die[]` — re-rolls all unheld dice, returns new dice array with random values 1–6
+- [x] `toggleHold(dice: Die[], id: number): Die[]` — flips the `held` flag on the die with matching id
+- [x] `scoreOnes(dice: Die[]): number` — sum of all dice showing 1
+- [x] `scoreTwos(dice: Die[]): number` — sum of all dice showing 2
+- [x] `scoreThrees(dice: Die[]): number` — sum of all dice showing 3
+- [x] `scoreFours(dice: Die[]): number` — sum of all dice showing 4
+- [x] `scoreFives(dice: Die[]): number` — sum of all dice showing 5
+- [x] `scoreSixes(dice: Die[]): number` — sum of all dice showing 6
+- [x] `scoreThreeOfAKind(dice: Die[]): number` — sum of all dice if three or more share a value, else 0
+- [x] `scoreFourOfAKind(dice: Die[]): number` — sum of all dice if four or more share a value, else 0
+- [x] `scoreFullHouse(dice: Die[]): number` — 25 if dice show a three-of-a-kind and a pair, else 0
+- [x] `scoreSmallStraight(dice: Die[]): number` — 30 if dice contain four sequential values (1-2-3-4, 2-3-4-5, or 3-4-5-6), else 0
+- [x] `scoreLargeStraight(dice: Die[]): number` — 40 if dice are exactly 1-2-3-4-5 or 2-3-4-5-6, else 0
+- [x] `scoreYahtzee(dice: Die[]): number` — 50 if all five dice show the same value, else 0
+- [x] `scoreChance(dice: Die[]): number` — sum of all five dice
+- [x] `calculateScore(category: ScoreCategory, dice: Die[]): number` — dispatcher that calls the correct scorer; also used directly for scorecard preview display (no separate `getPotentialScore` wrapper needed)
+- [x] `getUpperSectionTotal(scores: Scores): number` — sum of ones through sixes (excluding nulls)
+- [x] `getUpperBonus(scores: Scores): number` — 35 if upper section total >= 63, else 0
+- [x] `getLowerSectionTotal(scores: Scores): number` — sum of lower section categories (excluding nulls)
+- [x] `getYahtzeeBonusTotal(bonusCount: number): number` — bonusCount * 100
+- [x] `getGrandTotal(scores: Scores, bonusCount: number): number` — upper total + upper bonus + lower total + yahtzee bonus total
+- [x] `isGameOver(turn: number): boolean` — returns true when turn > 13
+- [x] `initialDice(): Die[]` — returns array of 5 dice all with value 1 and `held: false`; these are placeholder values used before the first roll. Dice with `rollCount === 0` are rendered greyed out to signal they have not been rolled yet — their face values are not meaningful.
 
 ---
 
 ## Components
 
-- [ ] `App` (`src/App.tsx`) — top-level state management (useReducer or useState), renders DiceArea, Scorecard, and GameOverScreen
-- [ ] `DiceArea` (`src/components/DiceArea.tsx`) — displays five `Die` components and the Roll button; receives dice, rollCount, onRoll, onToggleHold
-- [ ] `Die` (`src/components/Die.tsx`) — displays a single die face (value 1–6 as dots or number), held/unheld visual state; receives die, onToggleHold, disabled
-- [ ] `Scorecard` (`src/components/Scorecard.tsx`) — displays all 13 categories with current score or potential score preview; preview scores are computed by calling `calculateScore` directly; handles category selection; displays a Yahtzee Bonus row showing `yahtzeeBonusCount × 100`; displays the grand total; receives scores, dice, rollCount, yahtzeeBonusCount, onScore
-- [ ] `ScoreRow` (`src/components/ScoreRow.tsx`) — a single row in the scorecard: category name, score or preview, locked state; receives category label, score, previewScore, isLocked, onScore, and `canScore: boolean` — true when `rollCount >= 1`, the category is not yet scored, and game is not over
-- [ ] `GameOverScreen` (`src/components/GameOverScreen.tsx`) — final scorecard summary and total score with a Play Again button; receives scores, yahtzeeBonusCount, onPlayAgain
+- [x] `App` (`src/App.tsx`) — top-level state management (useReducer or useState), renders DiceArea, Scorecard, and GameOverScreen
+- [x] `DiceArea` (`src/components/DiceArea.tsx`) — displays five `Die` components and the Roll button; receives dice, rollCount, onRoll, onToggleHold
+- [x] `Die` (`src/components/Die.tsx`) — displays a single die face (value 1–6 as dots or number), held/unheld visual state; receives die, onToggleHold, disabled
+- [x] `Scorecard` (`src/components/Scorecard.tsx`) — displays all 13 categories with current score or potential score preview; preview scores are computed by calling `calculateScore` directly; handles category selection; displays a Yahtzee Bonus row showing `yahtzeeBonusCount × 100`; displays the grand total; receives scores, dice, rollCount, yahtzeeBonusCount, onScore
+- [x] `ScoreRow` (`src/components/ScoreRow.tsx`) — a single row in the scorecard: category name, score or preview, locked state; receives category label, score, previewScore, isLocked, onScore, and `canScore: boolean` — true when `rollCount >= 1`, the category is not yet scored, and game is not over
+- [x] `GameOverScreen` (`src/components/GameOverScreen.tsx`) — final scorecard summary and total score with a Play Again button; receives scores, yahtzeeBonusCount, onPlayAgain
 
 ---
 
@@ -173,23 +173,23 @@ All logic lives in `src/gameLogic.ts`.
 ---
 
 ## Styling
-- [ ] `global.css` — CSS variables for colors, fonts, resets
-- [ ] `App.css` — overall layout (two-column: dice area left, scorecard right, or stacked on mobile)
-- [ ] `DiceArea.css` — dice row, roll button placement
-- [ ] `Die.css` — die face with dots or number, held state highlight
-- [ ] `Scorecard.css` — table-like scorecard layout with upper/lower section dividers
-- [ ] `ScoreRow.css` — row hover, locked, preview, and scored states
-- [ ] `GameOverScreen.css` — centered overlay or full-page final score display
+- [x] `global.css` — CSS variables for colors, fonts, resets
+- [x] `App.css` — overall layout (two-column: dice area left, scorecard right, or stacked on mobile)
+- [x] `DiceArea.css` — dice row, roll button placement
+- [x] `Die.css` — die face with dots or number, held state highlight
+- [x] `Scorecard.css` — table-like scorecard layout with upper/lower section dividers
+- [x] `ScoreRow.css` — row hover, locked, preview, and scored states
+- [x] `GameOverScreen.css` — centered overlay or full-page final score display
 
 ---
 
 ## Polish
-- [ ] Die faces shown as pip dots (like real dice) rather than plain numbers
-- [ ] Roll button shake/roll animation on dice that are not held
-- [ ] Smooth transition when a score is locked in (row color change)
-- [ ] Disabled Roll button clearly greyed out with cursor: not-allowed
-- [ ] "Play Again" resets all state cleanly (no page reload)
-- [ ] Responsive layout — scorecard stacks below dice on narrow screens
+- [x] Die faces shown as pip dots (like real dice) rather than plain numbers
+- [x] Roll button shake/roll animation on dice that are not held
+- [x] Smooth transition when a score is locked in (row color change)
+- [x] Disabled Roll button clearly greyed out with cursor: not-allowed
+- [x] "Play Again" resets all state cleanly (no page reload)
+- [x] Responsive layout — scorecard stacks below dice on narrow screens
 
 ---
 

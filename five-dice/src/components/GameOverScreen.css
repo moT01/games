@@ -1,0 +1,62 @@
+.game-over-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: 420px;
+  width: 100%;
+}
+
+.game-over-screen__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+}
+
+.game-over-screen__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.game-over-screen__table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-default);
+}
+
+.game-over-screen__table td:last-child {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.game-over-screen__subtotal-row td {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.game-over-screen__grand-total td {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+  color: var(--color-accent);
+  border-top: 2px solid var(--color-accent);
+}
+
+.game-over-screen__play-again {
+  padding: var(--space-3) var(--space-7);
+  background: var(--color-accent);
+  color: var(--gray-90);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.game-over-screen__play-again:hover {
+  background: var(--color-accent-hover);
+}
