@@ -21,6 +21,7 @@ This skill is called by `create-known-game` — do not invoke directly.
 - `<known-game>` — passed in via Task call (may be same as game name)
 
 All file paths are derived from the game name:
+
 - Plan file: `artifacts/<game-name>/PLAN.md`
 - Review file: `artifacts/<game-name>/PLAN-REVIEW.md`
 
@@ -28,9 +29,10 @@ All file paths are derived from the game name:
 
 ## Step 1 — Determine mode
 
-**If no review file exists:** this is the first pass. Proceed to Step 2.
+Check if `artifacts/<game-name>/PLAN-REVIEW.md` exists:
 
-**If a review file exists:** this is a revision pass. Skip to Step 3.
+**If it does not exist:** this is the first pass. Proceed to Step 2.
+**If it exists:** this is a revision pass. Skip to Step 3.
 
 ---
 
@@ -40,7 +42,13 @@ Read `artifacts/<game-name>/PLAN.md`.
 
 Fill out every section completely using your own knowledge of the game:
 - Write a concrete **What we're building** description
-- Fill in real rules, players, modes, win/draw conditions
+- Fill in real rules, players, modes, win/draw conditions:
+  - Determine appropriate player modes based on the nature of the game:
+    - Turn-based competitive games (checkers, chess, connect 4) → local multiplayer + vs computer
+    - Score/roll-based games (yahtzee, etc.) → single player + local multiplayer + vs computer
+    - Puzzle games → single player only
+    - Always include a mode select screen if more than one mode is supported
+    - Use your judgment — pick what makes sense for this specific game. Lean towards more modes if you're unsure.
 - List actual edge cases for this specific game
 - Fill in real **Game Logic** checklist items with specific function names
 - Fill in real **Components** checklist items with specific names and responsibilities
@@ -65,8 +73,3 @@ Read both files:
 
 Address every item flagged in the review. Do not change sections that
 were not flagged. Write the revised plan back to `artifacts/<game-name>/PLAN.md`.
-
-## Step 4 — Done
-
-Write the completed plan to `artifacts/<game-name>/PLAN.md` and stop.
-Do not launch any other skills or agents.

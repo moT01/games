@@ -87,15 +87,66 @@ Stop and surface any errors before continuing. Ignore the TS type error in `vite
 ## Step 3 — Create the plan file
 
 1. Create `artifacts/<game-name>/` folder
-2. Copy the plan template from `.claude/templates/PLAN_TEMPLATE.md` to `.artifacts/<game-name>/PLAN.md`
+2. Copy the plan template from `.claude/templates/PLAN_TEMPLATE.md` to `artifacts/<game-name>/PLAN.md`
 3. Replace all `<game-name>` placeholders with the actual game name
+4. Replace all `<known-name>` placeholders with the known game name - or use the game name if no known name was provided
 
 ---
 
-## Step 4 — Launch planner
+## Step 4 — Planning loop
+
+Create `artifacts/<game-name>/PLAN-REVISION-COUNT.txt` containing `0`.
+
+### 4a — Launch planner
 
 ```
 Task: "Read and follow `.claude/skills/planner/SKILL.md`.
 Game name: <game-name>
-Known game: <known-game> (if different from game name)"
+Known game: <known-game>"
 ```
+
+### 4b — Launch plan-reviewer
+
+```
+Task: "Read and follow `.claude/skills/plan-reviewer/SKILL.md`.
+Game name: <game-name>
+Known game: <known-game>"
+```
+
+### 4c — Check result
+
+Read the first line of `artifacts/<game-name>/PLAN-REVIEW.md`:
+
+**If `STATUS: APPROVED`:** proceed to Step 5.
+
+**If `STATUS: REVISE`:**
+- Read `artifacts/<game-name>/PLAN-REVISION-COUNT.txt`
+- If count < 2 → increment count, return to Step 4a
+- If count >= 2 → proceed to Step 5
+
+---
+
+## Step 5 — Complete PLAN.md Setup checklist
+
+Check off all the completed tasks in the Setup section of the `artifacts/<game-name>/PLAN-REVIEW.md` file. We already set up the project and created those things.
+
+## Step 6 — Create CODER-LOG.md and CODE-REVIEW.md
+
+- Create an empty `artifacts/<game-name>/CODER-LOG.md` file. This is where the coder will log their work in the next phase.
+- Create an empty `artifacts/<game-name>/CODE-REVIEW.md` file. This is where the code reviewer will log their feedback.
+
+## Step 6 — Launch coder
+
+```
+Task: "Read and follow `.claude/skills/coder/SKILL.md`.
+Game name: <game-name>
+Known game: <known-game>"
+```
+
+---
+
+## Step 7 — Done
+
+Tell the user:
+"Game complete. The finished code is in `<game-name>/` and the updated
+plan checklist is at `artifacts/<game-name>/PLAN.md`."
