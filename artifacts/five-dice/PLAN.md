@@ -196,29 +196,29 @@ All logic lives in `src/gameLogic.ts`.
 ## Testing
 
 **Unit tests — game logic (`src/gameLogic.test.ts`):**
-- [ ] `rollDice` — held dice keep their values; unheld dice change (statistical: run multiple times or mock Math.random)
-- [ ] `toggleHold` — toggles held flag on correct die, others unchanged
-- [ ] `scoreOnes` through `scoreSixes` — correct sum for various inputs
-- [ ] `scoreThreeOfAKind` — returns sum when 3+ match, 0 otherwise
-- [ ] `scoreFourOfAKind` — returns sum when 4+ match, 0 otherwise
-- [ ] `scoreFullHouse` — 25 for valid full house, 0 otherwise; five-of-a-kind does NOT count as full house (standard rules)
-- [ ] `scoreSmallStraight` — 30 for valid 4-run, 0 otherwise; duplicates allowed (e.g. 1,2,3,4,4 is valid)
-- [ ] `scoreLargeStraight` — 40 for valid 5-run, 0 otherwise
-- [ ] `scoreYahtzee` — 50 for five matching, 0 otherwise
-- [ ] `scoreChance` — always returns sum of all five dice
-- [ ] `getUpperSectionTotal` — sums only non-null upper scores
-- [ ] `getUpperBonus` — 35 when >= 63, 0 otherwise
-- [ ] `getYahtzeeBonusTotal` — returns 0 for 0 bonuses, 100 for 1, 200 for 2
-- [ ] `getGrandTotal` — correctly combines all parts including yahtzee bonus
+- [x] `rollDice` — held dice keep their values; unheld dice change (statistical: run multiple times or mock Math.random)
+- [x] `toggleHold` — toggles held flag on correct die, others unchanged
+- [x] `scoreOnes` through `scoreSixes` — correct sum for various inputs
+- [x] `scoreThreeOfAKind` — returns sum when 3+ match, 0 otherwise
+- [x] `scoreFourOfAKind` — returns sum when 4+ match, 0 otherwise
+- [x] `scoreFullHouse` — 25 for valid full house, 0 otherwise; five-of-a-kind does NOT count as full house (standard rules)
+- [x] `scoreSmallStraight` — 30 for valid 4-run, 0 otherwise; duplicates allowed (e.g. 1,2,3,4,4 is valid)
+- [x] `scoreLargeStraight` — 40 for valid 5-run, 0 otherwise
+- [x] `scoreYahtzee` — 50 for five matching, 0 otherwise
+- [x] `scoreChance` — always returns sum of all five dice
+- [x] `getUpperSectionTotal` — sums only non-null upper scores
+- [x] `getUpperBonus` — 35 when >= 63, 0 otherwise
+- [x] `getYahtzeeBonusTotal` — returns 0 for 0 bonuses, 100 for 1, 200 for 2
+- [x] `getGrandTotal` — correctly combines all parts including yahtzee bonus
 
 **Component tests — (`src/App.test.tsx`):**
-- [ ] Initial render shows 5 dice and a Roll button
-- [ ] Roll button is enabled on first turn before rolling
-- [ ] Clicking Roll increments roll count display
-- [ ] After 3 rolls, Roll button becomes disabled
-- [ ] Clicking a die after rolling toggles its held appearance
-- [ ] Clicking an unscored category after rolling assigns a score and advances the turn
-- [ ] Clicking an already-scored category does nothing
-- [ ] Clicking Roll before rolling at least once blocks scoring (score rows non-interactive)
-- [ ] After 13 turns, GameOverScreen renders with final score
-- [ ] Play Again button resets the game to initial state
+- [x] Initial render shows 5 dice and a Roll button
+- [x] Roll button is enabled on first turn before rolling
+- [x] Clicking Roll increments roll count display
+- [x] After 3 rolls, Roll button becomes disabled
+- [x] Clicking a die after rolling toggles its held appearance
+- [x] Clicking an unscored category after rolling assigns a score and advances the turn
+- [x] Clicking an already-scored category does nothing
+- [x] Clicking Roll before rolling at least once blocks scoring (score rows non-interactive)
+- [x] After 13 turns, GameOverScreen renders with final score
+- [x] Play Again button resets the game to initial state
