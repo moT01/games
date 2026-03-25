@@ -106,9 +106,9 @@ Not applicable. Single-player game only.
 ---
 
 ## Setup
-- [ ] Create `five-dice/` folder and bootstrap (see CLAUDE.md → Bootstrapping a New Game)
-- [ ] Clean up Vite boilerplate
-- [ ] Add `global.css`
+- [x] Create `five-dice/` folder and bootstrap (see CLAUDE.md → Bootstrapping a New Game)
+- [x] Clean up Vite boilerplate
+- [x] Add `global.css`
 
 ---
 
