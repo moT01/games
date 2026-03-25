@@ -1,0 +1,54 @@
+.round-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.round-result__outcome {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.round-result__outcome--win {
+  color: green;
+}
+
+.round-result__outcome--loss {
+  color: red;
+}
+
+.round-result__outcome--draw {
+  color: gray;
+}
+
+.round-result__choices {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.round-result__choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.round-result__icon {
+  font-size: 2.5rem;
+}
+
+.round-result__name {
+  font-size: 0.85rem;
+}
+
+.round-result__vs {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.round-result__detail {
+  font-size: 0.9rem;
+  color: #555;
+}

@@ -1,0 +1,44 @@
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.game-screen__choices {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.game-screen__banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.game-screen__banner-text {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.game-screen__banner-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.game-screen__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.game-screen__actions button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

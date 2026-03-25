@@ -55,9 +55,7 @@
 ---
 
 ## Setup
-- [ ] Create `{game-name}/` folder and bootstrap (see CLAUDE.md → Bootstrapping a New Game)
-- [ ] Clean up Vite boilerplate
-- [ ] Add `global.css`
+- [ ] Create `{game-name}/` folder and bootstrap project with boilerplate.
 
 ---
 

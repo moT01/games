@@ -1,0 +1,36 @@
+.score-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.score-board__scores {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.score-board__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.score-board__label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.score-board__value {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.score-board__progress {
+  font-size: 0.85rem;
+  color: #555;
+}
