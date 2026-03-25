@@ -1,20 +1,18 @@
 ---
 name: coder
-description: Writes game code section by section based on the approved plan. Called by create-known-game — do not invoke directly.
+description: Writes a section of the game code based on the approved plan. Called by create-known-game — do not invoke directly.
 ---
 
 # coder
 
 ## Purpose
 
-Implement the game section by section based on the approved plan. For each
-section, write the code, have it reviewed, fix any issues, then check off
-completed items before moving to the next section.
+Implement a section of the game based on the approved plan. Write the code for the section, have it reviewed, fix any issues, then check off completed items.
 
 ## Invocation
 
 Called by `create-known-game` as part of the pipeline, or invoked directly
-as `/code-game <game-name>` or `/code-game <game-name> (<known-game>)` when a plan already exists.
+as `/coder <game-name>` or `/coder <game-name> (<known-game>)` when a plan already exists.
 
 ---
 
@@ -35,36 +33,29 @@ for rules and game knowledge. For example, if the game name is `five-dice`
 and the known game is `yahtzee`, all code should reference `five-dice`,
 never `yahtzee`.
 
-You have everything you need from the Task call. Do not explore the project
-structure, search for files, or run any commands to orient yourself.
-Derive all paths from `<game-name>` and start immediately.
+Only read files that are explicitly listed in the plan, the coder log, or explicitely mentioned. Derive all paths from `<game-name>`. Do not explore the project structure or search for files.
 
-Only read files that are explicitly listed in the plan, the coder log, or explicitely mentioned.
-Do not explore the project structure or search for files.
+Only implement the specific checklist items in the current section of the plan. Do not add anything that is not in the plan. Do not move on to items in the next section until all items in the current section are complete and checked off. The sections are:
+
+- Setup
+- Game Logic
+- Components
+- Interaction Model
+- Styling
+- Polish
+- Testing
 
 ---
 
 ## Step 1 — Read the plan
 
-Read `artifacts/<game-name>/PLAN.md` fully before writing any code.
-Identify all sections with unchecked items — these are the sections to implement.
-Work through them in order:
-
-1. Setup
-2. Game Logic
-3. Components
-4. Styling
-5. Polish
-6. Testing
-
-Skip any section where all items are already checked off.
+Read `artifacts/<game-name>/PLAN.md` fully before writing any code. Understand the rules, logic, components, and every checklist item.
 
 ---
 
 ## Step 2 — Implement the next incomplete section
 
-Find the first section in the plan with unchecked items. Implement every
-unchecked item in that section completely.
+Identify the first section in the plan with unchecked items — this is the section you will implement. Skip any section where all items are already checked off.
 
 Follow the conventions in `CLAUDE.md`:
 - TypeScript always — no plain JS
@@ -139,11 +130,4 @@ by the reviewer.
 
 Items that were flagged and could not be fully resolved stay unchecked.
 
----
-
-## Step 7 — Next section
-
-If there are more sections with unchecked items, return to Step 2.
-
-If all sections are complete, stop and report:
-"Coding complete. All sections implemented. Plan checklist updated."
+That is all you need to do. Do not launch any other skills or agents. Do not start the next section.

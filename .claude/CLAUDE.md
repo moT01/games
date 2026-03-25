@@ -1,5 +1,13 @@
 # Games Repo — Claude Code Guidelines
 
+## Starting a Session
+
+At the start of every session:
+1. Read this file (`CLAUDE.md`) fully before doing anything
+2. Read `UI.md` before writing any CSS or designing any UI - otherwise, ignore it
+
+---
+
 ## Project Structure
 
 ```
@@ -18,10 +26,12 @@ freecodecamp-games/
 - Games do not share code with each other — keep them independent
 
 ## Paths
+
 All relative paths are relative to the repo root — the directory containing
 this file (`CLAUDE.md`). This applies to all skills, tasks, and sub-agents.
 
 ## Off Limits
+
 Never read, search, or traverse the `node_modules/` directory under any circumstances.
 
 ---

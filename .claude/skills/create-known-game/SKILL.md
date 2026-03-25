@@ -135,17 +135,25 @@ Check off all the completed tasks in the Setup section of the `artifacts/<game-n
 - Create an empty `artifacts/<game-name>/CODER-LOG.md` file. This is where the coder will log their work in the next phase.
 - Create an empty `artifacts/<game-name>/CODE-REVIEW.md` file. This is where the code reviewer will log their feedback.
 
-## Step 6 — Launch coder
+## Step 7 — Coding loop
 
+### 7a — Launch coder
 ```
 Task: "Read and follow `.claude/skills/coder/SKILL.md`.
 Game name: <game-name>
 Known game: <known-game>"
 ```
 
+### 7b — Check progress
+
+Read `artifacts/<game-name>/PLAN.md`. Are there any unchecked items remaining?
+
+**If yes:** return to Step 7a.
+**If no:** proceed to Step 8.
+
 ---
 
-## Step 7 — Done
+## Step 8 — Done
 
 Tell the user:
 "Game complete. The finished code is in `<game-name>/` and the updated
