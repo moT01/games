@@ -6,7 +6,7 @@
       "Write(.env)",
       "Edit(.env)"
     ],
-    "defaultMode": "dontAsk",
+    "defaultMode": "acceptEdits",
     "allow": [
       "WebFetch(domain:registry.npmjs.org)",
       "Read(/Users/mot/.npm)",
@@ -15,7 +15,11 @@
       "Bash(npm install *)",
       "Bash(npm install)",
       "Bash(cp *)",
-      "Bash(mkdir *)"
+      "Bash(mkdir *)",
+      "Bash(cat *)",
+      "Read(/Users/mot/Documents/fcc-repos/freecodecamp-games/**/*)",
+      "Write(/Users/mot/Documents/fcc-repos/freecodecamp-games/**/*)",
+      "Edit(/Users/mot/Documents/fcc-repos/freecodecamp-games/**/*)"
     ]
   },
   "sandbox": {
@@ -34,6 +38,5 @@
     "verbs": [
       ""
     ]
-  },
-  "skipDangerousModePermissionPrompt": true
+  }
 }
