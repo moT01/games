@@ -55,30 +55,8 @@ plan completely without guessing.
 Follow these steps exactly. Do not perform any actions not listed here.
 Replace `<game-name>` with the actual game name throughout.
 
-1. Run `npm create vite@latest <game-name> -- --template react-ts` from the repo root
-2. Add to `devDependencies` in `<game-name>/package.json`:
-   - `"vitest": "^3.0.0"`
-   - `"jsdom": "^26.0.0"`
-   - `"@testing-library/react": "^16.0.0"`
-   - `"@testing-library/user-event": "^14.0.0"`
-3. Add `"test": "vitest"` to the `scripts` block
-4. Replace `vite.config.ts` with:
-```ts
-   import { defineConfig } from 'vitest/config'
-   import react from '@vitejs/plugin-react'
-   export default defineConfig({
-     plugins: [react()],
-     test: { environment: 'jsdom', globals: true },
-   })
-```
-5. Copy `tic-tac-toe/src/global.css` into `<game-name>/src/global.css`
-6. In `<game-name>/src/main.tsx` replace the default CSS import with `import './global.css'`
+1. Run `cp -R boilerplate <game-name>` from the repo root to copy the boilerplate project into a new folder with the game name for the new game.
 7. Run `npm install` inside `<game-name>/`
-8. Clean up Vite boilerplate:
-   - Clear `App.css`
-   - Remove counter/logo code from `App.tsx`
-9. Copy `tic-tac-toe/public/favicon-32x32.png` to `<game-name>/public/favicon-32x32.png`
-10. Update `index.html` to reference `favicon-32x32.png`
 
 Stop and surface any errors before continuing. Ignore the TS type error in `vite.config.ts` about Plugin type incompatibility between vite@8 (rolldown) and vitest@3 (bundled rollup) — this is a known false positive, tests run fine.
 
