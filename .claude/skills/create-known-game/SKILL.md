@@ -86,8 +86,8 @@ Stop and surface any errors before continuing. Ignore the TS type error in `vite
 
 ## Step 3 — Create the plan file
 
-1. Create `.claude/plans/<game-name>/` folder
-2. Copy the plan template from `.claude/plans/PLAN_TEMPLATE.md` to `.claude/plans/<game-name>/PLAN.md`
+1. Create `artifacts/<game-name>/` folder
+2. Copy the plan template from `.claude/templates/PLAN_TEMPLATE.md` to `.artifacts/<game-name>/PLAN.md`
 3. Replace all `<game-name>` placeholders with the actual game name
 
 ---

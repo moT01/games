@@ -21,8 +21,8 @@ This skill is called by `create-known-game` — do not invoke directly.
 - `<known-game>` — passed in via Task call (may be same as game name)
 
 All file paths are derived from the game name:
-- Plan file: `.claude/plans/<game-name>/PLAN.md`
-- Review file: `.claude/plans/<game-name>/PLAN-REVIEW.md`
+- Plan file: `artifacts/<game-name>/PLAN.md`
+- Review file: `artifacts/<game-name>/PLAN-REVIEW.md`
 
 ---
 
@@ -36,7 +36,7 @@ All file paths are derived from the game name:
 
 ## Step 2 — Fill out the plan
 
-Read `.claude/plans/<game-name>/PLAN.md`.
+Read `artifacts/<game-name>/PLAN.md`.
 
 Fill out every section completely using your own knowledge of the game:
 - Write a concrete **What we're building** description
@@ -53,20 +53,20 @@ Fill out every section completely using your own knowledge of the game:
 Do not leave any section as `...` or blank. If you are uncertain about
 something, make your best attempt — the plan-checker will catch gaps.
 
-Write the completed plan back to `.claude/plans/<game-name>/PLAN.md`.
+Write the completed plan back to `artifacts/<game-name>/PLAN.md`.
 
 ---
 
 ## Step 3 — Revise the plan
 
 Read both files:
-- Current plan: `.claude/plans/<game-name>/PLAN.md`
-- Review notes: `.claude/plans/<game-name>/PLAN-REVIEW.md`
+- Current plan: `artifacts/<game-name>/PLAN.md`
+- Review notes: `artifacts/<game-name>/PLAN-REVIEW.md`
 
 Address every item flagged in the review. Do not change sections that
-were not flagged. Write the revised plan back to `.claude/plans/<game-name>/PLAN.md`.
+were not flagged. Write the revised plan back to `artifacts/<game-name>/PLAN.md`.
 
 ## Step 4 — Done
 
-Write the completed plan to `.claude/plans/<game-name>/PLAN.md` and stop.
+Write the completed plan to `artifacts/<game-name>/PLAN.md` and stop.
 Do not launch any other skills or agents.
