@@ -4,7 +4,9 @@
 
 At the start of every session:
 1. Read this file (`CLAUDE.md`) fully before doing anything
-2. Read `UI.md` before writing any CSS or designing any UI - otherwise, ignore it
+2. Only read `UI.md` before writing any CSS or designing any UI - otherwise, ignore it
+3. Only read `templates/PLAN-TEMPLATE` when asked to (usually via skill) - otherwise, ignore it
+4. Don't read anything in the `temp/` folder unless asked to - otherwise, ignore it
 
 ---
 

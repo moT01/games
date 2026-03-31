@@ -18,7 +18,7 @@
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
 }
 
 .scorecard__bonus-row td {

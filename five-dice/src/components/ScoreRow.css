@@ -23,6 +23,10 @@
   background: var(--blue-light-translucent);
 }
 
+.score-row--scorable:hover td:first-child {
+  border-left: 2px solid var(--blue-mid);
+}
+
 .score-row__value--preview {
   color: var(--color-text-muted);
 }

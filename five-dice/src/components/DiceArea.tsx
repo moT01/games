@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './DiceArea.css';
 import { Die as DieComponent } from './Die';
+import { RulesModal } from './RulesModal';
 import type { Die } from '../gameLogic';
 
 type DiceAreaProps = {
@@ -13,14 +14,15 @@ type DiceAreaProps = {
 };
 
 function getRollLabel(rollCount: number): string {
-  if (rollCount === 0) return 'Roll (1/3)';
-  if (rollCount === 1) return 'Roll (2/3)';
-  if (rollCount === 2) return 'Roll (3/3 — must score)';
-  return 'Must score';
+  if (rollCount === 0) return '1st Roll';
+  if (rollCount === 1) return '2nd Roll';
+  if (rollCount === 2) return '3rd Roll (last)';
+  return 'Score a category';
 }
 
 export function DiceArea({ dice, rollCount, turn, onRoll, onToggleHold, gameOver }: DiceAreaProps) {
   const [rolling, setRolling] = useState(false);
+  const [showRules, setShowRules] = useState(false);
 
   const rollDisabled = rollCount >= 3 || gameOver;
   const dieDisabled = rollCount === 0 || rollCount >= 3 || gameOver;
@@ -33,7 +35,11 @@ export function DiceArea({ dice, rollCount, turn, onRoll, onToggleHold, gameOver
 
   return (
     <div className="dice-area">
-      <p className="dice-area__turn-info">Turn {turn} of 13</p>
+      {showRules && <RulesModal onClose={() => setShowRules(false)} />}
+      <div className="dice-area__header">
+        <p className="dice-area__turn-info">Turn {turn} of 13</p>
+        <button className="dice-area__rules-button" onClick={() => setShowRules(true)}>Rules</button>
+      </div>
       <div className="dice-area__row">
         {dice.map(die => (
           <DieComponent
