@@ -3,7 +3,7 @@ name: plan-game
 description: Scaffolds and plans a well-known game from scratch. Only invoked explicitly as /create-known-game <game-name> — do not trigger from natural language.
 ---
 
-# create-known-game
+# plan-game
 
 ## Purpose
 
@@ -13,13 +13,13 @@ bootstrapping, and plan file generation, then hands off to the planner.
 ## Invocation
 
 ```
-/create-known-game checkers
-/create-known-game five-dice (yahtzee)
+/plan-game checkers
+/plan-game five-dice (yahtzee)
 ```
 
 The first argument is the game name we want to use. If there's another in parenthesis, it's the well known name for the game that we want to clone.
 
-Do not run this skill unless explicitly invoked with the `/create-known-game` command.
+Do not run this skill unless explicitly invoked with the `/plan-game` command.
 
 ---
 
