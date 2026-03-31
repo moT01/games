@@ -67,6 +67,11 @@ Stop and surface any errors before continuing. Ignore the TS type error in `vite
 2. Copy the plan template from `.claude/templates/PLAN_TEMPLATE.md` to `artifacts/<game-name>/PLAN.md`
 3. Replace all `<game-name>` placeholders with the actual game name
 4. Replace all `<known-name>` placeholders with the known game name - or use the game name if no known name was provided
+5. Create `artifacts/<game-name>/PLAN-REVIEW.md` with the following content:
+
+```
+STATUS: PENDING REVIEW
+```
 
 ---
 
@@ -96,7 +101,7 @@ Read the first line of `artifacts/<game-name>/PLAN-REVIEW.md`:
 
 **If `STATUS: APPROVED`:** proceed to Step 5.
 
-**If `STATUS: REVISE`:**
+**If `STATUS: REVISE`:** or **`STATUS: PENDING REVIEW`:**
 - Read `artifacts/<game-name>/PLAN-REVISION-COUNT.txt`
 - If count < 2 → increment count, return to Step 4a
 - If count >= 2 → proceed to Step 5
