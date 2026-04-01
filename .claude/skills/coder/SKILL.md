@@ -61,8 +61,7 @@ Follow the conventions in `CLAUDE.md`:
 ---
 
 ## Step 3 — Check off completed items
-In `artifacts/<game-name>/PLAN.md`, check off every item that was implemented and not flagged as still broken
-by the reviewer.
+In `artifacts/<game-name>/PLAN.md`, check off every item that was implemented.
 
 Items that were flagged and could not be fully resolved stay unchecked.
 

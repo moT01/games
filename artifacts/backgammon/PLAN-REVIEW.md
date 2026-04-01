@@ -1,0 +1,13 @@
+STATUS: REVISE
+
+## Feedback
+
+1. **Testing — missing bearing-off move constraint test:** The rules and edge cases describe the case where a player rolls a value for which there is no checker but higher-point checkers exist — the player must move from a higher point rather than bear off a lower point. There is no unit test for this in `getValidMovesForChecker()`. Add: "`getValidMovesForChecker()` — bearing off: when roll matches a point with no checker but higher-point checkers exist, only moves from higher points are returned (no bearing off a lower point allowed)."
+
+2. **Testing — missing forced-skip-from-bar test:** The edge cases describe the scenario where a player has bar checkers and all entry points are blocked, causing the full turn to be skipped (`forcedSkip = true`). The unit tests cover `getAllValidMoves()` returning empty when all points are blocked generally, and bar entry moves when entry is available, but there is no test specifically for the bar-blocked-all-entry-points case. Add: "`getAllValidMoves()` — player has checkers on bar and all entry points are made points → returns empty array (forces skip)."
+
+3. **Testing — missing component test for AI turn non-interactivity:** The interaction model states that when it is the AI's turn the board is non-interactive, but there is no component test verifying this. Add: "During AI turn, clicking a checker does not select it (board is non-interactive)."
+
+4. **Game Logic — `applyMove()` turn-end responsibility is unspecified:** The turn structure says `applyMove` returns a new `GameState` and updates `dice`, but it is not stated whether `applyMove` switches `currentPlayer` when `dice` becomes empty, or whether `App` handles that. This will cause a design decision to be made ad-hoc during coding. Clarify: either `applyMove` handles turn transition (resetting `diceRolled`, switching `currentPlayer`) when the last die is consumed, or it does not and `App` is responsible for detecting the empty-dice condition — in which case, note whether a separate `endTurn(state)` function is needed or if App handles it inline.
+
+5. **Game Logic — higher-die rule calling convention is ambiguous:** The Data Model says `getValidMovesForChecker()` "applies higher-die rule filter if applicable," and the Move Validation section says `getAllValidMoves()` is used to enforce it, but the mechanism is unspecified. Does `getValidMovesForChecker()` call `getAllValidMoves()` internally, or does the caller (App) pre-compute it and pass it in? This will cause an ad-hoc decision during coding. Add one sentence specifying the calling convention, e.g., "`getValidMovesForChecker(state, from)` calls `getAllValidMoves(state)` internally to determine whether the higher-die constraint applies."
