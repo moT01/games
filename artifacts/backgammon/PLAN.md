@@ -160,9 +160,9 @@ type ValidMove = {
 ---
 
 ## Setup
-- [ ] Create `backgammon/` folder and bootstrap project with boilerplate (Vite + React + TypeScript).
-- [ ] Configure `vite.config.ts` with vitest.
-- [ ] Set up `index.html`, `src/main.tsx`, `src/App.tsx`, `src/global.css`.
+- [x] Create `backgammon/` folder and bootstrap project with boilerplate (Vite + React + TypeScript).
+- [x] Configure `vite.config.ts` with vitest.
+- [x] Set up `index.html`, `src/main.tsx`, `src/App.tsx`, `src/global.css`.
 
 ---
 

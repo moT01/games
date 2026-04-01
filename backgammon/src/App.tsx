@@ -1,9 +1,9 @@
 import './App.css'
 
-function App() {
+export default function App() {
   return (
-    <h1>Boilerplate</h1>
+    <div className="app">
+      <h1>Backgammon</h1>
+    </div>
   )
 }
-
-export default App
