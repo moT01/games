@@ -1,0 +1,133 @@
+.board-point {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  overflow: visible;
+  transition: background-color var(--transition-fast);
+}
+
+/* Triangle background via pseudo-element so checkers render above it */
+.board-point::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.board-point--top::before {
+  clip-path: polygon(5% 0%, 95% 0%, 50% 94%);
+}
+
+.board-point--bottom::before {
+  clip-path: polygon(5% 100%, 95% 100%, 50% 6%);
+}
+
+/* Alternating triangle colors */
+.board__half .board-point:nth-child(odd)::before {
+  background-color: var(--gray-75);
+}
+
+.board__half .board-point:nth-child(even)::before {
+  background-color: var(--color-surface-raised);
+}
+
+/* Home board tint */
+.board-point--home {
+  background-color: rgba(153, 201, 255, 0.06);
+}
+
+/* Selection highlight */
+.board-point--selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 191, 0, 0.18);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Valid destination highlight */
+.board-point--valid-dest::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(153, 201, 255, 0.18);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Hover */
+.board-point:hover {
+  background-color: rgba(153, 201, 255, 0.08);
+}
+
+/* Checkers container — above the triangle pseudo-element */
+.board-point__checkers {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  justify-content: center;
+  padding: var(--space-1) 0;
+}
+
+.board-point--top .board-point__checkers {
+  flex-direction: column;
+  padding-top: var(--space-1);
+}
+
+.board-point--bottom .board-point__checkers {
+  flex-direction: column-reverse;
+  padding-bottom: var(--space-1);
+}
+
+/* Point number label */
+.board-point__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 2;
+  user-select: none;
+  line-height: 1;
+}
+
+.board-point--top .board-point__label {
+  order: 1;
+  margin-top: auto;
+  padding-bottom: var(--space-1);
+}
+
+.board-point--bottom .board-point__label {
+  order: -1;
+  margin-bottom: auto;
+  padding-top: var(--space-1);
+}
+
+/* Valid destination dot — shown near the triangle tip */
+.board-point__dest-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--blue-mid);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  box-shadow: 0 0 6px rgba(25, 142, 238, 0.6);
+}
+
+.board-point--top .board-point__dest-dot {
+  bottom: 24px;
+}
+
+.board-point--bottom .board-point__dest-dot {
+  top: 24px;
+}

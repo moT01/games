@@ -170,34 +170,34 @@ type ValidMove = {
 
 All game logic lives in `src/gameLogic.ts`. Pure functions only — no React, no side effects.
 
-- [ ] `initBoard()` — returns the standard starting `Point[]` array (24 points with correct checker placement)
-- [ ] `initGame(mode)` — returns a fresh `GameState` for the given mode; does not roll dice yet
-- [ ] `rollDice()` — returns an array of 1–4 die values: `[d1, d2]` or `[d, d, d, d]` for doubles
-- [ ] `canBearOff(state, player)` — returns true when all of player's checkers are on their home board (and none on bar)
-- [ ] `getAllValidMoves(state)` — returns all legal `ValidMove[]` for the current player given current `state.dice`; used to detect forced-skip and enforce higher-die rule
-- [ ] `getValidMovesForChecker(state, from)` — returns legal `ValidMove[]` from a specific point (`from` is 0–23 or `'bar'`); calls `getAllValidMoves(state)` internally to determine whether the higher-die constraint applies (i.e., if only the higher die produces any legal move across all checkers, only moves using the higher die value are returned)
-- [ ] `applyMove(state, move)` — returns new `GameState` after applying the move (immutable); handles hit/bar logic, bearing off, updating `dice`. `applyMove` does NOT switch `currentPlayer` or reset `diceRolled` — it only applies the single move and removes the consumed die. Turn transition (switching `currentPlayer`, clearing `selectedPoint`, `validMoves`, `forcedSkip`, and re-rolling dice) is handled by `App` when it detects that `state.dice` is empty or no further moves are possible. No separate `endTurn()` function is needed; `App` handles this inline after each `applyMove` call.
-- [ ] `checkWinner(state)` — returns `Color | null`; winner when `off.white === 15` or `off.black === 15`
-- [ ] `getAIMove(state)` — returns the best full sequence `ValidMove[]` for the AI (black) by exhaustively evaluating all legal move sequences with the current dice and picking the sequence that produces the highest `scoreBoard` result; `App` executes the sequence move-by-move with animation delays
-- [ ] `scoreBoard(state, player)` — heuristic scoring function for AI: evaluates bar count, made points, blots, pip count
-- [ ] `getHomeRange(player)` — returns `[minIndex, maxIndex]` of the player's home board points (White: 18–23, Black: 0–5)
-- [ ] `getPipCount(state, player)` — returns total pip distance all of a player's checkers must travel to bear off
+- [x] `initBoard()` — returns the standard starting `Point[]` array (24 points with correct checker placement)
+- [x] `initGame(mode)` — returns a fresh `GameState` for the given mode; does not roll dice yet
+- [x] `rollDice()` — returns an array of 1–4 die values: `[d1, d2]` or `[d, d, d, d]` for doubles
+- [x] `canBearOff(state, player)` — returns true when all of player's checkers are on their home board (and none on bar)
+- [x] `getAllValidMoves(state)` — returns all legal `ValidMove[]` for the current player given current `state.dice`; used to detect forced-skip and enforce higher-die rule
+- [x] `getValidMovesForChecker(state, from)` — returns legal `ValidMove[]` from a specific point (`from` is 0–23 or `'bar'`); calls `getAllValidMoves(state)` internally to determine whether the higher-die constraint applies (i.e., if only the higher die produces any legal move across all checkers, only moves using the higher die value are returned)
+- [x] `applyMove(state, move)` — returns new `GameState` after applying the move (immutable); handles hit/bar logic, bearing off, updating `dice`. `applyMove` does NOT switch `currentPlayer` or reset `diceRolled` — it only applies the single move and removes the consumed die. Turn transition (switching `currentPlayer`, clearing `selectedPoint`, `validMoves`, `forcedSkip`, and re-rolling dice) is handled by `App` when it detects that `state.dice` is empty or no further moves are possible. No separate `endTurn()` function is needed; `App` handles this inline after each `applyMove` call.
+- [x] `checkWinner(state)` — returns `Color | null`; winner when `off.white === 15` or `off.black === 15`
+- [x] `getAIMove(state)` — returns the best full sequence `ValidMove[]` for the AI (black) by exhaustively evaluating all legal move sequences with the current dice and picking the sequence that produces the highest `scoreBoard` result; `App` executes the sequence move-by-move with animation delays
+- [x] `scoreBoard(state, player)` — heuristic scoring function for AI: evaluates bar count, made points, blots, pip count
+- [x] `getHomeRange(player)` — returns `[minIndex, maxIndex]` of the player's home board points (White: 18–23, Black: 0–5)
+- [x] `getPipCount(state, player)` — returns total pip distance all of a player's checkers must travel to bear off
 
 ---
 
 ## Components
 
-- [ ] `App` — top-level: holds `GameState`, renders mode-select or game screen, handles turn transitions and AI scheduling
-- [ ] `ModeSelect` — initial screen with two buttons: "vs AI" and "2 Players"; sets game mode and transitions to playing
-- [ ] `Board` — renders the 24 points, bar area, and off areas; receives click handlers; purely presentational given state
-- [ ] `BoardPoint` — renders a single point: stack of checker tokens, highlighting if selected or valid destination
-- [ ] `Checker` — renders a single checker token (circle) with the appropriate color
-- [ ] `Bar` — renders the center bar with white and black bar checkers; clickable if current player has bar checkers
-- [ ] `OffArea` — renders borne-off checker count for one player (one instance per player)
-- [ ] `DiceDisplay` — renders current dice values; consumed dice are visually distinct
-- [ ] `StatusBar` — shows whose turn it is, any "no moves" message, or winner announcement inline
-- [ ] `WinModal` — overlaid modal when game is over; shows winner and "Play Again" button
-- [ ] `HelpModal` — overlaid modal for rules/strategy; opened by "?" button in header
+- [x] `App` — top-level: holds `GameState`, renders mode-select or game screen, handles turn transitions and AI scheduling
+- [x] `ModeSelect` — initial screen with two buttons: "vs AI" and "2 Players"; sets game mode and transitions to playing
+- [x] `Board` — renders the 24 points, bar area, and off areas; receives click handlers; purely presentational given state
+- [x] `BoardPoint` — renders a single point: stack of checker tokens, highlighting if selected or valid destination
+- [x] `Checker` — renders a single checker token (circle) with the appropriate color
+- [x] `Bar` — renders the center bar with white and black bar checkers; clickable if current player has bar checkers
+- [x] `OffArea` — renders borne-off checker count for one player (one instance per player)
+- [x] `DiceDisplay` — renders current dice values; consumed dice are visually distinct
+- [x] `StatusBar` — shows whose turn it is, any "no moves" message, or winner announcement inline
+- [x] `WinModal` — overlaid modal when game is over; shows winner and "Play Again" button
+- [x] `HelpModal` — overlaid modal for rules/strategy; opened by "?" button in header
 
 ---
 
@@ -218,29 +218,29 @@ Color assignments for backgammon-specific elements:
 - **Modals:** `var(--color-surface)` card on `var(--gray-90-translucent)` overlay
 - **Buttons / accents:** `var(--color-accent)` with `var(--color-accent-hover)` on hover
 
-- [ ] `global.css` — import shared font (Lato + Inconsolata), full CSS variable set (copy from `checkers/src/global.css`), reset, body background
-- [ ] `App.css` — overall layout: board centered, header bar with help button and status
-- [ ] `ModeSelect.css` — centered card with two large buttons
-- [ ] `Board.css` — board dimensions, point layout (flex column, alternating top/bottom rows of 12 points each), bar column
-- [ ] `BoardPoint.css` — triangle shape via CSS clip-path or border trick; checker stack alignment; selection/valid-move highlight classes
-- [ ] `Checker.css` — circular token using theme checker colors above, with border for contrast
-- [ ] `Bar.css` — center bar styling using `var(--color-bg)`, stacked checker display
-- [ ] `OffArea.css` — side panel for borne-off count
-- [ ] `DiceDisplay.css` — dice cube appearance using theme colors, consumed-die style
-- [ ] `WinModal.css` — full-screen overlay, centered modal card
-- [ ] `HelpModal.css` — scrollable modal with rules content
+- [x] `global.css` — import shared font (Lato + Inconsolata), full CSS variable set (copy from `checkers/src/global.css`), reset, body background
+- [x] `App.css` — overall layout: board centered, header bar with help button and status
+- [x] `ModeSelect.css` — centered card with two large buttons
+- [x] `Board.css` — board dimensions, point layout (flex column, alternating top/bottom rows of 12 points each), bar column
+- [x] `BoardPoint.css` — triangle shape via CSS clip-path or border trick; checker stack alignment; selection/valid-move highlight classes
+- [x] `Checker.css` — circular token using theme checker colors above, with border for contrast
+- [x] `Bar.css` — center bar styling using `var(--color-bg)`, stacked checker display
+- [x] `OffArea.css` — side panel for borne-off count
+- [x] `DiceDisplay.css` — dice cube appearance using theme colors, consumed-die style
+- [x] `WinModal.css` — full-screen overlay, centered modal card
+- [x] `HelpModal.css` — scrollable modal with rules content
 
 ---
 
 ## Polish
 
-- [ ] AI move plays with a 600ms delay between individual checker moves so the user can follow what happened
-- [ ] Animate checker movement with a CSS transition (translate from source to destination)
-- [ ] "No legal moves" message shown for 1.5 seconds before auto-advancing the turn
-- [ ] Dice roll shows a brief "rolling" animation (shake or number cycling) before settling
-- [ ] The board visually distinguishes the home boards (slight background tint) from the outer boards
-- [ ] Bar checkers are shown stacked with a count badge when more than 2 are on the bar
-- [ ] Points are numbered (1–24) as small labels so players can orient themselves
+- [x] AI move plays with a 600ms delay between individual checker moves so the user can follow what happened
+- [x] Animate checker movement with a CSS transition (translate from source to destination)
+- [x] "No legal moves" message shown for 1.5 seconds before auto-advancing the turn
+- [x] Dice roll shows a brief "rolling" animation (shake or number cycling) before settling
+- [x] The board visually distinguishes the home boards (slight background tint) from the outer boards
+- [x] Bar checkers are shown stacked with a count badge when more than 2 are on the bar
+- [x] Points are numbered (1–24) as small labels so players can orient themselves
 
 ---
 
@@ -273,40 +273,40 @@ Color assignments for backgammon-specific elements:
 - Doubles are powerful — use them to make two points at once or move your back checkers through danger zones.
 
 ### Help Guide Checklist
-- [ ] `HelpModal` — "?" button accessible from main game screen
-- [ ] Content is specific to backgammon — covers rules, strategy, and beginner tips with no generic filler
+- [x] `HelpModal` — "?" button accessible from main game screen
+- [x] Content is specific to backgammon — covers rules, strategy, and beginner tips with no generic filler
 
 ---
 
 ## Testing
 
 **Unit tests — game logic (`src/gameLogic.test.ts`):**
-- [ ] `initBoard()` — verify correct starting checker counts on all 24 points (2, 5, 3, 5 pattern for each player)
-- [ ] `rollDice()` — doubles returns 4 values; non-doubles returns 2 values; all values in range 1–6
-- [ ] `canBearOff()` — false when any checker is outside home board; false when checker is on bar; true when all 15 are on home board points
-- [ ] `getAllValidMoves()` — returns empty array when no moves are possible (all points blocked)
-- [ ] `getAllValidMoves()` — returns correct moves when player has bar checkers (only entry-point moves available)
-- [ ] `getValidMovesForChecker()` — checker cannot move to a made point (2+ opponent checkers)
-- [ ] `getValidMovesForChecker()` — checker can move to a blot (and hit it)
-- [ ] `getValidMovesForChecker()` — bar checker can only enter on internal indices 0–5 (White's entry zone, Black's home board) or 18–23 (Black's entry zone, White's home board)
-- [ ] `getValidMovesForChecker()` — bearing off: when roll matches a point with no checker but higher-point checkers exist, only moves from higher points are returned (bearing off a lower point is not allowed)
-- [ ] `getAllValidMoves()` — player has checkers on bar and all entry points are made points → returns empty array (forces skip)
-- [ ] `applyMove()` — hit blot goes to bar, landing checker occupies the point
-- [ ] `applyMove()` — bearing off removes checker from point and increments `off` count
-- [ ] `applyMove()` — doubles: `dice` array still has 3 remaining after one move
-- [ ] `applyMove()` — consuming a die removes it from `state.dice`
-- [ ] `checkWinner()` — returns null mid-game; returns correct color when `off` count reaches 15
-- [ ] `getPipCount()` — correct total for starting position (both players start at 167)
-- [ ] Higher-die rule: when only one of two dice can be played, `getValidMovesForChecker()` only returns moves using the higher die value
-- [ ] `scoreBoard()` — score is worse (lower) when player has more bar checkers
+- [x] `initBoard()` — verify correct starting checker counts on all 24 points (2, 5, 3, 5 pattern for each player)
+- [x] `rollDice()` — doubles returns 4 values; non-doubles returns 2 values; all values in range 1–6
+- [x] `canBearOff()` — false when any checker is outside home board; false when checker is on bar; true when all 15 are on home board points
+- [x] `getAllValidMoves()` — returns empty array when no moves are possible (all points blocked)
+- [x] `getAllValidMoves()` — returns correct moves when player has bar checkers (only entry-point moves available)
+- [x] `getValidMovesForChecker()` — checker cannot move to a made point (2+ opponent checkers)
+- [x] `getValidMovesForChecker()` — checker can move to a blot (and hit it)
+- [x] `getValidMovesForChecker()` — bar checker can only enter on internal indices 0–5 (White's entry zone, Black's home board) or 18–23 (Black's entry zone, White's home board)
+- [x] `getValidMovesForChecker()` — bearing off: when roll matches a point with no checker but higher-point checkers exist, only moves from higher points are returned (bearing off a lower point is not allowed)
+- [x] `getAllValidMoves()` — player has checkers on bar and all entry points are made points → returns empty array (forces skip)
+- [x] `applyMove()` — hit blot goes to bar, landing checker occupies the point
+- [x] `applyMove()` — bearing off removes checker from point and increments `off` count
+- [x] `applyMove()` — doubles: `dice` array still has 3 remaining after one move
+- [x] `applyMove()` — consuming a die removes it from `state.dice`
+- [x] `checkWinner()` — returns null mid-game; returns correct color when `off` count reaches 15
+- [x] `getPipCount()` — correct total for starting position (both players start at 167)
+- [x] Higher-die rule: when only one of two dice can be played, `getValidMovesForChecker()` only returns moves using the higher die value
+- [x] `scoreBoard()` — score is worse (lower) when player has more bar checkers
 
 **Component tests — (`src/App.test.tsx`):**
-- [ ] Mode select renders two buttons; clicking "vs AI" transitions to game screen
-- [ ] Mode select renders two buttons; clicking "2 Players" transitions to game screen
-- [ ] Dice display shows correct number of dice values
-- [ ] Clicking a checker with no valid moves does not select it
-- [ ] Clicking a valid checker highlights it as selected
-- [ ] Clicking a valid destination after selecting a checker moves the checker
-- [ ] "Play Again" button in win modal resets to mode select screen
-- [ ] When `forcedSkip` is true, "No legal moves" message is displayed
-- [ ] During AI turn, clicking a checker does not select it (board is non-interactive)
+- [x] Mode select renders two buttons; clicking "vs AI" transitions to game screen
+- [x] Mode select renders two buttons; clicking "2 Players" transitions to game screen
+- [x] Dice display shows correct number of dice values
+- [x] Clicking a checker with no valid moves does not select it
+- [x] Clicking a valid checker highlights it as selected
+- [x] Clicking a valid destination after selecting a checker moves the checker
+- [x] "Play Again" button in win modal resets to mode select screen
+- [x] When `forcedSkip` is true, "No legal moves" message is displayed
+- [x] During AI turn, clicking a checker does not select it (board is non-interactive)

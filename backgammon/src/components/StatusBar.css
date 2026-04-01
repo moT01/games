@@ -1,0 +1,24 @@
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+}
+
+.status-bar__player {
+  letter-spacing: 0.04em;
+}
+
+.status-bar__player--white {
+  color: var(--gray-05);
+}
+
+.status-bar__player--black {
+  color: var(--gray-45);
+}
+
+.status-bar__message {
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-normal);
+}
