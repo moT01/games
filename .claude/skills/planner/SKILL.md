@@ -40,6 +40,14 @@ Check if `artifacts/<game-name>/PLAN-REVIEW.md` exists:
 
 Read `artifacts/<game-name>/PLAN.md`.
 
+The template is a starting point, not a ceiling. Use it as the minimum
+structure, but add sections, fields, or checklist items whenever the game
+warrants it. For example: a game with complex scoring might need a
+`## Scoring` section; a game with multiple distinct phases might need a
+`## Game Phases` breakdown. If something important about this specific game
+doesn't fit neatly into the template, add a section for it. The goal is a
+plan that fully captures this game — not one that merely fills in the blanks.
+
 Before writing anything, mentally enumerate the non-obvious rules and mechanics
 of this specific game. Ask yourself:
 
@@ -73,6 +81,9 @@ Fill out every section completely using your own knowledge of the game:
 - Fill in **Special rules / one-off mechanics** if any exist
 - Fill in **AI / Computer Player** if a computer opponent is needed
 - Fill in **Interaction Model** with specific input and feedback details
+- Fill in the **Help & Strategy Guide** with content specific to this game —
+  real strategies, actual common mistakes, and beginner tips that reflect how
+  this game is actually played. No generic filler.
 
 Do not leave any section as `...` or blank. If you are uncertain about
 something, make your best attempt — the plan-checker will catch gaps.
@@ -87,5 +98,5 @@ Read both files:
 - Current plan: `artifacts/<game-name>/PLAN.md`
 - Review notes: `artifacts/<game-name>/PLAN-REVIEW.md`
 
-Address every item flagged in the review. Do not change sections that
-were not flagged. Write the revised plan back to `artifacts/<game-name>/PLAN.md`.
+Address every item flagged in the review. Apply the same quality standard as Step 2 — specific, no placeholders,
+no generic content. Do not change sections that were not flagged. Write the revised plan back to `artifacts/<game-name>/PLAN.md`.

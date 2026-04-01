@@ -13,7 +13,7 @@ could start coding without any questions.
 
 ## Invocation
 
-This skill is called by `create-known-game` — do not invoke directly.
+This skill is called by `create-known-game` or `plan-game` — do not invoke directly.
 
 ---
 

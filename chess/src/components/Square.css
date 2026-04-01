@@ -1,0 +1,102 @@
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  font-size: calc(var(--square-size) * 0.8);
+  transition: background-color var(--transition-fast);
+  user-select: none;
+}
+
+.square.light { background-color: var(--board-light); }
+.square.dark  { background-color: var(--board-dark); }
+
+/* Highlights */
+.square.last-move.light { background-color: #f6ef82; }
+.square.last-move.dark  { background-color: #baca2b; }
+
+.square.selected {
+  background-color: var(--board-selected) !important;
+  box-shadow: inset 0 0 0 3px var(--color-accent), var(--shadow-accent);
+}
+
+.square.capture-target {
+  background-color: var(--board-capture) !important;
+}
+
+.square.in-check {
+  background-color: var(--board-in-check) !important;
+  box-shadow: inset 0 0 0 3px #ff0000;
+}
+
+/* Hover — only show on non-selected, non-highlighted squares */
+.square:hover:not(.selected):not(.capture-target):not(.in-check) {
+  box-shadow: inset 0 0 0 2px var(--blue-mid);
+}
+
+/* Legal move dot */
+.move-dot {
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background-color: var(--board-legal-move);
+  border: 2px solid rgba(153, 201, 255, 0.6);
+  pointer-events: none;
+}
+
+/* Piece inside square */
+.piece {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.piece-white {
+  color: #faf0dc;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 1px rgba(0, 0, 0, 0.8);
+}
+
+.piece-black {
+  color: #1a1008;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+/* Coordinate labels */
+.rank-label,
+.file-label {
+  position: absolute;
+  font-size: calc(var(--square-size) * 0.22);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-body);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rank-label {
+  top: 2px;
+  left: 3px;
+}
+
+.file-label {
+  bottom: 2px;
+  right: 3px;
+}
+
+.light .rank-label,
+.light .file-label {
+  color: var(--board-dark);
+}
+
+.dark .rank-label,
+.dark .file-label {
+  color: var(--board-light);
+}

@@ -133,45 +133,45 @@ type CastlingRights = {
 ---
 
 ## Setup
-- [ ] Create `chess/` folder and bootstrap project with boilerplate (Vite + React + TypeScript).
+- [x] Create `chess/` folder and bootstrap project with boilerplate (Vite + React + TypeScript).
 
 ---
 
 ## Game Logic
-- [ ] `initBoard()` — returns the standard chess starting position as a 64-cell flat array
-- [ ] `initGameState()` — returns initial `GameState` with board, white to move, all castling rights, no en passant
-- [ ] `isInCheck(board, color)` — returns true if `color`'s king is under attack
-- [ ] `getAttackedSquares(board, color)` — returns set of square indices attacked by `color`
-- [ ] `getPseudoLegalMoves(board, square, gameState)` — all candidate moves for piece at square (no self-check filter)
+- [x] `initBoard()` — returns the standard chess starting position as a 64-cell flat array
+- [x] `initGameState()` — returns initial `GameState` with board, white to move, all castling rights, no en passant
+- [x] `isInCheck(board, color)` — returns true if `color`'s king is under attack
+- [x] `getAttackedSquares(board, color)` — returns set of square indices attacked by `color`
+- [x] `getPseudoLegalMoves(board, square, gameState)` — all candidate moves for piece at square (no self-check filter)
   - Pawn: forward one, forward two from start rank, diagonal captures, en passant capture
   - Knight: L-shape jumps
   - Bishop: diagonal rays until blocked or capture
   - Rook: horizontal/vertical rays until blocked or capture
   - Queen: rook + bishop combined
   - King: one square in any direction plus castling candidates
-- [ ] `getLegalMoves(board, square, gameState)` — filters pseudo-legal by simulating move and calling `isInCheck`
-- [ ] `getAllLegalMoves(board, color, gameState)` — unions legal moves for all pieces of `color`
-- [ ] `applyMove(gameState, from, to)` — applies the move, handles en passant capture, castling rook move, promotion flag, updates castling rights, en passant target, clocks, position history, flips turn
-- [ ] `applyPromotion(gameState, pieceType)` — replaces promoted pawn with chosen piece, clears `pendingPromotion`, flips turn, runs post-move checks
-- [ ] `detectGameStatus(gameState)` — returns updated status: playing / check / checkmate / stalemate / draw (fifty-move, threefold, insufficient material)
-- [ ] `serializePosition(gameState)` — serializes board + turn + castling rights + en passant for repetition detection
-- [ ] `hasInsufficientMaterial(board)` — detects K vs K, K+B vs K, K+N vs K, K+B vs K+B (same color bishops)
-- [ ] `getBestMove(gameState)` — minimax with alpha-beta, returns `{ from, to }` for the computer's best move. During lookahead, pawn promotions are always assumed to be queen (no modal interaction mid-search). The returned move may include an implicit promotion to queen if the moving pawn reaches the back rank.
-- [ ] `evaluateBoard(board, color)` — material + piece-square table score from `color`'s perspective
+- [x] `getLegalMoves(board, square, gameState)` — filters pseudo-legal by simulating move and calling `isInCheck`
+- [x] `getAllLegalMoves(board, color, gameState)` — unions legal moves for all pieces of `color`
+- [x] `applyMove(gameState, from, to)` — applies the move, handles en passant capture, castling rook move, promotion flag, updates castling rights, en passant target, clocks, position history, flips turn
+- [x] `applyPromotion(gameState, pieceType)` — replaces promoted pawn with chosen piece, clears `pendingPromotion`, flips turn, runs post-move checks
+- [x] `detectGameStatus(gameState)` — returns updated status: playing / check / checkmate / stalemate / draw (fifty-move, threefold, insufficient material)
+- [x] `serializePosition(gameState)` — serializes board + turn + castling rights + en passant for repetition detection
+- [x] `hasInsufficientMaterial(board)` — detects K vs K, K+B vs K, K+N vs K, K+B vs K+B (same color bishops)
+- [x] `getBestMove(gameState)` — minimax with alpha-beta, returns `{ from, to }` for the computer's best move. During lookahead, pawn promotions are always assumed to be queen (no modal interaction mid-search). The returned move may include an implicit promotion to queen if the moving pawn reaches the back rank.
+- [x] `evaluateBoard(board, color)` — material + piece-square table score from `color`'s perspective
 
 ---
 
 ## Components
-- [ ] `App` — top-level state, mode routing, renders `ModeSelect` or `Game`
-- [ ] `ModeSelect` — shows two buttons: "Local Multiplayer" and "vs Computer"; when "vs Computer" is chosen, `ColorPicker` renders inline as a second step within the same screen (not a separate route or page). Confirming a color in `ColorPicker` starts the game.
-- [ ] `ColorPicker` — rendered inside `ModeSelect` as a conditional second step after choosing vs Computer; lets player pick White / Black / Random
-- [ ] `Game` — owns `GameState`, handles click logic (select/move), triggers AI moves, renders `Board`, `CapturedPieces`, `StatusBar`, `PromotionModal`
-- [ ] `Board` — renders 8x8 grid of `Square` components; passes click handlers and highlight sets
-- [ ] `Square` — renders one cell, shows piece SVG if occupied, applies highlight/selected/check CSS classes
-- [ ] `Piece` (display) — renders the correct SVG icon for a piece type + color
-- [ ] `PromotionModal` — shown when `pendingPromotion` is set; four piece buttons (Q, R, B, N) in the promoting player's color
-- [ ] `StatusBar` — shows current turn, check indicator, game over message
-- [ ] `CapturedPieces` — shows pieces captured by each side, sorted by value
+- [x] `App` — top-level state, mode routing, renders `ModeSelect` or `Game`
+- [x] `ModeSelect` — shows two buttons: "Local Multiplayer" and "vs Computer"; when "vs Computer" is chosen, `ColorPicker` renders inline as a second step within the same screen (not a separate route or page). Confirming a color in `ColorPicker` starts the game.
+- [x] `ColorPicker` — rendered inside `ModeSelect` as a conditional second step after choosing vs Computer; lets player pick White / Black / Random
+- [x] `Game` — owns `GameState`, handles click logic (select/move), triggers AI moves, renders `Board`, `CapturedPieces`, `StatusBar`, `PromotionModal`
+- [x] `Board` — renders 8x8 grid of `Square` components; passes click handlers and highlight sets
+- [x] `Square` — renders one cell, shows piece SVG if occupied, applies highlight/selected/check CSS classes
+- [x] `Piece` (display) — renders the correct SVG icon for a piece type + color
+- [x] `PromotionModal` — shown when `pendingPromotion` is set; four piece buttons (Q, R, B, N) in the promoting player's color
+- [x] `StatusBar` — shows current turn, check indicator, game over message
+- [x] `CapturedPieces` — shows pieces captured by each side, sorted by value
 
 ---
 
@@ -191,27 +191,27 @@ type CastlingRights = {
 ---
 
 ## Styling
-- [ ] `global.css` — CSS variables for board colors (light/dark squares), highlight colors, font; box-sizing reset
-- [ ] `App.css` — top-level layout (centered page, full-height flex column)
-- [ ] `ModeSelect.css` — centered card with large buttons
-- [ ] `ColorPicker.css` — color option buttons (White / Black / Random) styled consistently with ModeSelect
-- [ ] `Game.css` — game layout: board centered with status bar above and captured pieces below
-- [ ] `Board.css` — 8x8 grid layout, square sizing (responsive, e.g., `min(62px, 10vw)`)
-- [ ] `Square.css` — light/dark square colors, highlight classes (selected, legal-move, capture-target, in-check, last-move)
+- [x] `global.css` — CSS variables for board colors (light/dark squares), highlight colors, font; box-sizing reset
+- [x] `App.css` — top-level layout (centered page, full-height flex column)
+- [x] `ModeSelect.css` — centered card with large buttons
+- [x] `ColorPicker.css` — color option buttons (White / Black / Random) styled consistently with ModeSelect
+- [x] `Game.css` — game layout: board centered with status bar above and captured pieces below
+- [x] `Board.css` — 8x8 grid layout, square sizing (responsive, e.g., `min(62px, 10vw)`)
+- [x] `Square.css` — light/dark square colors, highlight classes (selected, legal-move, capture-target, in-check, last-move)
   - Note: `Piece` (display component) has no own CSS file — SVG sizing is inherited from the parent `Square` dimensions via `Square.css`; no separate `Piece.css` is needed
-- [ ] `PromotionModal.css` — modal overlay centered over board, four piece buttons in a row
-- [ ] `StatusBar.css` — turn indicator, check warning styling
-- [ ] `CapturedPieces.css` — flex row of small piece icons
+- [x] `PromotionModal.css` — modal overlay centered over board, four piece buttons in a row
+- [x] `StatusBar.css` — turn indicator, check warning styling
+- [x] `CapturedPieces.css` — flex row of small piece icons
 
 ---
 
 ## Polish
-- [ ] Smooth piece move (CSS transition on position, or simply re-render is fine for v1)
-- [ ] Board coordinate labels (a–h along bottom, 1–8 along left side)
-- [ ] Flip board for Black when playing vs Computer as Black
-- [ ] Prevent interaction with board while computer is thinking
-- [ ] "Play Again" and "Back to Menu" buttons on game-over overlay
-- [ ] Responsive board size (scales down on mobile)
+- [x] Smooth piece move (CSS transition on position, or simply re-render is fine for v1)
+- [x] Board coordinate labels (a–h along bottom, 1–8 along left side)
+- [x] Flip board for Black when playing vs Computer as Black
+- [x] Prevent interaction with board while computer is thinking
+- [x] "Play Again" and "Back to Menu" buttons on game-over overlay
+- [x] Responsive board size (scales down on mobile)
 
 ---
 

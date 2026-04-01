@@ -1,0 +1,21 @@
+.status-bar {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-default);
+}
+
+.check-warning {
+  color: var(--color-danger);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}

@@ -97,21 +97,6 @@
   --transition-fast: 120ms ease;
   --transition-default: 200ms ease;
   --transition-slow: 350ms ease;
-
-  /* Chess board */
-  --board-light: #f0d9b5;
-  --board-dark: #b58863;
-  --board-selected: rgba(255, 191, 0, 0.55);
-  --board-legal-move: rgba(153, 201, 255, 0.35);
-  --board-capture: rgba(255, 80, 80, 0.5);
-  --board-in-check: rgba(200, 0, 0, 0.6);
-  --board-last-move: rgba(255, 191, 0, 0.25);
-  --square-size: min(68px, 11vw);
-}
-
-:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(153, 201, 255, 0.5);
 }
 
 body {

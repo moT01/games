@@ -54,6 +54,16 @@
 
 ---
 
+## Interaction Model
+
+**Input method:** ...
+
+**Visual feedback:** ...
+
+**Captured / out-of-play pieces:** ...
+
+---
+
 ## Setup
 - [ ] Create `{game-name}/` folder and bootstrap project with boilerplate.
 
@@ -70,16 +80,6 @@
 
 ---
 
-## Interaction Model
-
-**Input method:** ...
-
-**Visual feedback:** ...
-
-**Captured / out-of-play pieces:** ...
-
----
-
 ## Styling
 - [ ] `global.css`
 - [ ] `App.css`
@@ -89,6 +89,27 @@
 
 ## Polish
 - [ ] ...
+
+---
+
+## Help & Strategy Guide
+
+**Rules summary:** ...
+
+**Objective:** ...
+
+**Key strategies:**
+- ...
+
+**Common mistakes:**
+- ...
+
+**Tips for beginners:**
+- ...
+
+### Help Guide Checklist
+- [ ] `HelpModal` — "?" button accessible from main game screen
+- [ ] Content is specific to this game — no generic filler
 
 ---
 

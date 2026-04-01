@@ -1,0 +1,23 @@
+.captured-pieces {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 2.5rem;
+}
+
+.captured-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  font-size: 1.3rem;
+  min-height: 1.5rem;
+  align-items: center;
+}
+
+.captured-row .piece {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  font-size: 1.3rem;
+  line-height: 1;
+}

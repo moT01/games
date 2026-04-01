@@ -1,6 +1,6 @@
 ---
 name: coder
-description: Writes a section of the game code based on the approved plan. Called by create-known-game — do not invoke directly.
+description: Writes a section of the game code based on the approved plan. Called by create-known-game — or invoked directly.
 ---
 
 # coder
@@ -60,63 +60,8 @@ Follow the conventions in `CLAUDE.md`:
 
 ---
 
-## Step 3 — Write the coder log
-The coder log is for the code-reviewer — write it clearly and include
-anything that would help the reviewer understand what was built and why.
-This includes decisions made, tradeoffs, anything uncertain, and anything
-that deviated from the plan even slightly.
-
-Overwrite `artifacts/<game-name>/CODER-LOG.md` with:
-```markdown
-## Section: <section-name-from-PLAN.md>
-
-### Files created / modified
-- `path/to/file.ts` — what it does
-
-### Decisions made
-- ...
-
-### Uncertainties / flags
-- ...
-
-### Anything the reviewer should pay extra attention to
-- ...
-
-### Items ready for review
-- [ ] specific checklist item from PLAN.md
-- [ ] another item
-```
-
----
-
-## Step 4 — Launch code-reviewer
-```
-Task: "Read and follow `.claude/skills/code-reviewer/SKILL.md`.
-Game name: <game-name>
-Known game: <known-name>"
-```
-
-When the Task completes, continue to Step 5.
-
----
-
-## Step 5 — Read reviewer feedback
-Read `artifacts/<game-name>/CODE-REVIEW.md`.
-
-**If `STATUS: APPROVED`:** proceed to Step 6.
-
-**If `STATUS: REVISE`:** fix every item flagged in the feedback following
-the same conventions from Step 2. Fix only what was flagged — do not
-rewrite things that were not flagged.
-
-Then proceed to Step 6.
-
----
-
-## Step 6 — Check off completed items
-Read `artifacts/<game-name>/CODER-LOG.md` to remind yourself which items
-were implemented in this section. In `artifacts/<game-name>/PLAN.md`,
-check off every item that was implemented and not flagged as still broken
+## Step 3 — Check off completed items
+In `artifacts/<game-name>/PLAN.md`, check off every item that was implemented and not flagged as still broken
 by the reviewer.
 
 Items that were flagged and could not be fully resolved stay unchecked.
