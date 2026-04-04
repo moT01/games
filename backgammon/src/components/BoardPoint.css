@@ -9,35 +9,39 @@
   transition: background-color var(--transition-fast);
 }
 
-/* Triangle background via pseudo-element so checkers render above it */
+/* Triangle background via pseudo-element */
 .board-point::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: 0 6px;
   z-index: 0;
   transition: opacity var(--transition-fast);
 }
 
 .board-point--top::before {
-  clip-path: polygon(5% 0%, 95% 0%, 50% 94%);
+  /* Triangles reach 70% of row height, leaving a generous gap in middle */
+  clip-path: polygon(0% 0%, 100% 0%, 50% 70%);
 }
 
 .board-point--bottom::before {
-  clip-path: polygon(5% 100%, 95% 100%, 50% 6%);
+  clip-path: polygon(0% 100%, 100% 100%, 50% 30%);
 }
 
-/* Alternating triangle colors */
-.board__half .board-point:nth-child(odd)::before {
-  background-color: var(--gray-75);
+/* Triangle colors */
+.board__half:nth-child(odd) .board-point:nth-child(odd)::before,
+.board__half:nth-child(even) .board-point:nth-child(even)::before {
+  background: linear-gradient(to bottom, var(--gray-75), var(--gray-80));
 }
 
-.board__half .board-point:nth-child(even)::before {
-  background-color: var(--color-surface-raised);
+.board__half:nth-child(odd) .board-point:nth-child(even)::before,
+.board__half:nth-child(even) .board-point:nth-child(odd)::before {
+  background: linear-gradient(to bottom, var(--blue-dark), var(--blue-mid));
+  opacity: 0.5;
 }
 
 /* Home board tint */
 .board-point--home {
-  background-color: rgba(153, 201, 255, 0.06);
+  background-color: rgba(255, 191, 0, 0.02);
 }
 
 /* Selection highlight */
@@ -45,9 +49,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(255, 191, 0, 0.18);
+  background-color: rgba(255, 191, 0, 0.12);
   z-index: 5;
   pointer-events: none;
+  border: 1px solid var(--color-accent);
 }
 
 /* Valid destination highlight */
@@ -55,79 +60,98 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(153, 201, 255, 0.18);
+  background-color: rgba(153, 201, 255, 0.08);
   z-index: 5;
   pointer-events: none;
+  border: 1px dashed var(--blue-mid);
 }
 
 /* Hover */
 .board-point:hover {
-  background-color: rgba(153, 201, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
-/* Checkers container — above the triangle pseudo-element */
+/* Checkers container */
 .board-point__checkers {
   display: flex;
   align-items: center;
-  gap: 2px;
   position: relative;
   z-index: 2;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-start;
   padding: var(--space-1) 0;
 }
 
 .board-point--top .board-point__checkers {
   flex-direction: column;
-  padding-top: var(--space-1);
+  padding-top: var(--space-2);
 }
 
 .board-point--bottom .board-point__checkers {
   flex-direction: column-reverse;
-  padding-bottom: var(--space-1);
+  padding-bottom: var(--space-2);
+}
+
+/* Consistent stacking logic: overlap every piece after the first one */
+.board-point--top .checker + .checker {
+  margin-top: -30%;
+}
+
+.board-point--bottom .checker + .checker {
+  margin-bottom: -30%;
 }
 
 /* Point number label */
 .board-point__label {
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--color-text-muted);
+  font-size: clamp(14px, 3cqi, 28px);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
   letter-spacing: 0.04em;
   position: relative;
-  z-index: 2;
+  z-index: 4;
   user-select: none;
   line-height: 1;
+  opacity: 0.9;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
 .board-point--top .board-point__label {
   order: 1;
   margin-top: auto;
-  padding-bottom: var(--space-1);
+  padding-bottom: 6px;
 }
 
 .board-point--bottom .board-point__label {
   order: -1;
   margin-bottom: auto;
-  padding-top: var(--space-1);
+  padding-top: 6px;
 }
 
-/* Valid destination dot — shown near the triangle tip */
+/* Valid destination dot */
 .board-point__dest-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: var(--radius-full);
-  background-color: var(--blue-mid);
+  background-color: var(--color-accent);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   z-index: 6;
-  box-shadow: 0 0 6px rgba(25, 142, 238, 0.6);
+  box-shadow: 0 0 10px var(--color-accent);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
 }
 
 .board-point--top .board-point__dest-dot {
-  bottom: 24px;
+  bottom: 25%;
 }
 
 .board-point--bottom .board-point__dest-dot {
-  top: 24px;
+  top: 25%;
 }

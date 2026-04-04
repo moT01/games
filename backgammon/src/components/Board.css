@@ -1,15 +1,16 @@
 .board {
   width: 100%;
-  max-width: 1200px;
-  max-height: 75vh;
+  max-width: 1600px;
+  max-height: 85vh;
   display: flex;
   align-items: stretch;
   gap: var(--space-2);
   background-color: var(--gray-80);
   padding: var(--space-2);
   border-radius: var(--radius-lg);
-  border: 8px solid var(--gray-75);
+  border: 10px solid var(--gray-75);
   box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  container-type: inline-size;
 }
 
 .board__field {
@@ -32,11 +33,10 @@
 
 .board__row--top {
   border-bottom: var(--border-default);
-  align-items: flex-start;
 }
 
 .board__row--bottom {
-  align-items: flex-end;
+  /* No special alignment needed, allow children to stretch */
 }
 
 .board__half {

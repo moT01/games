@@ -171,17 +171,17 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="app__header">
-        <StatusBar
-          currentPlayer={state.currentPlayer}
-          forcedSkip={state.forcedSkip}
-          phase={state.phase}
-          winner={state.winner}
-        />
-        <button className="app__help-btn" onClick={() => setShowHelp(true)}>?</button>
-      </header>
-
       <main className="app__main">
+        <header className="app__header">
+          <StatusBar
+            currentPlayer={state.currentPlayer}
+            forcedSkip={state.forcedSkip}
+            phase={state.phase}
+            winner={state.winner}
+          />
+          <button className="app__help-btn" onClick={() => setShowHelp(true)}>?</button>
+        </header>
+
         <Board
           state={state}
           onPointClick={handlePointClick}

@@ -4,8 +4,8 @@
 }
 
 .checker {
-  width: clamp(24px, 6cqw, 44px);
-  height: clamp(24px, 6cqw, 44px);
+  width: clamp(24px, 6.5cqw, 56px);
+  height: clamp(24px, 6.5cqw, 56px);
   border-radius: var(--radius-full);
   border: 1px solid rgba(0, 0, 0, 0.2);
   flex-shrink: 0;

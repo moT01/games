@@ -1,0 +1,103 @@
+.board-cell {
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition:
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.board-cell:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--blue-mid);
+  z-index: 1;
+  position: relative;
+}
+
+/* ── Unrevealed ── */
+.board-cell--unrevealed {
+  background: var(--color-surface-raised);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.15),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.board-cell--unrevealed:hover {
+  background: var(--color-border);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.18),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px var(--blue-mid);
+}
+
+.board-cell--unrevealed:active {
+  background: var(--color-surface);
+  box-shadow:
+    inset 2px 2px 0 rgba(0, 0, 0, 0.4),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ── Revealed (base) ── */
+.board-cell--revealed {
+  background: var(--color-surface);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.35);
+  cursor: default;
+}
+
+/* ── Blank (0 neighbors) ── */
+.board-cell--blank {
+  background: var(--color-bg);
+}
+
+/* ── Numbered cells ── */
+.board-cell--one   { color: var(--num-1); }
+.board-cell--two   { color: var(--num-2); }
+.board-cell--three { color: var(--num-3); }
+.board-cell--four  { color: var(--num-4); }
+.board-cell--five  { color: var(--num-5); }
+.board-cell--six   { color: var(--num-6); }
+.board-cell--seven { color: var(--num-7); }
+.board-cell--eight { color: var(--num-8); }
+
+/* ── Flagged ── */
+.board-cell--flagged {
+  background: var(--color-surface-raised);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.15),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* ── Wrong flag (flagged but not a bomb, revealed on loss) ── */
+.board-cell--wrong-flag {
+  background: rgba(255, 50, 34, 0.15);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+  cursor: default;
+  font-size: 0.85rem;
+}
+
+/* ── Bomb (revealed on loss, not the trigger) ── */
+.board-cell--bomb {
+  background: var(--color-surface);
+  cursor: default;
+  font-size: 0.9rem;
+}
+
+/* ── Detonated (the bomb that was clicked) ── */
+.board-cell--detonated {
+  background: var(--red-dark);
+  box-shadow: inset 0 0 0 2px rgba(255, 80, 50, 0.6);
+  cursor: default;
+  font-size: 0.9rem;
+}
