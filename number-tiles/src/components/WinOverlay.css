@@ -1,0 +1,65 @@
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--gray-90-translucent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn var(--transition-default) ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.win-overlay__card {
+  background: var(--color-surface);
+  border: var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-lg), var(--shadow-accent);
+  animation: slideUp var(--transition-default) ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.win-overlay__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+}
+
+.win-overlay__stat {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+}
+
+.win-overlay__stat strong {
+  color: var(--color-text-primary);
+}
+
+.win-overlay__btn {
+  background: var(--color-accent);
+  color: var(--gray-90);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  margin-top: var(--space-2);
+  transition: background var(--transition-fast);
+}
+
+.win-overlay__btn:hover {
+  background: var(--color-accent-hover);
+}
