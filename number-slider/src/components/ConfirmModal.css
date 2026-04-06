@@ -1,0 +1,13 @@
+.confirm-modal__message {
+  font-size: var(--text-lg);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: var(--space-5);
+  line-height: var(--line-height-normal);
+}
+
+.confirm-modal__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+}

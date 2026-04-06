@@ -1,0 +1,55 @@
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-xl);
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  user-select: none;
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.tile--blank {
+  background: transparent;
+  cursor: default;
+}
+
+.tile--numbered {
+  background: linear-gradient(160deg, var(--color-surface-raised) 0%, var(--color-surface) 100%);
+  color: var(--color-text-primary);
+  border: var(--border-default);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--shadow-sm);
+  cursor: default;
+}
+
+.tile--numbered:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.tile--movable {
+  background: linear-gradient(160deg, var(--color-surface-raised) 0%, var(--color-surface) 100%);
+  border-color: var(--color-border);
+  cursor: pointer;
+}
+
+.tile--movable:hover {
+  background: var(--blue-light-translucent);
+  box-shadow: inset 0 0 0 2px var(--blue-mid), var(--shadow-sm);
+  transform: scale(1.03);
+}
+
+.tile--movable:active {
+  transform: scale(0.97);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(153, 201, 255, 0.5);
+}
