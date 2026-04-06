@@ -33,19 +33,19 @@ export function GameBoard({
   detonatedIndex, showHelp,
   onCellClick, onCellRightClick, onReset, onChangeDifficulty, onToggleHelp,
 }: Props) {
-  const face = status === 'won' ? '😎' : status === 'lost' ? '😵' : '🙂';
+  const face = status === 'won' ? '⚡' : status === 'lost' ? '💀' : '🤖';
   const mineStr = formatMines(config.bombs, flagCount);
   const timerStr = pad3(elapsedSeconds);
 
   return (
     <div className="game-board">
       <div className="game-board__header">
-        <div className="game-board__lcd game-board__mines">{mineStr}</div>
-        <button className="game-board__reset" onClick={onReset} title="New Game">
+        <div className="game-board__lcd game-board__mines" title="Viruses Detected">{mineStr}</div>
+        <button className="game-board__reset" onClick={onReset} title="Reset System">
           {face}
         </button>
-        <div className="game-board__lcd game-board__timer">{timerStr}</div>
-        <button className="game-board__help-btn" onClick={onToggleHelp} title="Help">?</button>
+        <div className="game-board__lcd game-board__timer" title="Uptime">{timerStr}</div>
+        <button className="game-board__help-btn" onClick={onToggleHelp} title="System Info">?</button>
       </div>
       <div
         className={`game-board__grid${status === 'lost' ? ' game-board__grid--shake' : ''}`}
@@ -68,21 +68,21 @@ export function GameBoard({
           <div className="game-board__overlay-box">
             {status === 'won' ? (
               <>
-                <div className="game-board__overlay-icon">🎉</div>
-                <h2>You win!</h2>
-                <p>Cleared in {elapsedSeconds}s</p>
+                <div className="game-board__overlay-icon">⚡</div>
+                <h2>System Purged</h2>
+                <p>Completion Time: {elapsedSeconds}s</p>
               </>
             ) : (
               <>
-                <div className="game-board__overlay-icon">💥</div>
-                <h2>Game over</h2>
+                <div className="game-board__overlay-icon">💀</div>
+                <h2>Critical Failure</h2>
               </>
             )}
             <button className="game-board__overlay-btn" onClick={onReset}>
-              Play Again
+              Reboot System
             </button>
             <button className="game-board__overlay-btn game-board__overlay-btn--secondary" onClick={onChangeDifficulty}>
-              Change Difficulty
+              Abort Mission
             </button>
           </div>
         </div>

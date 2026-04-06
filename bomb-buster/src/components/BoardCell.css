@@ -1,7 +1,7 @@
 .board-cell {
   width: 28px;
   height: 28px;
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--weight-bold);
   line-height: 1;
@@ -11,55 +11,57 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition:
-    background-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .board-cell:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 2px var(--blue-mid);
+  box-shadow: 0 0 0 2px var(--blue-light);
   z-index: 1;
   position: relative;
 }
 
 /* ── Unrevealed ── */
 .board-cell--unrevealed {
-  background: var(--color-surface-raised);
-  box-shadow:
-    inset 2px 2px 0 rgba(255, 255, 255, 0.15),
-    inset -2px -2px 0 rgba(0, 0, 0, 0.5);
+  background: var(--gray-85);
+  border: 1px solid var(--gray-80);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
 .board-cell--unrevealed:hover {
-  background: var(--color-border);
-  box-shadow:
-    inset 2px 2px 0 rgba(255, 255, 255, 0.18),
-    inset -2px -2px 0 rgba(0, 0, 0, 0.5),
-    inset 0 0 0 1px var(--blue-mid);
+  background: var(--gray-80);
+  border-color: var(--blue-mid);
+  box-shadow: 
+    0 0 8px rgba(0, 242, 255, 0.3),
+    inset 0 0 5px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  z-index: 2;
 }
 
 .board-cell--unrevealed:active {
-  background: var(--color-surface);
-  box-shadow:
-    inset 2px 2px 0 rgba(0, 0, 0, 0.4),
-    inset -2px -2px 0 rgba(255, 255, 255, 0.05);
+  background: var(--gray-90);
+  transform: scale(0.95);
 }
 
 /* ── Revealed (base) ── */
 .board-cell--revealed {
-  background: var(--color-surface);
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.35);
+  background: #0a0a1a;
+  border: 1px solid #16213e;
   cursor: default;
 }
 
 /* ── Blank (0 neighbors) ── */
 .board-cell--blank {
-  background: var(--color-bg);
+  background: #050510;
+  border: 1px solid #0a0a20;
 }
 
 /* ── Numbered cells ── */
+.board-cell--num {
+  text-shadow: 0 0 5px currentColor;
+}
+
 .board-cell--one   { color: var(--num-1); }
 .board-cell--two   { color: var(--num-2); }
 .board-cell--three { color: var(--num-3); }
@@ -71,33 +73,36 @@
 
 /* ── Flagged ── */
 .board-cell--flagged {
-  background: var(--color-surface-raised);
-  box-shadow:
-    inset 2px 2px 0 rgba(255, 255, 255, 0.15),
-    inset -2px -2px 0 rgba(0, 0, 0, 0.5);
+  background: var(--gray-85);
+  border: 1px solid var(--blue-mid);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
-/* ── Wrong flag (flagged but not a bomb, revealed on loss) ── */
+/* ── Wrong flag ── */
 .board-cell--wrong-flag {
-  background: rgba(255, 50, 34, 0.15);
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 0, 85, 0.1);
+  border: 1px solid var(--color-danger);
   cursor: default;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
-/* ── Bomb (revealed on loss, not the trigger) ── */
+/* ── Bomb ── */
 .board-cell--bomb {
-  background: var(--color-surface);
+  background: rgba(255, 0, 85, 0.05);
+  border: 1px solid #3b3b4f;
   cursor: default;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  filter: drop-shadow(0 0 5px var(--color-danger));
 }
 
-/* ── Detonated (the bomb that was clicked) ── */
+/* ── Detonated ── */
 .board-cell--detonated {
-  background: var(--red-dark);
-  box-shadow: inset 0 0 0 2px rgba(255, 80, 50, 0.6);
+  background: var(--color-danger);
+  border: 1px solid white;
+  box-shadow: 0 0 20px var(--color-danger);
   cursor: default;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+  z-index: 3;
 }

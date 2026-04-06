@@ -30,25 +30,25 @@ beforeEach(() => {
   );
 });
 
-// Renders App and clicks the Beginner button
+// Renders App and clicks the first difficulty button (Protocol 1 / Beginner)
 async function startBeginner() {
   const user = userEvent.setup();
   const result = render(<App />);
-  await user.click(screen.getByRole('button', { name: /beginner/i }));
+  await user.click(screen.getByRole('button', { name: /protocol 1/i }));
   return { ...result, user };
 }
 
 describe('App', () => {
   it('renders difficulty select screen on initial load', () => {
     render(<App />);
-    expect(screen.queryByText('Bomb Buster')).not.toBeNull();
-    expect(screen.getByRole('button', { name: /beginner/i })).toBeTruthy();
+    expect(screen.queryByText('Cyber Sweeper')).not.toBeNull();
+    expect(screen.getByRole('button', { name: /protocol 1/i })).toBeTruthy();
   });
 
   it('clicking a difficulty button transitions to the game board', async () => {
     await startBeginner();
-    expect(screen.queryByText('Bomb Buster')).toBeNull();
-    expect(screen.getByTitle('New Game')).toBeTruthy();
+    expect(screen.queryByText('Cyber Sweeper')).toBeNull();
+    expect(screen.getByTitle('Reset System')).toBeTruthy();
   });
 
   it('mine counter shows correct initial value (bombs count)', async () => {
@@ -89,7 +89,7 @@ describe('App', () => {
     // Mock places bomb at index 0; click that cell to trigger loss
     const cells = container.querySelectorAll('.board-cell');
     await user.click(cells[0]);
-    expect(screen.getByText('Game over')).toBeTruthy();
+    expect(screen.getByText('Critical Failure')).toBeTruthy();
   });
 
   it('revealing all safe cells shows the win overlay', async () => {
@@ -98,7 +98,7 @@ describe('App', () => {
     // through all 0-adjacent cells and reveals all 80 safe cells → win.
     const cells = container.querySelectorAll('.board-cell');
     await user.click(cells[80]);
-    expect(screen.getByText('You win!')).toBeTruthy();
+    expect(screen.getByText('System Purged')).toBeTruthy();
   });
 
   it('reset button starts a new game', async () => {
@@ -106,12 +106,12 @@ describe('App', () => {
     // Lose the game first
     const cells = container.querySelectorAll('.board-cell');
     await user.click(cells[0]);
-    expect(screen.getByText('Game over')).toBeTruthy();
+    expect(screen.getByText('Critical Failure')).toBeTruthy();
 
     // Click the reset (smiley) button
-    await user.click(screen.getByTitle('New Game'));
+    await user.click(screen.getByTitle('Reset System'));
     // Overlay gone, mine counter reset to initial value
-    expect(screen.queryByText('Game over')).toBeNull();
+    expect(screen.queryByText('Critical Failure')).toBeNull();
     const minesLcd = container.querySelector('.game-board__mines');
     expect(minesLcd?.textContent).toBe('010');
   });
@@ -121,10 +121,10 @@ describe('App', () => {
     // Lose the game
     const cells = container.querySelectorAll('.board-cell');
     await user.click(cells[0]);
-    expect(screen.getByText('Game over')).toBeTruthy();
+    expect(screen.getByText('Critical Failure')).toBeTruthy();
 
     // Click "Change Difficulty"
-    await user.click(screen.getByRole('button', { name: /change difficulty/i }));
-    expect(screen.queryByText('Bomb Buster')).not.toBeNull();
+    await user.click(screen.getByRole('button', { name: /abort mission/i }));
+    expect(screen.queryByText('Cyber Sweeper')).not.toBeNull();
   });
 });

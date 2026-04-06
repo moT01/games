@@ -8,6 +8,7 @@ import {
   checkWin,
   countFlags,
   revealAllBombs,
+  getNeighborIndices,
 } from './gameLogic';
 import type { Cell, Config, GameStatus } from './gameLogic';
 import { DifficultySelect } from './components/DifficultySelect';
@@ -89,7 +90,47 @@ export default function App() {
 
   function handleCellRightClick(index: number) {
     if (status === 'won' || status === 'lost') return;
-    if (cells[index].isRevealed) return;
+
+    const cell = cells[index];
+
+    // Chord click: right-click on a revealed numbered cell.
+    // If adjacent flag count matches the number, reveal all remaining unflagged neighbors.
+    if (cell.isRevealed && cell.adjacentCount > 0 && config) {
+      const neighbors = getNeighborIndices(index, config.rows, config.cols);
+      const flaggedCount = neighbors.filter(i => cells[i].isFlagged).length;
+      if (flaggedCount !== cell.adjacentCount) return;
+
+      const toReveal = neighbors.filter(i => !cells[i].isFlagged && !cells[i].isRevealed);
+      if (toReveal.length === 0) return;
+
+      // If any neighbor being revealed is a bomb, trigger loss
+      const detonated = toReveal.find(i => cells[i].isBomb);
+      if (detonated !== undefined) {
+        const nextCells = revealAllBombs(cells);
+        setDetonatedIndex(detonated);
+        setCells(nextCells);
+        setStatus('lost');
+        return;
+      }
+
+      // Reveal all safe neighbors (with cascade)
+      let nextCells = cells;
+      for (const i of toReveal) {
+        nextCells = revealCells(nextCells, i, config.rows, config.cols);
+      }
+
+      if (checkWin(nextCells)) {
+        nextCells = nextCells.map(c => c.isBomb && !c.isFlagged ? { ...c, isFlagged: true } : c);
+        setCells(nextCells);
+        setStatus('won');
+      } else {
+        setCells(nextCells);
+      }
+      return;
+    }
+
+    // Normal right-click: toggle flag on an unrevealed cell
+    if (cell.isRevealed) return;
     setCells(prev => toggleFlag(prev, index));
   }
 

@@ -19,7 +19,7 @@ export function BoardCell({ cell, index, status, isDetonated, onClick, onRightCl
     if (isRevealed) {
       if (isBomb) {
         const cls = isDetonated ? 'board-cell--detonated' : 'board-cell--bomb';
-        return [`board-cell board-cell--revealed ${cls}`, '💣'];
+        return [`board-cell board-cell--revealed ${cls}`, '👾'];
       }
       if (adjacentCount > 0) {
         return [`board-cell board-cell--revealed board-cell--num board-cell--${NUM_CLASS[adjacentCount]}`, adjacentCount];
@@ -29,9 +29,9 @@ export function BoardCell({ cell, index, status, isDetonated, onClick, onRightCl
 
     if (isFlagged) {
       if (status === 'lost' && !isBomb) {
-        return ['board-cell board-cell--wrong-flag', '❌'];
+        return ['board-cell board-cell--wrong-flag', '⚠️'];
       }
-      return ['board-cell board-cell--flagged', '🚩'];
+      return ['board-cell board-cell--flagged', '🛡️'];
     }
 
     return ['board-cell board-cell--unrevealed', null];

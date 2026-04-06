@@ -7,36 +7,35 @@ export function HelpModal({ onClose }: Props) {
     <div className="help-modal__backdrop" onClick={onClose}>
       <div className="help-modal" onClick={e => e.stopPropagation()}>
         <button className="help-modal__close" onClick={onClose} title="Close">✕</button>
-        <h2 className="help-modal__title">How to Play Bomb Buster</h2>
+        <h2 className="help-modal__title">System Documentation</h2>
 
-        <h3 className="help-modal__section">Rules</h3>
-        <p>Left-click to reveal a cell. Right-click to place or remove a flag. Numbers show how many of the 8 surrounding cells contain bombs. Reveal every safe cell without triggering a bomb to win.</p>
+        <h3 className="help-modal__section">Operational Protocols</h3>
+        <p>Left-click to probe a sector. Right-click to deploy or retract a firewall shield (🛡️). Numbers indicate how many of the 8 adjacent sectors contain active viruses (👾). Purge all safe sectors without triggering a virus to secure the system.</p>
 
-        <h3 className="help-modal__section">Objective</h3>
-        <p>Reveal every cell that does not contain a bomb. You do not need to flag all bombs — flagging is optional but helps you track your progress.</p>
+        <h3 className="help-modal__section">Mission Objective</h3>
+        <p>Expose every sector that does not contain a virus. Deploying firewalls is optional but helps track detected threats.</p>
 
-        <h3 className="help-modal__section">Key Strategies</h3>
+        <h3 className="help-modal__section">Tactical Strategies</h3>
         <ul className="help-modal__list">
-          <li>When a "1" cell touches only one unrevealed cell, that cell must be the bomb — flag it.</li>
-          <li>If a number's adjacent flag count already matches the number, the remaining unrevealed neighbors are safe to click.</li>
-          <li>Look for cells where the number equals all remaining unrevealed neighbors — every one of them is a bomb.</li>
-          <li>Corners and edges reduce unknown neighbors, making them easier to reason about.</li>
-          <li>When no safe deduction is possible, guess a corner or edge cell — statistically fewer bomb neighbors.</li>
+          <li>If a "1" sector touches only one unrevealed sector, that sector contains a virus — shield it.</li>
+          <li>If a sector's adjacent shield count matches its number, all other unrevealed neighbors are safe to probe.</li>
+          <li>Identify sectors where the virus count matches all remaining unrevealed neighbors — every one of them is a threat.</li>
+          <li>Perimeter sectors have fewer neighbors, making them easier to analyze.</li>
+          <li>When logic fails, probing perimeter sectors is statistically safer.</li>
         </ul>
 
-        <h3 className="help-modal__section">Tips for Beginners</h3>
+        <h3 className="help-modal__section">Initialization Data</h3>
         <ul className="help-modal__list">
-          <li>The first click is always safe — bombs are placed after you click.</li>
-          <li>Start with Beginner (9×9, 10 bombs) to learn how numbers work before trying larger boards.</li>
-          <li>Open corners first — they tend to cascade and expose large safe areas quickly.</li>
-          <li>Beginner is usually solvable with pure logic. Expert almost always requires at least one guess.</li>
+          <li>The initial probe is always safe — viruses are initialized after the first interaction.</li>
+          <li>Start with Protocol 1 (9×9, 10 viruses) to calibrate your detection algorithms.</li>
+          <li>Initialize probes in corners — they often trigger a cascade, exposing safe zones quickly.</li>
         </ul>
 
-        <h3 className="help-modal__section">Common Mistakes</h3>
+        <h3 className="help-modal__section">Critical Error Prevention</h3>
         <ul className="help-modal__list">
-          <li>The mine counter can go negative if you over-flag — don't rely on it blindly.</li>
-          <li>Don't try to flag every bomb before revealing safe cells — it slows you down.</li>
-          <li>Slow down near numbers — left-clicking too fast can trigger a bomb you spotted a moment too late.</li>
+          <li>The threat counter may fluctuate if you over-deploy shields — cross-reference with logic.</li>
+          <li>Do not attempt to shield every virus before probing safe sectors — efficiency is key.</li>
+          <li>Exercise caution near detected threats — rapid probes can lead to accidental detonation.</li>
         </ul>
       </div>
     </div>
