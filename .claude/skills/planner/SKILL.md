@@ -24,6 +24,7 @@ All file paths are derived from the game name:
 
 - Plan file: `artifacts/<game-name>/PLAN.md`
 - Review file: `artifacts/<game-name>/PLAN-REVIEW.md`
+- Overview file: `artifacts/<game-name>/OVERVIEW.md`
 
 ---
 
@@ -38,7 +39,13 @@ Check if `artifacts/<game-name>/PLAN-REVIEW.md` exists:
 
 ## Step 2 — Fill out the plan
 
-Read `artifacts/<game-name>/PLAN.md`.
+Read these files before writing anything:
+- `artifacts/<game-name>/PLAN.md` — the template to fill out
+- `artifacts/<game-name>/OVERVIEW.md` — decisions already made by the user
+
+Respect everything in OVERVIEW.md. Do not override mode choices, rules
+variants, or anything else the user specified. These are not suggestions —
+they are decisions.
 
 The template is a starting point, not a ceiling. Use it as the minimum
 structure, but add sections, fields, or checklist items whenever the game
@@ -48,8 +55,8 @@ warrants it. For example: a game with complex scoring might need a
 doesn't fit neatly into the template, add a section for it. The goal is a
 plan that fully captures this game — not one that merely fills in the blanks.
 
-Before writing anything, mentally enumerate the non-obvious rules and mechanics
-of this specific game. Ask yourself:
+Before writing anything, mentally enumerate the non-obvious rules and
+mechanics of this specific game. Ask yourself:
 
 - What behaviors surprise first-time implementers of this game?
 - What state changes are easy to forget or get wrong?
@@ -59,20 +66,17 @@ of this specific game. Ask yourself:
 - Are there cascading effects when something changes?
 - What interactions feel simple but have hidden complexity?
 
-Write these down mentally, then make sure every one of them appears somewhere
-in the plan — either in Special Rules, Edge Cases, Data Model state flags,
-or Game Logic functions. If a non-obvious mechanic has no corresponding test
-case, add one.
+Make sure every non-obvious mechanic you identify appears somewhere in the
+plan — in Special Rules, Edge Cases, Data Model state flags, or Game Logic
+functions. If a non-obvious mechanic has no corresponding test case, add one.
 
 Fill out every section completely using your own knowledge of the game:
+
 - Write a concrete **What we're building** description
 - Fill in real rules, players, modes, win/draw conditions:
-  - Determine appropriate player modes based on the nature of the game:
-    - Turn-based competitive games (checkers, chess, connect 4) → local multiplayer + vs computer
-    - Score/roll-based games (yahtzee, etc.) → single player + local multiplayer + vs computer
-    - Puzzle games → single player only
-    - Always include a mode select screen if more than one mode is supported
-    - Use your judgment — pick what makes sense for this specific game. Lean towards more modes if you're unsure.
+  - Follow the mode guidelines in `STANDARDS.md` for default mode selection
+  - If OVERVIEW.md specifies mode overrides, use those instead
+  - Always include a mode select screen if more than one mode is supported
 - List actual edge cases for this specific game
 - Fill in real **Game Logic** checklist items with specific function names
 - Fill in real **Components** checklist items with specific names and responsibilities
@@ -85,8 +89,8 @@ Fill out every section completely using your own knowledge of the game:
   real strategies, actual common mistakes, and beginner tips that reflect how
   this game is actually played. No generic filler.
 
-Do not leave any section as `...` or blank. If you are uncertain about
-something, make your best attempt — the plan-checker will catch gaps.
+Do not leave any section as `...` or blank. If uncertain about something,
+make your best attempt — the plan-reviewer will catch gaps.
 
 Write the completed plan back to `artifacts/<game-name>/PLAN.md`.
 
@@ -94,9 +98,19 @@ Write the completed plan back to `artifacts/<game-name>/PLAN.md`.
 
 ## Step 3 — Revise the plan
 
-Read both files:
+Read all three files:
 - Current plan: `artifacts/<game-name>/PLAN.md`
 - Review notes: `artifacts/<game-name>/PLAN-REVIEW.md`
+- Overview: `artifacts/<game-name>/OVERVIEW.md`
 
-Address every item flagged in the review. Apply the same quality standard as Step 2 — specific, no placeholders,
-no generic content. Do not change sections that were not flagged. Write the revised plan back to `artifacts/<game-name>/PLAN.md`.
+Address every item flagged in the review. Apply the same quality standard
+as Step 2 — specific, no placeholders, no generic content. Do not change
+sections that were not flagged.
+
+If the Help & Strategy Guide was flagged as generic, rewrite it from
+scratch with game-specific content — do not patch generic text.
+
+If any flagged item conflicts with a decision in OVERVIEW.md, the OVERVIEW.md
+decision wins. Note the conflict in the plan as a comment if helpful.
+
+Write the revised plan back to `artifacts/<game-name>/PLAN.md`.

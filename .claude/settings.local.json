@@ -16,7 +16,8 @@
       "Bash(npm test:*)",
       "Bash(cp:*)",
       "Bash(npx tsc:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npx vite:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
