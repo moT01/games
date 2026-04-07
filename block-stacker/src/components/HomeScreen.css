@@ -1,0 +1,111 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 420px;
+}
+
+.home__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.home__best {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.home__best span {
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-mono);
+}
+
+.home__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.home__option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.home__option label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.home__select {
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--text-md);
+  padding: var(--space-2) var(--space-3);
+  width: 100%;
+  cursor: pointer;
+}
+
+.home__select:focus {
+  outline: var(--border-focus);
+}
+
+.home__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.btn--primary {
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  border: 2px solid var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  width: 100%;
+  transition: background-color var(--transition-fast);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  outline: none;
+}
+
+.btn--donate {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  border: var(--border-default);
+  background: none;
+  color: var(--color-text-muted);
+  width: 100%;
+  transition: color var(--transition-fast);
+  text-decoration: none;
+  text-align: center;
+  display: block;
+}
+
+.btn--donate:hover,
+.btn--donate:focus-visible {
+  color: var(--color-text-primary);
+  outline: none;
+}

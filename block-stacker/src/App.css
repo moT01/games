@@ -1,0 +1,44 @@
+.play-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.board-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 110px;
+}
+
+@media (max-width: 600px) {
+  .board-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .side-panel {
+    flex-direction: row;
+    justify-content: center;
+    min-width: unset;
+  }
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --color-bg: var(--gray-00);
+  --color-surface: var(--gray-05);
+  --color-surface-raised: var(--gray-10);
+  --color-border: var(--gray-15);
+  --color-text-primary: var(--gray-90);
+  --color-text-secondary: var(--gray-75);
+  --color-text-muted: var(--gray-45);
+}

@@ -1,0 +1,30 @@
+.cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: var(--cell-bg, var(--color-bg));
+  transition: background-color 60ms ease;
+}
+
+.cell.flash {
+  animation: cell-flash 200ms ease forwards;
+}
+
+@keyframes cell-flash {
+  0%   { background-color: var(--cell-bg); filter: brightness(1); }
+  50%  { filter: brightness(2.5); }
+  100% { filter: brightness(1); }
+}
+
+/* Piece color palette — 1=I, 2=O, 3=T, 4=S, 5=Z, 6=J, 7=L */
+.cell[data-color="1"] { --cell-bg: #4a9bb0; } /* I — muted cyan    */
+.cell[data-color="2"] { --cell-bg: #b8a832; } /* O — muted gold    */
+.cell[data-color="3"] { --cell-bg: #7e52b0; } /* T — muted purple  */
+.cell[data-color="4"] { --cell-bg: #4a9858; } /* S — muted green   */
+.cell[data-color="5"] { --cell-bg: #b04a4a; } /* Z — muted red     */
+.cell[data-color="6"] { --cell-bg: #4a64b0; } /* J — muted blue    */
+.cell[data-color="7"] { --cell-bg: #b07832; } /* L — muted orange  */
+
+.cell[data-active="true"] {
+  filter: brightness(1.15);
+}

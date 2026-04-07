@@ -1,0 +1,54 @@
+.gameover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+}
+
+.gameover__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-danger);
+}
+
+.gameover__scores {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.gameover__score-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.gameover__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gameover__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}
+
+.gameover__best {
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+}
+
+.gameover__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}

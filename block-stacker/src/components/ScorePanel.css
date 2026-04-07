@@ -1,0 +1,36 @@
+.score-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 100px;
+}
+
+.score-panel__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.score-panel__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.score-panel__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}
+
+.score-panel__value.level-up {
+  animation: level-pulse 400ms ease;
+}
+
+@keyframes level-pulse {
+  0%   { color: var(--color-text-primary); }
+  50%  { color: var(--color-accent); }
+  100% { color: var(--color-text-primary); }
+}

@@ -1,0 +1,58 @@
+.confirm-modal {
+  text-align: center;
+}
+
+.confirm-modal__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.confirm-modal__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-5);
+}
+
+.confirm-modal__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.btn {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn--secondary {
+  background: none;
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.btn--danger {
+  background-color: transparent;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn--danger:hover,
+.btn--danger:focus-visible {
+  background-color: var(--color-danger);
+  color: var(--color-bg);
+  outline: none;
+}

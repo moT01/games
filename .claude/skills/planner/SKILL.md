@@ -7,11 +7,11 @@ description: Fills out a game plan template based on Claude's knowledge of the g
 
 ## Purpose
 
-Fill out the game plan template for a known game using Claude's own knowledge.
+Fill out and self-review the game plan for a known game in a single pass.
 
 ## Invocation
 
-This skill is called by `create-known-game` — do not invoke directly.
+Called by `create-known-game` — do not invoke directly.
 
 ---
 
@@ -20,97 +20,54 @@ This skill is called by `create-known-game` — do not invoke directly.
 - `<game-name>` — passed in via Task call
 - `<known-game>` — passed in via Task call (may be same as game name)
 
-All file paths are derived from the game name:
 
-- Plan file: `artifacts/<game-name>/PLAN.md`
-- Review file: `artifacts/<game-name>/PLAN-REVIEW.md`
-- Overview file: `artifacts/<game-name>/OVERVIEW.md`
+All file paths are derived from the game name:
+- Overview: `artifacts/<game-name>/OVERVIEW.md`
+- Plan: `artifacts/<game-name>/PLAN.md`
 
 ---
 
-## Step 1 — Determine mode
+## Step 1 — Read
 
-Check if `artifacts/<game-name>/PLAN-REVIEW.md` exists:
-
-**If it does not exist:** this is the first pass. Proceed to Step 2.
-**If it exists:** this is a revision pass. Skip to Step 3.
+Read both files fully before writing anything:
+- `artifacts/<game-name>/OVERVIEW.md` — user decisions and required standards
+- `artifacts/<game-name>/PLAN.md` — template to fill out
 
 ---
 
 ## Step 2 — Fill out the plan
 
-Read these files before writing anything:
-- `artifacts/<game-name>/PLAN.md` — the template to fill out
-- `artifacts/<game-name>/OVERVIEW.md` — decisions already made by the user
+Respect everything in `OVERVIEW.md`. User decisions are not suggestions — do not override them.
 
-Respect everything in OVERVIEW.md. Do not override mode choices, rules
-variants, or anything else the user specified. These are not suggestions —
-they are decisions.
+The template is a minimum structure, not a ceiling. Add sections, fields, or checklist items whenever the game warrants it.
 
-The template is a starting point, not a ceiling. Use it as the minimum
-structure, but add sections, fields, or checklist items whenever the game
-warrants it. For example: a game with complex scoring might need a
-`## Scoring` section; a game with multiple distinct phases might need a
-`## Game Phases` breakdown. If something important about this specific game
-doesn't fit neatly into the template, add a section for it. The goal is a
-plan that fully captures this game — not one that merely fills in the blanks.
-
-Before writing anything, mentally enumerate the non-obvious rules and
-mechanics of this specific game. Ask yourself:
-
-- What behaviors surprise first-time implementers of this game?
+Before writing, think through the non-obvious mechanics of this specific game:
+- What surprises first-time implementers?
 - What state changes are easy to forget or get wrong?
 - What happens at edge transitions — deck exhausted, board full, turn wrap-around?
-- Are there any "resets" or "reshuffles" that don't preserve order?
-- Does any piece, card, or token have dual state (e.g. face-up vs face-down)?
-- Are there cascading effects when something changes?
-- What interactions feel simple but have hidden complexity?
+- Does any piece or card have dual state (e.g. face-up/face-down)?
+- Are there cascading effects or resets that don't preserve order?
 
-Make sure every non-obvious mechanic you identify appears somewhere in the
-plan — in Special Rules, Edge Cases, Data Model state flags, or Game Logic
-functions. If a non-obvious mechanic has no corresponding test case, add one.
+For well-known games, use canonical rules and systems — don't invent your own. Name them explicitly. Include tests that verify correct behavior against known examples.
 
-Fill out every section completely using your own knowledge of the game:
+Every non-obvious mechanic must appear somewhere in the plan — Special Rules, Edge Cases, Data Model, or Game Logic. If a mechanic has no test case, add one.
 
-- Write a concrete **What we're building** description
-- Fill in real rules, players, modes, win/draw conditions:
-  - Follow the mode guidelines in `STANDARDS.md` for default mode selection
-  - If OVERVIEW.md specifies mode overrides, use those instead
-  - Always include a mode select screen if more than one mode is supported
-- List actual edge cases for this specific game
-- Fill in real **Game Logic** checklist items with specific function names
-- Fill in real **Components** checklist items with specific names and responsibilities
-- Fill in real **Styling**, **Polish**, and **Testing** checklist items
-- Work out the full **Data Model** — state shape, piece types, turn structure
-- Fill in **Special rules / one-off mechanics** if any exist
-- Fill in **AI / Computer Player** if a computer opponent is needed
-- Fill in **Interaction Model** with specific input and feedback details
-- Fill in the **Help & Strategy Guide** with content specific to this game —
-  real strategies, actual common mistakes, and beginner tips that reflect how
-  this game is actually played. No generic filler.
+Fill out every section completely — no placeholders, no `...`, no generic content. Only include the AI / Computer Player section if the game has a computer opponent.
 
-Do not leave any section as `...` or blank. If uncertain about something,
-make your best attempt — the plan-reviewer will catch gaps.
+Fill in the Help & Strategy Guide with real strategies, actual common mistakes, and beginner tips specific to this game.
 
-Write the completed plan back to `artifacts/<game-name>/PLAN.md`.
+Write the completed plan to `artifacts/<game-name>/PLAN.md`.
 
 ---
 
-## Step 3 — Revise the plan
+## Step 3 — Self-review
 
-Read all three files:
-- Current plan: `artifacts/<game-name>/PLAN.md`
-- Review notes: `artifacts/<game-name>/PLAN-REVIEW.md`
-- Overview: `artifacts/<game-name>/OVERVIEW.md`
+Read the completed plan and check:
+- Any `...` placeholders remaining?
+- All standards from `OVERVIEW.md` included?
+- All checklist items specific enough to code from — no vague items like `- [ ] handle moves`?
+- Non-obvious mechanics covered with corresponding test cases?
+- Canonical systems named explicitly?
+- User decisions from `OVERVIEW.md` all reflected?
 
-Address every item flagged in the review. Apply the same quality standard
-as Step 2 — specific, no placeholders, no generic content. Do not change
-sections that were not flagged.
-
-If the Help & Strategy Guide was flagged as generic, rewrite it from
-scratch with game-specific content — do not patch generic text.
-
-If any flagged item conflicts with a decision in OVERVIEW.md, the OVERVIEW.md
-decision wins. Note the conflict in the plan as a comment if helpful.
-
-Write the revised plan back to `artifacts/<game-name>/PLAN.md`.
+Fix any gaps, then write the final plan to `artifacts/<game-name>/PLAN.md`.
