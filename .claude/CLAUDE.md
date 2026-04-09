@@ -3,7 +3,7 @@
 ## Rules
 - NEVER read or traverse `node_modules/`, `dist/`, or `.git/`
 - NEVER search in folders not mentioned - we know all the paths, if a path isn't found, ask for its location.
-- Never write to anything in a `.claude` folder
+- NEVER write or change anything in any `.claude` folder or its subfolders
 - All paths are relative to the repo root
 - NEVER run any git commands
 - Prefer the simplest thing that works

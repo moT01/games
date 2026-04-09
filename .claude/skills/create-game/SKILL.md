@@ -162,7 +162,7 @@ Fix any gaps using the rules from step 4, then write the final plan to `artifact
 ## Step 6 - Get user approval
 
 Show the user:
-> "The <game-name> plan is ready for your review."
+> "The <game-name> plan is ready for your review. Respond with 'plan approved' to start coding, or provide feedback for changes."
 
 Wait for explicit approval before proceeding. If the user requests changes, update the plan and ask again.
 

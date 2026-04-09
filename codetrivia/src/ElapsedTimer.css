@@ -1,0 +1,6 @@
+.elapsed-timer {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+}
