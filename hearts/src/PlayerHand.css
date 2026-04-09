@@ -1,0 +1,97 @@
+.player-hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  width: 100%;
+}
+
+.player-hand__pass-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.player-hand__direction {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.player-hand__count {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.player-hand__cards {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: calc(var(--card-h) + 24px); /* extra room for lift */
+  padding-top: 24px;
+}
+
+.player-card {
+  position: relative;
+  cursor: default;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    z-index 0ms;
+  margin-left: -34px;
+}
+
+.player-card:first-child {
+  margin-left: 0;
+}
+
+.player-card.clickable {
+  cursor: pointer;
+}
+
+.player-card.clickable:hover {
+  transform: translateY(-12px);
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+}
+
+.player-card.clickable:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--blue-mid), var(--shadow-sm);
+  transform: translateY(-8px);
+  z-index: 10;
+}
+
+.player-card.clickable:active {
+  transform: translateY(-8px) scale(0.97);
+}
+
+.player-card.selected {
+  transform: translateY(-16px);
+  z-index: 5;
+  box-shadow: var(--shadow-accent), var(--shadow-md);
+  outline: 2px solid var(--color-accent);
+}
+
+.player-card.selected:hover {
+  transform: translateY(-20px);
+}
+
+.player-card.illegal {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.player-hand__pass-btn {
+  padding: var(--space-2) var(--space-6);
+}
+
+.player-hand__waiting {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+}

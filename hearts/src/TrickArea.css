@@ -1,0 +1,44 @@
+.trick-area {
+  display: grid;
+  grid-template-areas:
+    ". north ."
+    "west  .  east"
+    ". south .";
+  grid-template-columns: 80px 80px 80px;
+  grid-template-rows: 105px 20px 105px;
+  justify-items: center;
+  align-items: center;
+}
+
+.trick-area__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.trick-area__slot--north { grid-area: north; align-self: end; }
+.trick-area__slot--west  { grid-area: west;  justify-self: end; }
+.trick-area__slot--east  { grid-area: east;  justify-self: start; }
+.trick-area__slot--south { grid-area: south; align-self: start; }
+
+.trick-area__slot--winner .playing-card {
+  box-shadow: 0 0 0 3px var(--color-accent), var(--shadow-md);
+  transform: scale(1.05);
+}
+
+.trick-card {
+  animation: card-play var(--transition-default);
+}
+
+@keyframes card-play {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.trick-area__empty {
+  width: var(--card-w);
+  height: var(--card-h);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+}

@@ -1,0 +1,94 @@
+.score-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: linear-gradient(160deg, var(--color-surface), var(--color-surface-raised));
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.06);
+  padding: var(--space-3);
+  min-width: 150px;
+}
+
+.score-panel__indicators {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.score-panel__badge {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.score-panel__badge.active {
+  background: rgba(192, 57, 43, 0.15);
+  border-color: var(--suit-red);
+  color: var(--suit-red);
+}
+
+.score-panel__badge.played {
+  background: rgba(255, 191, 0, 0.15);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.score-panel__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.score-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.score-panel__row.leading {
+  background: rgba(255, 191, 0, 0.08);
+  outline: 1px solid rgba(255, 191, 0, 0.2);
+}
+
+.score-panel__row.you {
+  font-weight: var(--weight-bold);
+}
+
+.score-panel__name {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  min-width: 48px;
+}
+
+.score-panel__row.you .score-panel__name {
+  color: var(--color-accent);
+}
+
+.score-panel__numbers {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.score-panel__hand {
+  color: var(--suit-red);
+  font-size: 0.7rem;
+}
+
+.score-panel__total {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-bold);
+  min-width: 28px;
+  text-align: right;
+}

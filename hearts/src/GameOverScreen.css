@@ -1,0 +1,106 @@
+.game-over {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  animation: fade-in var(--transition-default);
+}
+
+.game-over__box {
+  background: linear-gradient(160deg, var(--color-surface), var(--color-surface-raised));
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.08);
+  padding: var(--space-7) var(--space-6);
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.game-over__result {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+.game-over__result.win  { color: var(--color-success); }
+.game-over__result.loss { color: var(--color-danger); }
+.game-over__result.tie  { color: var(--color-accent); }
+
+.game-over__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+.game-over__table th,
+.game-over__table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+.game-over__table th {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.game-over__table tr.you {
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+}
+.game-over__table tr.winner td {
+  font-weight: var(--weight-bold);
+}
+.game-over__score {
+  font-family: var(--font-mono);
+  text-align: right;
+}
+.game-over__crown {
+  color: var(--color-accent);
+  margin-left: var(--space-1);
+}
+
+.game-over__record {
+  width: 100%;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.game-over__record-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.game-over__record-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+.win-count  { color: var(--color-success); }
+.loss-count { color: var(--color-danger); }
+.sep { color: var(--color-text-muted); }
+.best-score {
+  color: var(--color-text-muted);
+  margin-left: var(--space-2);
+}
+
+.game-over__buttons {
+  display: flex;
+  gap: var(--space-3);
+  width: 100%;
+}
+.game-over__buttons .btn {
+  flex: 1;
+  padding: var(--space-3);
+}

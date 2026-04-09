@@ -17,7 +17,9 @@
       "Bash(cp:*)",
       "Bash(npx tsc:*)",
       "Bash(npm run:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(node --input-type=module 2)",
+      "Bash(1:*)"
     ],
     "deny": [
       "Bash(sudo:*)",

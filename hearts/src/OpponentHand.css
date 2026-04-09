@@ -1,0 +1,105 @@
+.opponent-hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  user-select: none;
+}
+
+.opponent-hand__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  order: -1;
+}
+
+.opponent-hand__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.opponent-hand__pts {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--suit-red);
+  font-weight: var(--weight-bold);
+}
+
+.opponent-hand__cards {
+  display: flex;
+  position: relative;
+}
+
+.opponent-hand--north .opponent-hand__cards {
+  flex-direction: row;
+}
+.opponent-hand--north .playing-card--back {
+  width: 44px;
+  height: 62px;
+  border-radius: 4px;
+}
+.opponent-hand--north .playing-card--back:not(:first-child) {
+  margin-left: -28px;
+}
+
+.opponent-hand--west .opponent-hand__cards,
+.opponent-hand--east .opponent-hand__cards {
+  flex-direction: column;
+}
+.opponent-hand--west .playing-card--back,
+.opponent-hand--east .playing-card--back {
+  width: 44px;
+  height: 62px;
+  border-radius: 4px;
+}
+.opponent-hand--west .playing-card--back:not(:first-child),
+.opponent-hand--east .playing-card--back:not(:first-child) {
+  margin-top: -42px;
+}
+
+.opponent-hand__count {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+.opponent-hand__empty {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+}
+
+/* West: label on right, cards on left */
+.opponent-hand--west {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+.opponent-hand--west .opponent-hand__label {
+  flex-direction: column;
+  align-items: flex-start;
+  order: 1;
+}
+.opponent-hand--west .opponent-hand__count {
+  order: 2;
+}
+
+/* East: label on left, cards on right */
+.opponent-hand--east {
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: var(--space-3);
+}
+.opponent-hand--east .opponent-hand__label {
+  flex-direction: column;
+  align-items: flex-end;
+  order: 1;
+}
+.opponent-hand--east .opponent-hand__count {
+  order: 2;
+}
