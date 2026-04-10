@@ -46,6 +46,11 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'JSON.stringify(1)', type: 'string', difficulty: 'hard' },
   { declaration: '[1].join()', type: 'string', difficulty: 'hard' },
   { declaration: 'String(true)', type: 'string', difficulty: 'hard' },
+  { declaration: '1 && "hello"', type: 'string', difficulty: 'hard' },
+  { declaration: 'null || "default"', type: 'string', difficulty: 'hard' },
+  { declaration: '"" ?? "backup"', type: 'string', difficulty: 'hard' },
+  { declaration: 'false ? 1 : "no"', type: 'string', difficulty: 'hard' },
+  { declaration: '[] ? "yes" : 0', type: 'string', difficulty: 'hard' },
   // number
   { declaration: '42', type: 'number', difficulty: 'easy' },
   { declaration: '3.14', type: 'number', difficulty: 'easy' },
@@ -78,6 +83,11 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'Number(false)', type: 'number', difficulty: 'hard' },
   { declaration: '~~3.9', type: 'number', difficulty: 'hard' },
   { declaration: '1 / 0', type: 'number', difficulty: 'hard' },
+  { declaration: 'true && 42', type: 'number', difficulty: 'hard' },
+  { declaration: '"" || 0', type: 'number', difficulty: 'hard' },
+  { declaration: '0 ?? 99', type: 'number', difficulty: 'hard' },
+  { declaration: 'true ? 10 : "no"', type: 'number', difficulty: 'hard' },
+  { declaration: '1 || "hello"', type: 'number', difficulty: 'hard' },
   // boolean
   { declaration: 'true', type: 'boolean', difficulty: 'easy' },
   { declaration: 'false', type: 'boolean', difficulty: 'easy' },
@@ -105,6 +115,11 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'typeof null === "object"', type: 'boolean', difficulty: 'hard' },
   { declaration: 'NaN === NaN', type: 'boolean', difficulty: 'hard' },
   { declaration: '!!"false"', type: 'boolean', difficulty: 'hard' },
+  { declaration: 'false && null', type: 'boolean', difficulty: 'hard' },
+  { declaration: 'false || false', type: 'boolean', difficulty: 'hard' },
+  { declaration: 'false ?? true', type: 'boolean', difficulty: 'hard' },
+  { declaration: '0 ? "yes" : true', type: 'boolean', difficulty: 'hard' },
+  { declaration: '"" ? 1 : false', type: 'boolean', difficulty: 'hard' },
   // null
   { declaration: 'null', type: 'null', difficulty: 'easy' },
   { declaration: 'null', type: 'null', difficulty: 'easy' },
@@ -116,6 +131,10 @@ export const JS_POOL: VarEntry[] = [
   { declaration: '"abc".match(/\\d/)', type: 'null', difficulty: 'hard' },
   { declaration: 'null ?? null', type: 'null', difficulty: 'hard' },
   { declaration: '/\\d+/.exec("abc")', type: 'null', difficulty: 'hard' },
+  { declaration: 'null && "hello"', type: 'null', difficulty: 'hard' },
+  { declaration: 'false || null', type: 'null', difficulty: 'hard' },
+  { declaration: '0 || null', type: 'null', difficulty: 'hard' },
+  { declaration: 'undefined || null', type: 'null', difficulty: 'hard' },
   // undefined
   { declaration: 'undefined', type: 'undefined', difficulty: 'easy' },
   { declaration: 'undefined', type: 'undefined', difficulty: 'easy' },
@@ -127,6 +146,9 @@ export const JS_POOL: VarEntry[] = [
   { declaration: '({}).missing', type: 'undefined', difficulty: 'hard' },
   { declaration: '[undefined][0]', type: 'undefined', difficulty: 'hard' },
   { declaration: 'undefined ?? undefined', type: 'undefined', difficulty: 'hard' },
+  { declaration: 'undefined && "hello"', type: 'undefined', difficulty: 'hard' },
+  { declaration: '0 || undefined', type: 'undefined', difficulty: 'hard' },
+  { declaration: 'null?.foo', type: 'undefined', difficulty: 'hard' },
   // object
   { declaration: '{ id: 1 }', type: 'object', difficulty: 'easy' },
   { declaration: '{ name: "Alice" }', type: 'object', difficulty: 'easy' },
@@ -149,6 +171,7 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'new WeakMap()', type: 'object', difficulty: 'hard' },
   { declaration: 'Object.fromEntries([["a", 1]])', type: 'object', difficulty: 'hard' },
   { declaration: 'new Set([1, 2])', type: 'object', difficulty: 'hard' },
+  { declaration: 'null || {}', type: 'object', difficulty: 'hard' },
   // array
   { declaration: '[1, 2, 3]', type: 'array', difficulty: 'easy' },
   { declaration: '["a", "b"]', type: 'array', difficulty: 'easy' },
@@ -172,6 +195,7 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'Array.from({ length: 3 })', type: 'array', difficulty: 'hard' },
   { declaration: 'Object.entries({ a: 1 })', type: 'array', difficulty: 'hard' },
   { declaration: '"hello".split("")', type: 'array', difficulty: 'hard' },
+  { declaration: 'null || []', type: 'array', difficulty: 'hard' },
   // function
   { declaration: '() => "hi"', type: 'function', difficulty: 'easy' },
   { declaration: '(x) => x * 2', type: 'function', difficulty: 'easy' },
@@ -191,6 +215,7 @@ export const JS_POOL: VarEntry[] = [
   { declaration: '(function() {})', type: 'function', difficulty: 'hard' },
   { declaration: 'function* gen() {}', type: 'function', difficulty: 'hard' },
   { declaration: 'new Function("return 1")', type: 'function', difficulty: 'hard' },
+  { declaration: 'true && Math.random', type: 'function', difficulty: 'hard' },
   // extra tricky
   { declaration: 'typeof NaN', type: 'string', difficulty: 'hard' },
   { declaration: 'typeof typeof 42', type: 'string', difficulty: 'hard' },
@@ -249,6 +274,11 @@ export const PY_POOL: VarEntry[] = [
   { declaration: 'str(None)', type: 'str', difficulty: 'hard' },
   { declaration: 'repr(42)', type: 'str', difficulty: 'hard' },
   { declaration: 'chr(65)', type: 'str', difficulty: 'hard' },
+  { declaration: '1 and "hello"', type: 'str', difficulty: 'hard' },
+  { declaration: 'None or "default"', type: 'str', difficulty: 'hard' },
+  { declaration: 'False or ""', type: 'str', difficulty: 'hard' },
+  { declaration: '"yes" if False else "no"', type: 'str', difficulty: 'hard' },
+  { declaration: '[] or "fallback"', type: 'str', difficulty: 'hard' },
   // int
   { declaration: '42', type: 'int', difficulty: 'easy' },
   { declaration: '0', type: 'int', difficulty: 'easy' },
@@ -273,6 +303,11 @@ export const PY_POOL: VarEntry[] = [
   { declaration: 'True + True', type: 'int', difficulty: 'hard' },
   { declaration: 'False + 1', type: 'int', difficulty: 'hard' },
   { declaration: 'int(False)', type: 'int', difficulty: 'hard' },
+  { declaration: 'True and 42', type: 'int', difficulty: 'hard' },
+  { declaration: '"" or 0', type: 'int', difficulty: 'hard' },
+  { declaration: '1 or "hello"', type: 'int', difficulty: 'hard' },
+  { declaration: '10 if True else "no"', type: 'int', difficulty: 'hard' },
+  { declaration: 'None or 0', type: 'int', difficulty: 'hard' },
   // float
   { declaration: '3.14', type: 'float', difficulty: 'easy' },
   { declaration: '0.5', type: 'float', difficulty: 'easy' },
@@ -294,6 +329,7 @@ export const PY_POOL: VarEntry[] = [
   { declaration: '2.0 ** 0.5', type: 'float', difficulty: 'hard' },
   { declaration: 'float(True)', type: 'float', difficulty: 'hard' },
   { declaration: 'float("3.14")', type: 'float', difficulty: 'hard' },
+  { declaration: 'True and 3.14', type: 'float', difficulty: 'hard' },
   // bool
   { declaration: 'True', type: 'bool', difficulty: 'easy' },
   { declaration: 'False', type: 'bool', difficulty: 'easy' },
@@ -317,6 +353,11 @@ export const PY_POOL: VarEntry[] = [
   { declaration: 'isinstance(1, int)', type: 'bool', difficulty: 'hard' },
   { declaration: '1 == True', type: 'bool', difficulty: 'hard' },
   { declaration: '0 == False', type: 'bool', difficulty: 'hard' },
+  { declaration: 'False and None', type: 'bool', difficulty: 'hard' },
+  { declaration: 'False or False', type: 'bool', difficulty: 'hard' },
+  { declaration: 'True and False', type: 'bool', difficulty: 'hard' },
+  { declaration: '0 or False', type: 'bool', difficulty: 'hard' },
+  { declaration: 'True if 0 else False', type: 'bool', difficulty: 'hard' },
   // None
   { declaration: 'None', type: 'None', difficulty: 'easy' },
   { declaration: 'None', type: 'None', difficulty: 'easy' },
@@ -328,6 +369,10 @@ export const PY_POOL: VarEntry[] = [
   { declaration: '{}.clear()', type: 'None', difficulty: 'hard' },
   { declaration: '[1, 2, 3].clear()', type: 'None', difficulty: 'hard' },
   { declaration: '(lambda: None)()', type: 'None', difficulty: 'hard' },
+  { declaration: 'None and "hello"', type: 'None', difficulty: 'hard' },
+  { declaration: 'False or None', type: 'None', difficulty: 'hard' },
+  { declaration: '0 or None', type: 'None', difficulty: 'hard' },
+  { declaration: 'None if True else "yes"', type: 'None', difficulty: 'hard' },
   // list
   { declaration: '[1, 2, 3]', type: 'list', difficulty: 'easy' },
   { declaration: '["a", "b"]', type: 'list', difficulty: 'easy' },
@@ -349,6 +394,8 @@ export const PY_POOL: VarEntry[] = [
   { declaration: 'list(map(str, [1, 2]))', type: 'list', difficulty: 'hard' },
   { declaration: '[*range(3)]', type: 'list', difficulty: 'hard' },
   { declaration: 'list(filter(None, [0, 1, 2]))', type: 'list', difficulty: 'hard' },
+  { declaration: 'None or []', type: 'list', difficulty: 'hard' },
+  { declaration: '[] if True else {}', type: 'list', difficulty: 'hard' },
   // dict
   { declaration: '{"id": 1}', type: 'dict', difficulty: 'easy' },
   { declaration: '{"name": "Alice"}', type: 'dict', difficulty: 'easy' },
@@ -368,6 +415,8 @@ export const PY_POOL: VarEntry[] = [
   { declaration: 'dict.fromkeys("abc")', type: 'dict', difficulty: 'hard' },
   { declaration: '{**{"a": 1}, "b": 2}', type: 'dict', difficulty: 'hard' },
   { declaration: 'dict(enumerate("ab"))', type: 'dict', difficulty: 'hard' },
+  { declaration: 'None or {}', type: 'dict', difficulty: 'hard' },
+  { declaration: '{} if True else []', type: 'dict', difficulty: 'hard' },
   // tuple
   { declaration: '(1, 2)', type: 'tuple', difficulty: 'easy' },
   { declaration: '(0, 0)', type: 'tuple', difficulty: 'easy' },
@@ -387,6 +436,7 @@ export const PY_POOL: VarEntry[] = [
   { declaration: 'tuple(range(3))', type: 'tuple', difficulty: 'hard' },
   { declaration: '(1, 2)[::-1]', type: 'tuple', difficulty: 'hard' },
   { declaration: 'tuple(zip([1, 2], [3, 4]))', type: 'tuple', difficulty: 'hard' },
+  { declaration: 'None or (1, 2)', type: 'tuple', difficulty: 'hard' },
   // set
   { declaration: '{1, 2, 3}', type: 'set', difficulty: 'easy' },
   { declaration: '{"a", "b", "c"}', type: 'set', difficulty: 'easy' },
