@@ -1,0 +1,60 @@
+.variable-card {
+  background: linear-gradient(160deg, var(--color-surface-raised), var(--color-surface));
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 260px;
+  max-width: 360px;
+  transition: box-shadow var(--transition-fast);
+}
+
+.variable-card:hover {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.variable-card.dragging {
+  cursor: grabbing;
+  box-shadow: var(--shadow-lg), 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+.variable-card:focus-visible {
+  outline: none;
+  box-shadow: var(--border-focus) 0 0 0 2px, var(--shadow-md);
+}
+
+.card-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.card-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+}
+
+/* Syntax token colors */
+.token-kw { color: #c792ea; }
+.token-str { color: #f07178; }
+.token-num { color: #f78c6c; }
+.token-lit { color: #89ddff; }
+.token-punct { color: var(--color-text-secondary); }
+
+[data-theme="light"] .token-kw { color: #7c3aed; }
+[data-theme="light"] .token-str { color: #c2410c; }
+[data-theme="light"] .token-num { color: #b45309; }
+[data-theme="light"] .token-lit { color: #0369a1; }

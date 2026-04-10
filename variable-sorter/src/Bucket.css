@@ -1,0 +1,115 @@
+.bucket {
+  flex: 1;
+  min-width: 60px;
+  max-width: 120px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  border: 2px solid var(--bucket-color, var(--color-border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bucket-color, var(--color-border)) 10%, var(--color-surface));
+  position: relative;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.bucket.near {
+  border-color: var(--bucket-color, var(--color-accent));
+  background: color-mix(in srgb, var(--bucket-color, var(--color-border)) 20%, var(--color-surface));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bucket-color, var(--color-accent)) 30%, transparent);
+  transform: translateY(-2px);
+}
+
+.bucket.flash-correct {
+  border-color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 25%, var(--color-surface));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-success) 50%, transparent);
+}
+
+.bucket.flash-wrong {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 25%, var(--color-surface));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-danger) 50%, transparent);
+}
+
+.bucket-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--bucket-color, var(--color-text-secondary));
+  letter-spacing: -0.01em;
+}
+
+.bucket-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 1px 4px;
+  line-height: 1.4;
+  opacity: 1;
+  transition: opacity 400ms ease;
+}
+
+.bucket-key.key-hidden {
+  opacity: 0;
+}
+
+/* Type colors — consistent semantic mapping across JS and Python */
+/* String types */
+.bucket[data-type="string"],
+.bucket[data-type="str"] { --bucket-color: #f07178; }
+
+/* Integer / number */
+.bucket[data-type="number"],
+.bucket[data-type="int"] { --bucket-color: #82aaff; }
+
+/* Float */
+.bucket[data-type="float"] { --bucket-color: #89ddff; }
+
+/* Boolean */
+.bucket[data-type="boolean"],
+.bucket[data-type="bool"] { --bucket-color: #c3e88d; }
+
+/* Null / None */
+.bucket[data-type="null"],
+.bucket[data-type="None"] { --bucket-color: #858591; }
+
+/* Undefined */
+.bucket[data-type="undefined"] { --bucket-color: #c792ea; }
+
+/* Object / Dict */
+.bucket[data-type="object"],
+.bucket[data-type="dict"] { --bucket-color: #ffcb6b; }
+
+/* Array / List */
+.bucket[data-type="array"],
+.bucket[data-type="list"] { --bucket-color: #acd157; }
+
+/* Function */
+.bucket[data-type="function"] { --bucket-color: #f78c6c; }
+
+/* Tuple */
+.bucket[data-type="tuple"] { --bucket-color: #89ddff; }
+
+/* Set */
+.bucket[data-type="set"] { --bucket-color: #80cbc4; }
+
+@media (max-width: 600px) {
+  .bucket {
+    min-width: 44px;
+    min-height: 56px;
+  }
+
+  .bucket-label {
+    font-size: 11px;
+  }
+}

@@ -5,10 +5,10 @@ These features are required in every game. The planner must include all of them 
 ## UI & Layout
 
 - Light/dark theme toggle — persisted to local storage
-- Donate button — visible on home screen
+- Donate button — visible on every screen
 - Home screen and play screen (no routing, conditional render)
 - "Are you sure?" confirmation modal for destructive actions (new game, quit)
-- Help modal — "?" button accessible from play screen, content specific to the game
+- Help/Rules/Info modal (whichever is appropriate) — Maybe a "?" button accessible from all screens, content specific to the game
 
 ## Local Storage
 
@@ -27,7 +27,3 @@ These features are required in every game. The planner must include all of them 
 
 - Keyboard navigation
 - ARIA labels on interactive elements
-
----
-
-## Game Decisions

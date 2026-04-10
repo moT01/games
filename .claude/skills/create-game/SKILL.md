@@ -94,6 +94,7 @@ For simple games (HTML/CSS/JS), go to step 3a, for complex games (React/Vite), g
 
 ## Step 4a — Create the plan file
 
+1. Create a <game-name> directory in `artifacts/` - so you have `artifacts/<game-name>/`.
 1. If using the simple boilerplate, copy `.claude/templates/PLAN_TEMPLATE_SIMPLE.md` to `artifacts/<game-name>/PLAN.md`. If using the react boilerplate, copy `.claude/templates/PLAN_TEMPLATE_REACT.md` to `artifacts/<game-name>/PLAN.md`.
 2. Replace all `<game-name>` placeholders with the actual game name
 3. Replace all `<known-game>` placeholders with the known game name
