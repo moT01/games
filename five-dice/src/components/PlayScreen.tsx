@@ -6,6 +6,7 @@ import RollButton from './RollButton'
 import ScoreCard from './ScoreCard'
 import HelpModal from './HelpModal'
 import ConfirmModal from './ConfirmModal'
+import BackgroundDice from './BackgroundDice'
 
 interface Props {
   state: GameState
@@ -38,8 +39,19 @@ export default function PlayScreen({
     setTimeout(() => setRolling(false), 400)
   }
 
+  const getHint = () => {
+    if (state.rollCount > 0 && state.rollCount < 3) {
+      return 'Click dice to hold, then roll again or pick a category'
+    }
+    if (state.rollCount === 3) {
+      return 'Pick a category to score'
+    }
+    return ''
+  }
+
   return (
     <div className="play-screen">
+      <BackgroundDice />
       <div className="play-header">
         <button className="btn-icon" onClick={onQuit} aria-label="Quit game">✕</button>
         <div className="play-header-actions">
@@ -67,12 +79,7 @@ export default function PlayScreen({
           onToggleHold={onToggleHold}
         />
         <RollButton rollCount={state.rollCount} onRoll={handleRoll} />
-        {state.rollCount > 0 && state.rollCount < 3 && (
-          <p className="play-hint">Click dice to hold, then roll again or pick a category</p>
-        )}
-        {state.rollCount === 3 && (
-          <p className="play-hint">Pick a category to score</p>
-        )}
+        <p className="play-hint">{getHint()}</p>
       </div>
 
       <div className="play-scorecard">
