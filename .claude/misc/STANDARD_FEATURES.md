@@ -21,6 +21,7 @@ These features are required in every game. The planner must include all of them 
 - It should be responsive
 
 ## Local Storage
+
 - Theme preference
 - Best score / best time (where applicable)
 - Last selected mode
