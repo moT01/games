@@ -36,7 +36,7 @@ export default function Die({ index, value, held, rollCount, rolling, onToggleHo
 
   return (
     <div
-      className={`die ${held ? 'die--held' : ''} ${rolling ? 'die--rolling' : ''} ${canHold ? 'die--holdable' : ''}`}
+      className={`die ${held ? 'die--held' : ''} ${rolling ? 'die--rolling' : ''} ${canHold ? 'die--holdable' : ''} ${rollCount === 0 ? 'die--unrolled' : ''}`}
       onClick={handleClick}
       onKeyDown={handleKey}
       role="button"

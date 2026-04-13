@@ -40,6 +40,10 @@
   animation: shake 0.35s ease;
 }
 
+.die--unrolled {
+  opacity: 0.3;
+}
+
 .die-face {
   width: 100%;
   height: 100%;
