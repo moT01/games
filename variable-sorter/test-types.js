@@ -1,16 +1,5 @@
-// ---- Variable pools ----
-
-import type { VarType } from "./gameLogic"
-
-export type Difficulty = 'easy' | 'medium' | 'hard'
-
-interface VarEntry {
-  declaration: string
-  type: VarType
-  difficulty: Difficulty
-}
-
-export const JS_POOL: VarEntry[] = [
+// Test script to verify JS_POOL entries
+const entries = [
   // string
   { declaration: '"Alice"', type: 'string', difficulty: 'easy' },
   { declaration: '"hello"', type: 'string', difficulty: 'easy' },
@@ -122,7 +111,6 @@ export const JS_POOL: VarEntry[] = [
   { declaration: '"" ? 1 : false', type: 'boolean', difficulty: 'hard' },
   // null
   { declaration: 'null', type: 'null', difficulty: 'easy' },
-  { declaration: 'null', type: 'null', difficulty: 'medium' },
   { declaration: 'null || null', type: 'null', difficulty: 'medium' },
   { declaration: 'JSON.parse("null")', type: 'null', difficulty: 'hard' },
   { declaration: '[1, 2].find(x => x > 9)', type: 'null', difficulty: 'hard' },
@@ -241,238 +229,50 @@ export const JS_POOL: VarEntry[] = [
   { declaration: '"hello".match(/l/g)', type: 'array', difficulty: 'hard' },
   { declaration: 'Boolean', type: 'function', difficulty: 'hard' },
   { declaration: 'Number', type: 'function', difficulty: 'hard' },
-]
+];
 
-export const PY_POOL: VarEntry[] = [
-  // str
-  { declaration: '"Alice"', type: 'str', difficulty: 'easy' },
-  { declaration: '"hello"', type: 'str', difficulty: 'easy' },
-  { declaration: '"user@example.com"', type: 'str', difficulty: 'easy' },
-  { declaration: '"Berlin"', type: 'str', difficulty: 'easy' },
-  { declaration: '"Loading..."', type: 'str', difficulty: 'easy' },
-  { declaration: '"Tokyo"', type: 'str', difficulty: 'easy' },
-  { declaration: '"password"', type: 'str', difficulty: 'easy' },
-  { declaration: '"#FF0000"', type: 'str', difficulty: 'easy' },
-  { declaration: 'f"hello"', type: 'str', difficulty: 'easy' },
-  { declaration: '"42"', type: 'str', difficulty: 'medium' },
-  { declaration: '""', type: 'str', difficulty: 'medium' },
-  { declaration: '"0"', type: 'str', difficulty: 'medium' },
-  { declaration: '"3.14"', type: 'str', difficulty: 'medium' },
-  { declaration: '" "', type: 'str', difficulty: 'medium' },
-  { declaration: '"1"', type: 'str', difficulty: 'medium' },
-  { declaration: '"hello"[0]', type: 'str', difficulty: 'medium' },
-  { declaration: '"abc".upper()', type: 'str', difficulty: 'medium' },
-  { declaration: '"True"', type: 'str', difficulty: 'hard' },
-  { declaration: '"None"', type: 'str', difficulty: 'hard' },
-  { declaration: '"false"', type: 'str', difficulty: 'hard' },
-  { declaration: 'str(42)', type: 'str', difficulty: 'hard' },
-  { declaration: '"NaN"', type: 'str', difficulty: 'hard' },
-  { declaration: 'str(True)', type: 'str', difficulty: 'hard' },
-  { declaration: 'str(None)', type: 'str', difficulty: 'hard' },
-  { declaration: 'repr(42)', type: 'str', difficulty: 'hard' },
-  { declaration: 'chr(65)', type: 'str', difficulty: 'hard' },
-  { declaration: '1 and "hello"', type: 'str', difficulty: 'hard' },
-  { declaration: 'None or "default"', type: 'str', difficulty: 'hard' },
-  { declaration: 'False or ""', type: 'str', difficulty: 'hard' },
-  { declaration: '"yes" if False else "no"', type: 'str', difficulty: 'hard' },
-  { declaration: '[] or "fallback"', type: 'str', difficulty: 'hard' },
-  // int
-  { declaration: '42', type: 'int', difficulty: 'easy' },
-  { declaration: '0', type: 'int', difficulty: 'easy' },
-  { declaration: '-1', type: 'int', difficulty: 'easy' },
-  { declaration: '100', type: 'int', difficulty: 'easy' },
-  { declaration: '5000', type: 'int', difficulty: 'easy' },
-  { declaration: '7', type: 'int', difficulty: 'easy' },
-  { declaration: '255', type: 'int', difficulty: 'easy' },
-  { declaration: '-42', type: 'int', difficulty: 'easy' },
-  { declaration: '1000', type: 'int', difficulty: 'easy' },
-  { declaration: 'len("hello")', type: 'int', difficulty: 'medium' },
-  { declaration: 'abs(-5)', type: 'int', difficulty: 'medium' },
-  { declaration: 'int(3.9)', type: 'int', difficulty: 'medium' },
-  { declaration: 'round(3.7)', type: 'int', difficulty: 'medium' },
-  { declaration: 'ord("A")', type: 'int', difficulty: 'medium' },
-  { declaration: 'max(1, 2)', type: 'int', difficulty: 'medium' },
-  { declaration: 'min(3, 4)', type: 'int', difficulty: 'medium' },
-  { declaration: 'sum([1, 2])', type: 'int', difficulty: 'medium' },
-  { declaration: '2 ** 10', type: 'int', difficulty: 'medium' },
-  { declaration: 'int(3.0)', type: 'int', difficulty: 'medium' },
-  { declaration: 'int(True)', type: 'int', difficulty: 'hard' },
-  { declaration: 'True + True', type: 'int', difficulty: 'hard' },
-  { declaration: 'False + 1', type: 'int', difficulty: 'hard' },
-  { declaration: 'int(False)', type: 'int', difficulty: 'hard' },
-  { declaration: 'True and 42', type: 'int', difficulty: 'hard' },
-  { declaration: '"" or 0', type: 'int', difficulty: 'hard' },
-  { declaration: '1 or "hello"', type: 'int', difficulty: 'hard' },
-  { declaration: '10 if True else "no"', type: 'int', difficulty: 'hard' },
-  { declaration: 'None or 0', type: 'int', difficulty: 'hard' },
-  // float
-  { declaration: '3.14', type: 'float', difficulty: 'easy' },
-  { declaration: '0.5', type: 'float', difficulty: 'easy' },
-  { declaration: '-2.5', type: 'float', difficulty: 'easy' },
-  { declaration: '9.99', type: 'float', difficulty: 'easy' },
-  { declaration: '1.5', type: 'float', difficulty: 'easy' },
-  { declaration: '0.1', type: 'float', difficulty: 'easy' },
-  { declaration: '-3.14', type: 'float', difficulty: 'easy' },
-  { declaration: '1.0', type: 'float', difficulty: 'medium' },
-  { declaration: '42.0', type: 'float', difficulty: 'medium' },
-  { declaration: '0.1 + 0.2', type: 'float', difficulty: 'medium' },
-  { declaration: '100.0', type: 'float', difficulty: 'medium' },
-  { declaration: '3.14 * 2', type: 'float', difficulty: 'medium' },
-  { declaration: 'abs(-3.14)', type: 'float', difficulty: 'medium' },
-  { declaration: '1 / 3', type: 'float', difficulty: 'hard' },
-  { declaration: 'float(42)', type: 'float', difficulty: 'hard' },
-  { declaration: 'round(3.14, 1)', type: 'float', difficulty: 'hard' },
-  { declaration: '1 / 2', type: 'float', difficulty: 'hard' },
-  { declaration: '2.0 ** 0.5', type: 'float', difficulty: 'hard' },
-  { declaration: 'float(True)', type: 'float', difficulty: 'hard' },
-  { declaration: 'float("3.14")', type: 'float', difficulty: 'hard' },
-  { declaration: 'True and 3.14', type: 'float', difficulty: 'hard' },
-  // bool
-  { declaration: 'True', type: 'bool', difficulty: 'easy' },
-  { declaration: 'False', type: 'bool', difficulty: 'easy' },
-  { declaration: '1 < 2', type: 'bool', difficulty: 'easy' },
-  { declaration: '10 > 3', type: 'bool', difficulty: 'easy' },
-  { declaration: '0 < 1', type: 'bool', difficulty: 'easy' },
-  { declaration: '"a" == "a"', type: 'bool', difficulty: 'easy' },
-  { declaration: '3 >= 3', type: 'bool', difficulty: 'easy' },
-  { declaration: '5 != 6', type: 'bool', difficulty: 'easy' },
-  { declaration: '1 == 1', type: 'bool', difficulty: 'medium' },
-  { declaration: '"a" != "b"', type: 'bool', difficulty: 'medium' },
-  { declaration: 'not False', type: 'bool', difficulty: 'medium' },
-  { declaration: 'all([1, 2])', type: 'bool', difficulty: 'medium' },
-  { declaration: 'any([0, 1])', type: 'bool', difficulty: 'medium' },
-  { declaration: '"a" in "abc"', type: 'bool', difficulty: 'medium' },
-  { declaration: 'bool(1)', type: 'bool', difficulty: 'hard' },
-  { declaration: 'bool([])', type: 'bool', difficulty: 'hard' },
-  { declaration: '"" == False', type: 'bool', difficulty: 'hard' },
-  { declaration: 'not not 1', type: 'bool', difficulty: 'hard' },
-  { declaration: 'None is None', type: 'bool', difficulty: 'hard' },
-  { declaration: 'isinstance(1, int)', type: 'bool', difficulty: 'hard' },
-  { declaration: '1 == True', type: 'bool', difficulty: 'hard' },
-  { declaration: '0 == False', type: 'bool', difficulty: 'hard' },
-  { declaration: 'False and None', type: 'bool', difficulty: 'hard' },
-  { declaration: 'False or False', type: 'bool', difficulty: 'hard' },
-  { declaration: 'True and False', type: 'bool', difficulty: 'hard' },
-  { declaration: '0 or False', type: 'bool', difficulty: 'hard' },
-  { declaration: 'True if 0 else False', type: 'bool', difficulty: 'hard' },
-  // None
-  { declaration: 'None', type: 'None', difficulty: 'easy' },
-  { declaration: 'print("hi")', type: 'None', difficulty: 'medium' },
-  { declaration: '[1, 2].append(3)', type: 'None', difficulty: 'hard' },
-  { declaration: '[1, 2].sort()', type: 'None', difficulty: 'hard' },
-  { declaration: '[1, 2, 3].reverse()', type: 'None', difficulty: 'hard' },
-  { declaration: '{}.clear()', type: 'None', difficulty: 'hard' },
-  { declaration: '[1, 2, 3].clear()', type: 'None', difficulty: 'hard' },
-  { declaration: '(lambda: None)()', type: 'None', difficulty: 'hard' },
-  { declaration: 'None and "hello"', type: 'None', difficulty: 'hard' },
-  { declaration: 'False or None', type: 'None', difficulty: 'hard' },
-  { declaration: '0 or None', type: 'None', difficulty: 'hard' },
-  { declaration: 'None if True else "yes"', type: 'None', difficulty: 'hard' },
-  // list
-  { declaration: '[1, 2, 3]', type: 'list', difficulty: 'easy' },
-  { declaration: '["a", "b"]', type: 'list', difficulty: 'easy' },
-  { declaration: '[True, False]', type: 'list', difficulty: 'easy' },
-  { declaration: '[1, 2]', type: 'list', difficulty: 'easy' },
-  { declaration: '[0]', type: 'list', difficulty: 'easy' },
-  { declaration: '["hello"]', type: 'list', difficulty: 'easy' },
-  { declaration: '[None, None]', type: 'list', difficulty: 'easy' },
-  { declaration: '[True, False, True]', type: 'list', difficulty: 'easy' },
-  { declaration: '[]', type: 'list', difficulty: 'medium' },
-  { declaration: '[1, [2, 3]]', type: 'list', difficulty: 'medium' },
-  { declaration: 'list("abc")', type: 'list', difficulty: 'medium' },
-  { declaration: 'list()', type: 'list', difficulty: 'medium' },
-  { declaration: 'sorted([3, 1, 2])', type: 'list', difficulty: 'medium' },
-  { declaration: '[1] + [2, 3]', type: 'list', difficulty: 'medium' },
-  { declaration: '"a,b,c".split(",")', type: 'list', difficulty: 'hard' },
-  { declaration: 'list(range(5))', type: 'list', difficulty: 'hard' },
-  { declaration: '[x for x in range(3)]', type: 'list', difficulty: 'hard' },
-  { declaration: 'list(map(str, [1, 2]))', type: 'list', difficulty: 'hard' },
-  { declaration: '[*range(3)]', type: 'list', difficulty: 'hard' },
-  { declaration: 'list(filter(None, [0, 1, 2]))', type: 'list', difficulty: 'hard' },
-  { declaration: 'None or []', type: 'list', difficulty: 'hard' },
-  { declaration: '[] if True else {}', type: 'list', difficulty: 'hard' },
-  // dict
-  { declaration: '{"id": 1}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{"name": "Alice"}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{"x": 0, "y": 0}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{"active": True}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{"a": 1, "b": 2}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{"count": 0}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{"flag": False}', type: 'dict', difficulty: 'easy' },
-  { declaration: '{}', type: 'dict', difficulty: 'medium' },
-  { declaration: 'dict(a=1, b=2)', type: 'dict', difficulty: 'medium' },
-  { declaration: '{"1": "a", "2": "b"}', type: 'dict', difficulty: 'medium' },
-  { declaration: 'dict()', type: 'dict', difficulty: 'medium' },
-  { declaration: '{"a": [1, 2]}', type: 'dict', difficulty: 'medium' },
-  { declaration: '{k: k*2 for k in range(3)}', type: 'dict', difficulty: 'hard' },
-  { declaration: 'dict(zip("ab", [1, 2]))', type: 'dict', difficulty: 'hard' },
-  { declaration: 'dict([("a", 1)])', type: 'dict', difficulty: 'hard' },
-  { declaration: 'dict.fromkeys("abc")', type: 'dict', difficulty: 'hard' },
-  { declaration: '{**{"a": 1}, "b": 2}', type: 'dict', difficulty: 'hard' },
-  { declaration: 'dict(enumerate("ab"))', type: 'dict', difficulty: 'hard' },
-  { declaration: 'None or {}', type: 'dict', difficulty: 'hard' },
-  { declaration: '{} if True else []', type: 'dict', difficulty: 'hard' },
-  // tuple
-  { declaration: '(1, 2)', type: 'tuple', difficulty: 'easy' },
-  { declaration: '(0, 0)', type: 'tuple', difficulty: 'easy' },
-  { declaration: '("a", "b")', type: 'tuple', difficulty: 'easy' },
-  { declaration: '(1, 2, 3)', type: 'tuple', difficulty: 'easy' },
-  { declaration: '(1, 2, 3, 4)', type: 'tuple', difficulty: 'easy' },
-  { declaration: '("a", "b", "c")', type: 'tuple', difficulty: 'easy' },
-  { declaration: '(True, False)', type: 'tuple', difficulty: 'easy' },
-  { declaration: '(0, 0, 0)', type: 'tuple', difficulty: 'easy' },
-  { declaration: '(42,)', type: 'tuple', difficulty: 'medium' },
-  { declaration: '()', type: 'tuple', difficulty: 'medium' },
-  { declaration: 'tuple([1, 2])', type: 'tuple', difficulty: 'medium' },
-  { declaration: 'tuple()', type: 'tuple', difficulty: 'medium' },
-  { declaration: '(None,)', type: 'tuple', difficulty: 'medium' },
-  { declaration: 'divmod(7, 3)', type: 'tuple', difficulty: 'hard' },
-  { declaration: 'tuple("abc")', type: 'tuple', difficulty: 'hard' },
-  { declaration: 'tuple(range(3))', type: 'tuple', difficulty: 'hard' },
-  { declaration: '(1, 2)[::-1]', type: 'tuple', difficulty: 'hard' },
-  { declaration: 'tuple(zip([1, 2], [3, 4]))', type: 'tuple', difficulty: 'hard' },
-  { declaration: 'None or (1, 2)', type: 'tuple', difficulty: 'hard' },
-  // set
-  { declaration: '{1, 2, 3}', type: 'set', difficulty: 'easy' },
-  { declaration: '{"a", "b", "c"}', type: 'set', difficulty: 'easy' },
-  { declaration: '{True, False}', type: 'set', difficulty: 'easy' },
-  { declaration: '{1, 2}', type: 'set', difficulty: 'easy' },
-  { declaration: '{"a", "b"}', type: 'set', difficulty: 'easy' },
-  { declaration: '{0, 1, 2, 3}', type: 'set', difficulty: 'easy' },
-  { declaration: 'set([1, 1, 2])', type: 'set', difficulty: 'medium' },
-  { declaration: 'set("hello")', type: 'set', difficulty: 'medium' },
-  { declaration: 'set([1, 2])', type: 'set', difficulty: 'medium' },
-  { declaration: 'set()', type: 'set', difficulty: 'hard' },
-  { declaration: '{x for x in range(3)}', type: 'set', difficulty: 'hard' },
-  { declaration: '{*[1, 2, 3]}', type: 'set', difficulty: 'hard' },
-  { declaration: '{1} | {2}', type: 'set', difficulty: 'hard' },
-  { declaration: '{1, 2} & {2, 3}', type: 'set', difficulty: 'hard' },
-  // extra tricky
-  { declaration: 'f"{42}"', type: 'str', difficulty: 'hard' },
-  { declaration: '"".join(["a", "b"])', type: 'str', difficulty: 'hard' },
-  { declaration: 'str([1, 2, 3])', type: 'str', difficulty: 'hard' },
-  { declaration: 'format(3.14, ".2f")', type: 'str', difficulty: 'hard' },
-  { declaration: '~0', type: 'int', difficulty: 'hard' },
-  { declaration: 'int("ff", 16)', type: 'int', difficulty: 'hard' },
-  { declaration: '(-1) ** 2', type: 'int', difficulty: 'hard' },
-  { declaration: 'bool(True) + 1', type: 'int', difficulty: 'hard' },
-  { declaration: 'float("inf")', type: 'float', difficulty: 'hard' },
-  { declaration: 'float("nan")', type: 'float', difficulty: 'hard' },
-  { declaration: 'sum([0.1, 0.2])', type: 'float', difficulty: 'hard' },
-  { declaration: 'bool([0])', type: 'bool', difficulty: 'hard' },
-  { declaration: 'not []', type: 'bool', difficulty: 'hard' },
-  { declaration: '[] is not None', type: 'bool', difficulty: 'hard' },
-  { declaration: 'len("") == 0', type: 'bool', difficulty: 'hard' },
-  { declaration: '{"a": 1}.get("b")', type: 'None', difficulty: 'hard' },
-  { declaration: 'next(iter([]), None)', type: 'None', difficulty: 'hard' },
-  { declaration: 'max([], default=None)', type: 'None', difficulty: 'hard' },
-  { declaration: '[*"abc"]', type: 'list', difficulty: 'hard' },
-  { declaration: '[1, 2, 3][1:]', type: 'list', difficulty: 'hard' },
-  { declaration: 'list(set([1, 2, 2]))', type: 'list', difficulty: 'hard' },
-  { declaration: '{"a": 1} | {"b": 2}', type: 'dict', difficulty: 'hard' },
-  { declaration: '{i: i**2 for i in range(3)}', type: 'dict', difficulty: 'hard' },
-  { declaration: 'tuple(x for x in [1, 2])', type: 'tuple', difficulty: 'hard' },
-  { declaration: 'min((3, 1), (2, 4))', type: 'tuple', difficulty: 'hard' },
-  { declaration: '{1, 2, 3} - {2}', type: 'set', difficulty: 'hard' },
-  { declaration: '{1} ^ {1, 2}', type: 'set', difficulty: 'hard' },
-]
+function getActualType(value) {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  return typeof value;
+}
+
+const errors = [];
+entries.forEach((entry, index) => {
+  try {
+    const result = eval(entry.declaration);
+    const actualType = getActualType(result);
+    if (actualType !== entry.type) {
+      errors.push({
+        index,
+        declaration: entry.declaration,
+        expectedType: entry.type,
+        actualType,
+        value: result,
+      });
+    }
+  } catch (e) {
+    errors.push({
+      index,
+      declaration: entry.declaration,
+      expectedType: entry.type,
+      error: e.message,
+    });
+  }
+});
+
+if (errors.length === 0) {
+  console.log('All entries are correct!');
+} else {
+  console.log(`Found ${errors.length} errors:\n`);
+  errors.forEach(err => {
+    if (err.error) {
+      console.log(`[${err.index}] ${err.declaration}`);
+      console.log(`  Error: ${err.error}\n`);
+    } else {
+      console.log(`[${err.index}] ${err.declaration}`);
+      console.log(`  Expected: ${err.expectedType}, Got: ${err.actualType}`);
+      console.log(`  Value: ${JSON.stringify(err.value)}\n`);
+    }
+  });
+}

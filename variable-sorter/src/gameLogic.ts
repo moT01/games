@@ -143,7 +143,7 @@ export function getProximityBucket(dropX: number, dropY: number, buckets: Bucket
       closest = bucket
     }
   }
-  if (closest && minDist <= 80) return closest
+  if (closest && minDist <= 100) return closest
   return null
 }
 

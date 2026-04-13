@@ -85,7 +85,7 @@ export default function PlayScreen({ state, onDrop, onQuit, onShowHelp }: Props)
         closest = type
       }
     })
-    return closest && minDist <= 90 ? closest : null
+    return closest && minDist <= 100 ? closest : null
   }
 
   function handleCardDrop(centerX: number, centerY: number): 'correct' | 'wrong' | 'miss' {
@@ -106,13 +106,13 @@ export default function PlayScreen({ state, onDrop, onQuit, onShowHelp }: Props)
         <span className="progress-counter" aria-live="polite">
           {state.sorted} / {state.variableCount}
         </span>
+        <span className="timer" aria-label={`Time: ${formatTime(elapsed)}`}>
+          {formatTime(elapsed)}
+        </span>
         <div className="play-header-actions">
           <button className="play-icon-btn" onClick={onShowHelp} aria-label="Help">?</button>
           <button className="play-icon-btn" onClick={onQuit} aria-label="Quit run">Quit</button>
         </div>
-        <span className="timer" aria-label={`Time: ${formatTime(elapsed)}`}>
-          {formatTime(elapsed)}
-        </span>
       </div>
 
       <div className="play-area">

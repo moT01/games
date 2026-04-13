@@ -1,50 +1,74 @@
 .variable-card {
   background: linear-gradient(160deg, var(--color-surface-raised), var(--color-surface));
   border: var(--border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-4) var(--space-5);
-  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: 
+    var(--shadow-lg), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   cursor: grab;
   user-select: none;
   touch-action: none;
   position: relative;
-  z-index: 1;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  min-width: 260px;
-  max-width: 360px;
-  transition: box-shadow var(--transition-fast);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-width: 320px;
+  max-width: 440px;
+  transition: 
+    box-shadow var(--transition-fast), 
+    transform var(--transition-fast),
+    background var(--transition-fast);
 }
 
 .variable-card:hover {
-  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.5), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: linear-gradient(160deg, var(--color-border), var(--color-surface));
 }
 
 .variable-card.dragging {
   cursor: grabbing;
-  box-shadow: var(--shadow-lg), 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.6), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   z-index: 100;
+  transition: none; /* Instant feedback while dragging */
 }
 
 .variable-card:focus-visible {
   outline: none;
-  box-shadow: var(--border-focus) 0 0 0 2px, var(--shadow-md);
+  box-shadow: var(--border-focus) 0 0 0 3px, var(--shadow-lg);
 }
 
 .card-code {
   font-family: var(--font-mono);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: var(--weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
   white-space: nowrap;
+  background: rgba(0, 0, 0, 0.3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-hint {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   font-family: var(--font-body);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 /* Syntax token colors */

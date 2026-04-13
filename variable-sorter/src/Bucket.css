@@ -1,62 +1,81 @@
 .bucket {
   flex: 1;
-  min-width: 60px;
-  max-width: 120px;
-  min-height: 70px;
+  min-width: 120px;
+  max-width: 160px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   border: 2px solid var(--bucket-color, var(--color-border));
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--bucket-color, var(--color-border)) 10%, var(--color-surface));
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bucket-color, var(--color-border)) 8%, var(--color-surface));
   position: relative;
-  transition:
-    border-color var(--transition-fast),
-    background var(--transition-fast),
-    box-shadow var(--transition-fast),
-    transform var(--transition-fast);
+  transition: all var(--transition-default);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.bucket:hover {
+  background: color-mix(in srgb, var(--bucket-color, var(--color-border)) 12%, var(--color-surface));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .bucket.near {
   border-color: var(--bucket-color, var(--color-accent));
   background: color-mix(in srgb, var(--bucket-color, var(--color-border)) 20%, var(--color-surface));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bucket-color, var(--color-accent)) 30%, transparent);
-  transform: translateY(-2px);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--bucket-color, var(--color-accent)) 40%, transparent);
+  transform: translateY(-4px) scale(1.05);
+  z-index: 5;
 }
 
 .bucket.flash-correct {
   border-color: var(--color-success);
-  background: color-mix(in srgb, var(--color-success) 25%, var(--color-surface));
-  box-shadow: 0 0 12px color-mix(in srgb, var(--color-success) 50%, transparent);
+  background: color-mix(in srgb, var(--color-success) 30%, var(--color-surface));
+  box-shadow: 0 0 30px color-mix(in srgb, var(--color-success) 60%, transparent);
+  transform: scale(0.95);
 }
 
 .bucket.flash-wrong {
   border-color: var(--color-danger);
-  background: color-mix(in srgb, var(--color-danger) 25%, var(--color-surface));
-  box-shadow: 0 0 12px color-mix(in srgb, var(--color-danger) 50%, transparent);
+  background: color-mix(in srgb, var(--color-danger) 30%, var(--color-surface));
+  box-shadow: 0 0 30px color-mix(in srgb, var(--color-danger) 60%, transparent);
+  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
 .bucket-label {
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
   font-weight: var(--weight-bold);
   color: var(--bucket-color, var(--color-text-secondary));
-  letter-spacing: -0.01em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .bucket-key {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
+  font-weight: var(--weight-bold);
   color: var(--color-text-muted);
-  background: var(--color-surface-raised);
+  background: rgba(0, 0, 0, 0.2);
   border: 1px solid var(--color-border);
-  border-radius: 3px;
-  padding: 1px 4px;
-  line-height: 1.4;
+  border-radius: 4px;
+  padding: 2px 8px;
+  line-height: 1;
   opacity: 1;
   transition: opacity 400ms ease;
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
 }
 
 .bucket-key.key-hidden {
@@ -105,8 +124,8 @@
 
 @media (max-width: 600px) {
   .bucket {
-    min-width: 44px;
-    min-height: 56px;
+    min-width: 70px;
+    min-height: 90px;
   }
 
   .bucket-label {
