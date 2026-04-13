@@ -23,10 +23,7 @@ function makeInitialState(): GameState {
 }
 
 export default function App() {
-  const [state, setState] = useState<GameState>(() => {
-    const saved = loadGameState()
-    return saved ?? makeInitialState()
-  })
+  const [state, setState] = useState<GameState>(makeInitialState)
   const [highScore, setHighScore] = useState<number | null>(() => loadHighScore())
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     return (localStorage.getItem('five-dice-theme') as 'light' | 'dark') ?? 'light'
@@ -97,7 +94,7 @@ export default function App() {
     })
   }, [])
 
-  const hasSavedGame = loadGameState() !== null && state.gamePhase === 'home'
+  const hasSavedGame = loadGameState() !== null
 
   return (
     <div className="app">

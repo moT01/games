@@ -35,7 +35,7 @@ export default function HomeScreen({
         <div className="home-actions">
           {onResume && (
             <button className="btn btn-secondary" onClick={onResume}>
-              Resume
+              Resume Game
             </button>
           )}
           <button className="btn btn-primary" onClick={onStart}>
