@@ -239,11 +239,10 @@ body {
 
 /* Global Background Dice */
 .bg-dice-container {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background-color: var(--color-bg);
   overflow: hidden;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -251,7 +250,7 @@ body {
   position: absolute;
   font-size: clamp(3rem, 15vw, 6rem);
   color: var(--color-text-muted);
-  opacity: 0.15;
+  opacity: 0.25;
   user-select: none;
   pointer-events: none;
 }

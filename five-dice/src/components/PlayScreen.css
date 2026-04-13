@@ -25,7 +25,8 @@
   align-items: center;
   padding: var(--space-3) var(--space-4);
   border-bottom: var(--border-default);
-  background: var(--color-surface);
+  background: color-mix(in srgb, var(--color-surface), transparent 15%);
+  backdrop-filter: blur(4px);
   flex-shrink: 0;
 }
 
@@ -51,7 +52,7 @@
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-5) var(--space-4) var(--space-4);
-  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface), transparent 20%) 0%, color-mix(in srgb, var(--color-bg), transparent 40%) 100%);
   border-bottom: var(--border-default);
   flex-shrink: 0;
 }
@@ -87,6 +88,7 @@
     border-radius: 0 0 var(--radius-md) var(--radius-md);
     margin: 0 var(--space-4) var(--space-4);
     padding: var(--space-5) var(--space-6);
-    background: var(--color-bg);
+    background: color-mix(in srgb, var(--color-bg), transparent 40%);
+    backdrop-filter: blur(4px);
   }
 }

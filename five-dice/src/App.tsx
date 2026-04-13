@@ -9,6 +9,7 @@ import {
 import HomeScreen from './components/HomeScreen'
 import PlayScreen from './components/PlayScreen'
 import GameOverScreen from './components/GameOverScreen'
+import BackgroundDice from './components/BackgroundDice'
 
 const INITIAL_DICE = Array.from({ length: 5 }, () => ({ value: 1, held: false }))
 
@@ -98,6 +99,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <BackgroundDice />
       {state.gamePhase === 'home' && (
         <HomeScreen
           highScore={highScore}

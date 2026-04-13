@@ -6,7 +6,6 @@ import RollButton from './RollButton'
 import ScoreCard from './ScoreCard'
 import HelpModal from './HelpModal'
 import ConfirmModal from './ConfirmModal'
-import BackgroundDice from './BackgroundDice'
 
 interface Props {
   state: GameState
@@ -41,7 +40,6 @@ export default function PlayScreen({
 
   return (
     <div className="play-screen">
-      <BackgroundDice />
       <div className="play-header">
         <button className="btn-icon" onClick={onQuit} aria-label="Quit game">✕</button>
         <div className="play-header-actions">
