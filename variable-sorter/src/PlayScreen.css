@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1600px;
+  max-width: 100%;
   min-height: calc(100vh - var(--space-8));
-  padding: var(--space-6);
+  padding: var(--space-6) 0;
   gap: var(--space-7);
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@
 .bucket-row {
   display: flex;
   gap: var(--space-3);
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: nowrap;
   width: 100%;
 }
