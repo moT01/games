@@ -1,5 +1,6 @@
 import './HomeScreen.css'
 import HelpModal from './HelpModal'
+import BackgroundDice from './BackgroundDice'
 
 interface Props {
   highScore: number | null
@@ -19,7 +20,7 @@ export default function HomeScreen({
 }: Props) {
   return (
     <div className="home-screen">
-      <div className="home-bg" aria-hidden="true" />
+      <BackgroundDice />
 
       <div className="home-menu">
         <h1 className="home-title">Five Dice</h1>

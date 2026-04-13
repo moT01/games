@@ -1,6 +1,7 @@
 import './GameOverScreen.css'
 import type { CategoryKey } from '../gameLogic'
 import { calcGrandTotal } from '../gameLogic'
+import BackgroundDice from './BackgroundDice'
 
 interface Props {
   scores: Partial<Record<CategoryKey, number>>
@@ -21,6 +22,7 @@ export default function GameOverScreen({
 
   return (
     <div className="gameover-screen">
+      <BackgroundDice />
       <div className="gameover-panel">
         <h2 className="gameover-title">Game Over</h2>
 

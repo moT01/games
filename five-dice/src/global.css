@@ -237,6 +237,39 @@ body {
   box-shadow: var(--border-focus), 0 0 0 4px rgba(25, 142, 238, 0.2);
 }
 
+/* Global Background Dice */
+.bg-dice-container {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-bg);
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-die {
+  position: absolute;
+  font-size: clamp(3rem, 15vw, 6rem);
+  color: var(--color-text-muted);
+  opacity: 0.15;
+  user-select: none;
+  pointer-events: none;
+}
+
+.die-1 { top: 10%; left: 10%; transform: rotate(-15deg); }
+.die-2 { top: 20%; right: 15%; transform: rotate(12deg); }
+.die-3 { bottom: 15%; left: 5%; transform: rotate(20deg); }
+.die-4 { bottom: 20%; right: 10%; transform: rotate(-8deg); }
+.die-5 { top: 45%; left: 2%; transform: rotate(5deg); }
+.die-6 { bottom: 5%; right: 25%; transform: rotate(-25deg); }
+
+@media (min-width: 64rem) {
+  .die-1 { top: 15%; left: 20%; }
+  .die-2 { top: 25%; right: 25%; }
+  .die-3 { bottom: 20%; left: 20%; }
+  .die-4 { bottom: 25%; right: 20%; }
+}
+
 /* Modal overlay shared */
 .modal-overlay {
   position: fixed;

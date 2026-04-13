@@ -9,16 +9,6 @@
   overflow: hidden;
 }
 
-/* Dice-dot background pattern */
-.home-bg {
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-bg);
-  background-image: radial-gradient(circle, var(--color-border) 1.5px, transparent 1.5px);
-  background-size: 36px 36px;
-  opacity: 0.5;
-}
-
 .home-menu {
   position: relative;
   z-index: 1;

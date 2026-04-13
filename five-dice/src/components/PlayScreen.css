@@ -1,4 +1,5 @@
 .play-screen {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -6,6 +7,7 @@
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
+  overflow-x: hidden;
 }
 
 @media (min-width: 48rem) {
@@ -16,6 +18,8 @@
 }
 
 .play-header {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,6 +44,8 @@
 }
 
 .play-top {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,6 +73,8 @@
 }
 
 .play-scorecard {
+  position: relative;
+  z-index: 1;
   flex: 1;
   overflow-y: auto;
   padding: var(--space-3) var(--space-4) var(--space-6);
