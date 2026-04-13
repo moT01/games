@@ -125,6 +125,9 @@ export default function PlayScreen({ state, onDrop, onQuit, onShowHelp }: Props)
       </div>
 
       <div className="play-area">
+        <div className="preview-zone">
+          <NextPreview variable={state.next} />
+        </div>
         <div className="card-zone">
           {state.current && (
             <VariableCard
@@ -136,9 +139,6 @@ export default function PlayScreen({ state, onDrop, onQuit, onShowHelp }: Props)
               onDragMove={(x, y) => setDragPos({ x, y })}
             />
           )}
-        </div>
-        <div className="preview-zone">
-          <NextPreview variable={state.next} />
         </div>
       </div>
 
