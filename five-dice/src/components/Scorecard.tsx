@@ -34,56 +34,55 @@ export default function ScoreCard({ scores, dice, rollCount, fiveOfAKindBonus, o
 
   return (
     <div className="scorecard">
-      <div className="scorecard-section">
-        <div className="scorecard-section-header">Upper Section</div>
-        {UPPER_CATEGORIES.map(key => (
-          <ScoreRow
-            key={key}
-            categoryKey={key}
-            score={scores[key]}
-            potentialScore={getPotentialScore(key, dice, scores)}
-            rollCount={rollCount}
-            isBest={bestKey === key}
-            onScore={onScore}
-          />
-        ))}
-        <div className={`scorecard-bonus-row ${bonusReached ? 'scorecard-bonus-row--reached' : ''}`}>
-          <span>Upper Bonus</span>
-          <span className="scorecard-bonus-progress">
-            {bonusReached
-              ? '+35'
-              : `${upperTotal}/63`
-            }
-          </span>
-        </div>
-      </div>
-
-      <div className="scorecard-section">
-        <div className="scorecard-section-header">Lower Section</div>
-        {LOWER_CATEGORIES.map(key => (
-          <ScoreRow
-            key={key}
-            categoryKey={key}
-            score={scores[key]}
-            potentialScore={getPotentialScore(key, dice, scores)}
-            rollCount={rollCount}
-            isBest={bestKey === key}
-            onScore={onScore}
-          />
-        ))}
-      </div>
-
-      {fiveOfAKindBonus > 0 && (
-        <div className="scorecard-section">
-          <div className="scorecard-foakbonus-row">
-            <span>Five of a Kind Bonus</span>
-            <span>+{fiveOfAKindBonus}</span>
+      <div className="scorecard-grid">
+        <div className="scorecard-section scorecard-section--upper">
+          <div className="scorecard-section-header">Upper Section</div>
+          {UPPER_CATEGORIES.map(key => (
+            <ScoreRow
+              key={key}
+              categoryKey={key}
+              score={scores[key]}
+              potentialScore={getPotentialScore(key, dice, scores)}
+              rollCount={rollCount}
+              isBest={bestKey === key}
+              onScore={onScore}
+            />
+          ))}
+          <div className={`scorecard-bonus-row ${bonusReached ? 'scorecard-bonus-row--reached' : ''}`}>
+            <span>Upper Bonus</span>
+            <span className="scorecard-bonus-progress">
+              {bonusReached
+                ? '+35'
+                : `${upperTotal}/63`
+              }
+            </span>
           </div>
         </div>
-      )}
+
+        <div className="scorecard-section scorecard-section--lower">
+          <div className="scorecard-section-header">Lower Section</div>
+          {LOWER_CATEGORIES.map(key => (
+            <ScoreRow
+              key={key}
+              categoryKey={key}
+              score={scores[key]}
+              potentialScore={getPotentialScore(key, dice, scores)}
+              rollCount={rollCount}
+              isBest={bestKey === key}
+              onScore={onScore}
+            />
+          ))}
+          {fiveOfAKindBonus > 0 && (
+            <div className="scorecard-foakbonus-row">
+              <span>Five of a Kind Bonus</span>
+              <span>+{fiveOfAKindBonus}</span>
+            </div>
+          )}
+        </div>
+      </div>
 
       <div className="scorecard-total-row">
-        <span>Total</span>
+        <span>Total Score</span>
         <span>{grandTotal}</span>
       </div>
     </div>

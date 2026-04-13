@@ -1,8 +1,22 @@
 .scorecard {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
   padding-top: var(--space-3);
+}
+
+.scorecard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .scorecard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
 }
 
 .scorecard-section {
@@ -10,8 +24,10 @@
   border: var(--border-default);
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: var(--shadow-sm), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04);
+  height: fit-content;
 }
+
 
 .scorecard-section-header {
   padding: var(--space-2) var(--space-4);
