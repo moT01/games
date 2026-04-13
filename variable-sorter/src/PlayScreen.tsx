@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './PlayScreen.css'
 import type { GameState, VarType, BucketRect } from './gameLogic'
-import { getBuckets, getProximityBucket, formatTime } from './gameLogic'
+import { getBuckets, getProximityBucket, formatTime, DIFFICULTY_COUNT } from './gameLogic'
 import VariableCard from './VariableCard'
 import NextPreview from './NextPreview'
 import BucketRow from './BucketRow'
@@ -104,7 +104,7 @@ export default function PlayScreen({ state, onDrop, onQuit, onShowHelp }: Props)
     <div className="play-screen">
       <div className="play-header">
         <span className="progress-counter" aria-live="polite">
-          {state.sorted} / {state.variableCount}
+          {state.sorted} / {DIFFICULTY_COUNT[state.difficulty]}
         </span>
         <span className="timer" aria-label={`Time: ${formatTime(elapsed)}`}>
           {formatTime(elapsed)}

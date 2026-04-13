@@ -193,26 +193,6 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'Object.entries({ a: 1 })', type: 'array', difficulty: 'hard' },
   { declaration: '"hello".split("")', type: 'array', difficulty: 'hard' },
   { declaration: 'null || []', type: 'array', difficulty: 'hard' },
-  // function
-  { declaration: '() => "hi"', type: 'function', difficulty: 'easy' },
-  { declaration: '(x) => x * 2', type: 'function', difficulty: 'easy' },
-  { declaration: 'function() { return 1 }', type: 'function', difficulty: 'easy' },
-  { declaration: '() => {}', type: 'function', difficulty: 'easy' },
-  { declaration: '(x, y) => x + y', type: 'function', difficulty: 'easy' },
-  { declaration: 'n => n * n', type: 'function', difficulty: 'easy' },
-  { declaration: '() => null', type: 'function', difficulty: 'easy' },
-  { declaration: 'function add(a, b) {}', type: 'function', difficulty: 'easy' },
-  { declaration: 'Math.random', type: 'function', difficulty: 'medium' },
-  { declaration: 'parseInt', type: 'function', difficulty: 'medium' },
-  { declaration: 'Array.isArray', type: 'function', difficulty: 'medium' },
-  { declaration: 'JSON.stringify', type: 'function', difficulty: 'medium' },
-  { declaration: 'async () => {}', type: 'function', difficulty: 'medium' },
-  { declaration: 'Object.keys', type: 'function', difficulty: 'medium' },
-  { declaration: 'class Foo {}', type: 'function', difficulty: 'hard' },
-  { declaration: '(function() {})', type: 'function', difficulty: 'hard' },
-  { declaration: 'function* gen() {}', type: 'function', difficulty: 'hard' },
-  { declaration: 'new Function("return 1")', type: 'function', difficulty: 'hard' },
-  { declaration: 'true && Math.random', type: 'function', difficulty: 'hard' },
   // extra tricky
   { declaration: 'typeof NaN', type: 'string', difficulty: 'hard' },
   { declaration: 'typeof typeof 42', type: 'string', difficulty: 'hard' },
@@ -239,8 +219,6 @@ export const JS_POOL: VarEntry[] = [
   { declaration: 'new Number(42)', type: 'object', difficulty: 'hard' },
   { declaration: '[1, 2, 3].map(x => x * 2)', type: 'array', difficulty: 'hard' },
   { declaration: '"hello".match(/l/g)', type: 'array', difficulty: 'hard' },
-  { declaration: 'Boolean', type: 'function', difficulty: 'hard' },
-  { declaration: 'Number', type: 'function', difficulty: 'hard' },
 ]
 
 export const PY_POOL: VarEntry[] = [

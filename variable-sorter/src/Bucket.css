@@ -113,9 +113,6 @@
 .bucket[data-type="array"],
 .bucket[data-type="list"] { --bucket-color: #acd157; }
 
-/* Function */
-.bucket[data-type="function"] { --bucket-color: #f78c6c; }
-
 /* Tuple */
 .bucket[data-type="tuple"] { --bucket-color: #89ddff; }
 

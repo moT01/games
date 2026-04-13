@@ -14,7 +14,7 @@ function makeState(overrides: Partial<GameState> = {}): GameState {
   return {
     phase: 'playing',
     language: 'javascript',
-    variableCount: 10,
+    difficulty: 'easy',
     queue: [],
     current: null,
     next: null,

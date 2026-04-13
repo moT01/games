@@ -1,6 +1,7 @@
 import { JS_POOL, PY_POOL } from "./variables"
+import type { Difficulty } from "./variables"
 
-export type JSType = 'string' | 'number' | 'boolean' | 'null' | 'undefined' | 'object' | 'array' | 'function'
+export type JSType = 'string' | 'number' | 'boolean' | 'null' | 'undefined' | 'object' | 'array'
 export type PyType = 'str' | 'int' | 'float' | 'bool' | 'None' | 'list' | 'dict' | 'tuple' | 'set'
 export type Language = 'javascript' | 'python'
 export type VarType = JSType | PyType
@@ -20,9 +21,13 @@ export interface Bucket {
 export type GamePhase = 'home' | 'playing' | 'win' | 'fail'
 
 export interface PersonalBests {
-  javascript: { 10: number | null; 20: number | null; 30: number | null }
-  python: { 10: number | null; 20: number | null; 30: number | null }
+  javascript: { easy: number | null; medium: number | null; hard: number | null }
+  python: { easy: number | null; medium: number | null; hard: number | null }
 }
+
+export const DIFFICULTY_COUNT: Record<Difficulty, number> = { easy: 10, medium: 20, hard: 30 }
+
+export type { Difficulty }
 
 export interface FailedDrop {
   variable: Variable
@@ -33,7 +38,7 @@ export interface FailedDrop {
 export interface GameState {
   phase: GamePhase
   language: Language
-  variableCount: 10 | 20 | 30
+  difficulty: Difficulty
   queue: Variable[]
   current: Variable | null
   next: Variable | null
@@ -56,22 +61,41 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
-export function generateQueue(language: Language, count: number): Variable[] {
-  const pool = language === 'javascript' ? JS_POOL : PY_POOL
-  const shuffled = shuffleArray(pool)
-  const result: Variable[] = []
-  let idCounter = 0
+function pickN<T>(arr: T[], n: number): T[] {
+  const shuffled = shuffleArray(arr)
+  const result: T[] = []
+  for (let i = 0; i < n; i++) result.push(shuffled[i % shuffled.length])
+  return result
+}
 
-  for (let i = 0; i < count; i++) {
-    const candidate = shuffled[i % shuffled.length]
+export function generateQueue(language: Language, difficulty: Difficulty): Variable[] {
+  const pool = language === 'javascript' ? JS_POOL : PY_POOL
+  const easy = pool.filter(v => v.difficulty === 'easy')
+  const medium = pool.filter(v => v.difficulty === 'medium')
+  const hard = pool.filter(v => v.difficulty === 'hard')
+
+  let entries: typeof pool
+  if (difficulty === 'easy') {
+    entries = pickN(easy, 10)
+  } else if (difficulty === 'medium') {
+    entries = [...pickN(easy, 5), ...pickN(medium, 15)]
+  } else {
+    entries = [...pickN(medium, 10), ...pickN(hard, 20)]
+  }
+
+  const shuffled = shuffleArray(entries)
+  let idCounter = 0
+  const result: Variable[] = []
+
+  for (let i = 0; i < shuffled.length; i++) {
+    const candidate = shuffled[i]
     const prev = result[result.length - 1]
     if (prev && prev.declaration === candidate.declaration) {
-      // swap with next available entry that differs
       const swapIdx = (i + 1) % shuffled.length
       const swap = shuffled[swapIdx]
-      shuffled[i % shuffled.length] = swap
+      shuffled[i] = swap
       shuffled[swapIdx] = candidate
-      result.push({ id: `v${idCounter++}`, ...shuffled[i % shuffled.length] })
+      result.push({ id: `v${idCounter++}`, ...shuffled[i] })
     } else {
       result.push({ id: `v${idCounter++}`, ...candidate })
     }
@@ -102,9 +126,9 @@ export function recordWin(state: GameState): Partial<GameState> {
   const endTime = Date.now()
   const elapsed = endTime - (state.startTime ?? endTime)
   const bests = structuredClone(state.personalBests)
-  const prev = bests[state.language][state.variableCount]
+  const prev = bests[state.language][state.difficulty]
   if (prev === null || elapsed < prev) {
-    bests[state.language][state.variableCount] = elapsed
+    bests[state.language][state.difficulty] = elapsed
   }
   return {
     phase: 'win',
@@ -158,7 +182,7 @@ export function formatTime(ms: number): string {
 }
 
 export function getJSBuckets(): Bucket[] {
-  const types: JSType[] = ['string', 'number', 'boolean', 'null', 'undefined', 'object', 'array', 'function']
+  const types: JSType[] = ['string', 'number', 'boolean', 'null', 'undefined', 'object', 'array']
   return types.map((type, i) => ({ type, label: type, keyboardKey: i + 1 }))
 }
 
@@ -173,7 +197,7 @@ export function getBuckets(language: Language): Bucket[] {
 
 export function makeInitialPersonalBests(): PersonalBests {
   return {
-    javascript: { 10: null, 20: null, 30: null },
-    python: { 10: null, 20: null, 30: null },
+    javascript: { easy: null, medium: null, hard: null },
+    python: { easy: null, medium: null, hard: null },
   }
 }

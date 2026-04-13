@@ -2,7 +2,7 @@
   background: linear-gradient(160deg, var(--color-surface-raised), var(--color-surface));
   border: var(--border-default);
   border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6);
+  padding: var(--space-6) var(--space-7);
   box-shadow: 
     var(--shadow-lg), 
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -15,9 +15,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  min-width: 320px;
-  max-width: 440px;
+  gap: var(--space-4);
+  min-width: 400px;
+  max-width: 550px;
   transition: 
     box-shadow var(--transition-fast), 
     transform var(--transition-fast),
@@ -25,9 +25,9 @@
 }
 
 .variable-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: 
-    0 12px 32px rgba(0, 0, 0, 0.5), 
+    0 16px 48px rgba(0, 0, 0, 0.6), 
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   background: linear-gradient(160deg, var(--color-border), var(--color-surface));
 }
@@ -35,7 +35,7 @@
 .variable-card.dragging {
   cursor: grabbing;
   box-shadow: 
-    0 24px 60px rgba(0, 0, 0, 0.6), 
+    0 32px 80px rgba(0, 0, 0, 0.7), 
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   z-index: 100;
   transition: none; /* Instant feedback while dragging */
@@ -43,19 +43,19 @@
 
 .variable-card:focus-visible {
   outline: none;
-  box-shadow: var(--border-focus) 0 0 0 3px, var(--shadow-lg);
+  box-shadow: var(--border-focus) 0 0 0 4px, var(--shadow-lg);
 }
 
 .card-code {
   font-family: var(--font-mono);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: var(--weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
   white-space: nowrap;
   background: rgba(0, 0, 0, 0.3);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.05);
   width: 100%;
   text-align: center;
@@ -64,7 +64,7 @@
 }
 
 .card-hint {
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
   color: var(--color-text-muted);
   font-family: var(--font-body);
   letter-spacing: 0.05em;

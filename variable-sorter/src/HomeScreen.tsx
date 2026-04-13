@@ -1,29 +1,30 @@
 import './HomeScreen.css'
-import type { Language, PersonalBests } from './gameLogic'
+import type { Language, PersonalBests, Difficulty } from './gameLogic'
 import { formatTime } from './gameLogic'
 
 interface Props {
   language: Language
-  variableCount: 10 | 20 | 30
+  difficulty: Difficulty
   personalBests: PersonalBests
   theme: 'light' | 'dark'
   onLanguageChange: (lang: Language) => void
-  onCountChange: (count: 10 | 20 | 30) => void
+  onDifficultyChange: (difficulty: Difficulty) => void
   onStart: () => void
   onToggleTheme: () => void
   onShowHelp: () => void
 }
 
-const COUNTS: Array<10 | 20 | 30> = [10, 20, 30]
+const DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard']
+const DIFF_LABELS: Record<Difficulty, string> = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }
 const LANG_LABELS: Record<Language, string> = { javascript: 'JavaScript', python: 'Python' }
 
 export default function HomeScreen({
   language,
-  variableCount,
+  difficulty,
   personalBests,
   theme,
   onLanguageChange,
-  onCountChange,
+  onDifficultyChange,
   onStart,
   onToggleTheme,
   onShowHelp,
@@ -70,16 +71,16 @@ export default function HomeScreen({
         </section>
 
         <section className="home-section">
-          <label className="section-label">Variables</label>
-          <div className="count-selector" role="group" aria-label="Select variable count">
-            {COUNTS.map(c => (
+          <label className="section-label">Difficulty</label>
+          <div className="count-selector" role="group" aria-label="Select difficulty">
+            {DIFFICULTIES.map(d => (
               <button
-                key={c}
-                className={`count-btn${variableCount === c ? ' active' : ''}`}
-                onClick={() => onCountChange(c)}
-                aria-pressed={variableCount === c}
+                key={d}
+                className={`count-btn${difficulty === d ? ' active' : ''}`}
+                onClick={() => onDifficultyChange(d)}
+                aria-pressed={difficulty === d}
               >
-                {c}
+                {DIFF_LABELS[d]}
               </button>
             ))}
           </div>
@@ -91,17 +92,17 @@ export default function HomeScreen({
             <thead>
               <tr>
                 <th>Language</th>
-                {COUNTS.map(c => <th key={c}>{c} vars</th>)}
+                {DIFFICULTIES.map(d => <th key={d}>{DIFF_LABELS[d]}</th>)}
               </tr>
             </thead>
             <tbody>
               {(['javascript', 'python'] as Language[]).map(lang => (
                 <tr key={lang}>
                   <td>{LANG_LABELS[lang]}</td>
-                  {COUNTS.map(c => (
-                    <td key={c} className="best-time-cell">
-                      {personalBests[lang][c] !== null
-                        ? formatTime(personalBests[lang][c]!)
+                  {DIFFICULTIES.map(d => (
+                    <td key={d} className="best-time-cell">
+                      {personalBests[lang][d] !== null
+                        ? formatTime(personalBests[lang][d]!)
                         : <span className="no-time">--</span>}
                     </td>
                   ))}
@@ -124,6 +125,7 @@ export default function HomeScreen({
         >
           Donate
         </a>
+
       </div>
     </div>
   )

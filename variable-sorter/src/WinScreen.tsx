@@ -1,10 +1,10 @@
 import './WinScreen.css'
-import type { Language, PersonalBests } from './gameLogic'
-import { formatTime } from './gameLogic'
+import type { Language, PersonalBests, Difficulty } from './gameLogic'
+import { formatTime, DIFFICULTY_COUNT } from './gameLogic'
 
 interface Props {
   language: Language
-  variableCount: 10 | 20 | 30
+  difficulty: Difficulty
   endTime: number
   startTime: number
   personalBests: PersonalBests
@@ -13,10 +13,11 @@ interface Props {
 }
 
 const LANG_LABELS: Record<Language, string> = { javascript: 'JavaScript', python: 'Python' }
+const DIFF_LABELS: Record<Difficulty, string> = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }
 
 export default function WinScreen({
   language,
-  variableCount,
+  difficulty,
   endTime,
   startTime,
   personalBests,
@@ -24,7 +25,7 @@ export default function WinScreen({
   onChangeSettings,
 }: Props) {
   const elapsed = endTime - startTime
-  const best = personalBests[language][variableCount]
+  const best = personalBests[language][difficulty]
   const isNewBest = best !== null && best === elapsed
 
   return (
@@ -32,7 +33,7 @@ export default function WinScreen({
       <div className="result-card win-card">
         <div className="result-icon">&#10003;</div>
         <h2 className="result-title">Run complete!</h2>
-        <p className="result-sub">{variableCount} {LANG_LABELS[language]} variables</p>
+        <p className="result-sub">{DIFF_LABELS[difficulty]} - {DIFFICULTY_COUNT[difficulty]} {LANG_LABELS[language]} variables</p>
 
         <div className="result-time">
           <span className="time-value">{formatTime(elapsed)}</span>

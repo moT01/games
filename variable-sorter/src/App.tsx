@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import './App.css'
-import type { GameState, Language, VarType, PersonalBests } from './gameLogic'
+import type { GameState, Language, VarType, PersonalBests, Difficulty } from './gameLogic'
 import {
   makeInitialPersonalBests,
   generateQueue,
@@ -8,6 +8,7 @@ import {
   recordWin,
   recordFail,
   checkDrop,
+  DIFFICULTY_COUNT,
 } from './gameLogic'
 import HomeScreen from './HomeScreen'
 import PlayScreen from './PlayScreen'
@@ -35,14 +36,14 @@ function App() {
   const [state, setState] = useState<GameState>(() => {
     const personalBests = loadPersonalBests()
     const language = (localStorage.getItem('vs_last_language') as Language | null) ?? 'javascript'
-    const rawCount = Number(localStorage.getItem('vs_last_count'))
-    const variableCount: 10 | 20 | 30 = ([10, 20, 30] as const).includes(rawCount as 10 | 20 | 30)
-      ? (rawCount as 10 | 20 | 30)
-      : 10
+    const rawDifficulty = localStorage.getItem('vs_last_difficulty')
+    const difficulty: Difficulty = (['easy', 'medium', 'hard'] as const).includes(rawDifficulty as Difficulty)
+      ? (rawDifficulty as Difficulty)
+      : 'easy'
     return {
       phase: 'home',
       language,
-      variableCount,
+      difficulty,
       queue: [],
       current: null,
       next: null,
@@ -73,14 +74,14 @@ function App() {
     localStorage.setItem('vs_last_language', language)
   }
 
-  function setVariableCount(count: 10 | 20 | 30) {
-    setState(s => ({ ...s, variableCount: count }))
-    localStorage.setItem('vs_last_count', String(count))
+  function setDifficulty(difficulty: Difficulty) {
+    setState(s => ({ ...s, difficulty }))
+    localStorage.setItem('vs_last_difficulty', difficulty)
   }
 
   function startGame() {
     const s = stateRef.current
-    const queue = generateQueue(s.language, s.variableCount)
+    const queue = generateQueue(s.language, s.difficulty)
     const current = queue[0] ?? null
     const next = queue[1] ?? null
     const remaining = queue.slice(2)
@@ -106,7 +107,7 @@ function App() {
 
     if (isCorrect) {
       const newSorted = s.sorted + 1
-      if (newSorted === s.variableCount) {
+      if (newSorted === DIFFICULTY_COUNT[s.difficulty]) {
         const winPatch = recordWin({ ...s, sorted: newSorted })
         const newBests = winPatch.personalBests!
         localStorage.setItem('vs_personal_bests', JSON.stringify(newBests))
@@ -162,11 +163,11 @@ function App() {
       {state.phase === 'home' && (
         <HomeScreen
           language={state.language}
-          variableCount={state.variableCount}
+          difficulty={state.difficulty}
           personalBests={state.personalBests}
           theme={theme}
           onLanguageChange={setLanguage}
-          onCountChange={setVariableCount}
+          onDifficultyChange={setDifficulty}
           onStart={startGame}
           onToggleTheme={toggleTheme}
           onShowHelp={() => setShowHelp(true)}
@@ -183,7 +184,7 @@ function App() {
       {state.phase === 'win' && (
         <WinScreen
           language={state.language}
-          variableCount={state.variableCount}
+          difficulty={state.difficulty}
           endTime={state.endTime!}
           startTime={state.startTime!}
           personalBests={state.personalBests}
