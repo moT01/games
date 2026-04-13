@@ -71,11 +71,11 @@ Anything where the DOM structure is minimal
 
 Use React/Vite when:
 
-Complex state across many components (chess, solitaire, card games)
+Complex state across many components
 Games with lots of UI screens and interactions
 Anything where TypeScript and component structure genuinely helps
 
-For simple games (HTML/CSS/JS), go to step 3a, for complex games (React/Vite), go to step 3b.
+Always choose the simplest option that fits the game. Prefer the simple boilerplate if possible. Don't overcomplicate. For simple games (HTML/CSS/JS), go to step 3a, for complex games (React/Vite), go to step 3b.
 
 ### Step 3a — Copy simple boilerplate
 
@@ -94,16 +94,16 @@ For simple games (HTML/CSS/JS), go to step 3a, for complex games (React/Vite), g
 
 ## Step 4a — Create the plan file
 
-1. Create a <game-name> directory in `artifacts/` - so you have `artifacts/<game-name>/`.
-1. If using the simple boilerplate, copy `.claude/templates/PLAN_TEMPLATE_SIMPLE.md` to `artifacts/<game-name>/PLAN.md`. If using the react boilerplate, copy `.claude/templates/PLAN_TEMPLATE_REACT.md` to `artifacts/<game-name>/PLAN.md`.
-2. Replace all `<game-name>` placeholders with the actual game name
-3. Replace all `<known-game>` placeholders with the known game name
+1. Create a `context` directory in <game-name> - so you have `<game-name>/context/`.
+2. If using the simple boilerplate, copy `.claude/templates/PLAN_TEMPLATE_SIMPLE.md` to `<game-name>/context/PLAN.md`. If using the react boilerplate, copy `.claude/templates/PLAN_TEMPLATE_REACT.md` to `<game-name>/context/PLAN.md`. In the new file...
+3. Replace all `<game-name>` placeholders with the actual game name
+4. Replace all `<known-game>` placeholders with the known game name
 
 ## Step 4b — Fill out the plan
 
-Read the `artifacts/<game-name>/PLAN.md` to understand the template. The template is a minimum structure, not a ceiling. Add sections, fields, or checklist items whenever the game warrants it.
+Read the `<game-name>/context/PLAN.md` to understand the template. The template is a minimum structure, not a ceiling. Add sections, fields, or checklist items whenever the game warrants it.
 
-Read `.claude/misc/STANDARD_FEATURES.md` to understand required features for all games. Everything in this file should be included in the plan.
+Read `.claude/misc/STANDARD_FEATURES.md` to understand required features for all games. Everything in this file should be included in the plan.s
 
 Be sure to include all of the user's decisions from step 2 in the plan as well.
 
@@ -124,7 +124,7 @@ Fill out every section completely — no placeholders, no `...`, no generic cont
 
 Fill in the Help & Strategy Guide with real strategies, actual common mistakes, and beginner tips specific to this game.
 
-Write the completed plan to `artifacts/<game-name>/PLAN.md`.
+Write the completed plan to `<game-name>/context/PLAN.md`.
 
 ---
 
@@ -156,7 +156,7 @@ Read the completed plan and check:
 - Edge cases feel thin given the complexity of the game
 - Help & Strategy Guide content feels generic rather than game-specific
 
-Fix any gaps using the rules from step 4, then write the final plan to `artifacts/<game-name>/PLAN.md`.
+Fix any gaps using the rules from step 4, then write the final plan to `<game-name>/context/PLAN.md`.
 
 ---
 

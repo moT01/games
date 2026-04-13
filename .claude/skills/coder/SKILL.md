@@ -35,7 +35,7 @@ Only read files explicitly listed in the plan or mentioned in inputs. Do not exp
 
 ## Step 1 — Read the plan
 
-Read `artifacts/<game-name>/PLAN.md` fully before writing any code.
+Read `<game-name>/context/PLAN.md` fully before writing any code.
 
 ---
 
@@ -43,13 +43,13 @@ Read `artifacts/<game-name>/PLAN.md` fully before writing any code.
 
 Identify the first section with unchecked items and implement all of them. Before writing any CSS or UI, read `.claude/misc/UI.md` first.
 
-Only implement what is in the plan. Do not add abstractions, files, or dependencies not listed. Follow all conventions in `CLAUDE.md`.
+Only implement the next section - do not implatement more than one section at a time. Only implement what is in the plan. Do not add abstractions, files, or dependencies not listed. Follow all conventions in `CLAUDE.md`.
 
 ---
 
 ## Step 3 — Check off completed items
 
-Mark every implemented item as done in `artifacts/<game-name>/PLAN.md`.
+Mark every implemented item as done in `<game-name>/context/PLAN.md`.
 
 ---
 

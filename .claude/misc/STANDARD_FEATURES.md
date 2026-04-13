@@ -7,11 +7,20 @@ These features are required in every game. The planner must include all of them 
 - Light/dark theme toggle — persisted to local storage
 - Donate button — visible on every screen
 - Home screen and play screen (no routing, conditional render)
-- "Are you sure?" confirmation modal for destructive actions (new game, quit)
+- Confirmation modal for destructive actions (new game, quit)
 - Help/Rules/Info modal (whichever is appropriate) — Maybe a "?" button accessible from all screens, content specific to the game
 
-## Local Storage
+### Home Screen
 
+- The home screen should consist of all the main menu options, buttons, and everything else centered on the screen - with a border around the whole set of items.
+- Behind the items should be a background to match the game. Ideally, elegant and minimal - not overwhelming.
+
+### Play Screen
+
+- The play screen should fill the whole window if possible.
+- It should be responsive
+
+## Local Storage
 - Theme preference
 - Best score / best time (where applicable)
 - Last selected mode
