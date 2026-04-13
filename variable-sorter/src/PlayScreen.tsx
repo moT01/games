@@ -110,6 +110,15 @@ export default function PlayScreen({ state, onDrop, onQuit, onShowHelp }: Props)
           {formatTime(elapsed)}
         </span>
         <div className="play-header-actions">
+          <a
+            className="play-icon-btn"
+            href="https://www.freecodecamp.org/donate"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Donate to freeCodeCamp"
+          >
+            Donate
+          </a>
           <button className="play-icon-btn" onClick={onShowHelp} aria-label="Help">?</button>
           <button className="play-icon-btn" onClick={onQuit} aria-label="Quit run">Quit</button>
         </div>
