@@ -1,75 +1,65 @@
-import './GameOverScreen.css';
-import type { Scores } from '../gameLogic';
-import {
-  getUpperSectionTotal, getUpperBonus,
-  getLowerSectionTotal, getYahtzeeBonusTotal, getGrandTotal,
-} from '../gameLogic';
+import './GameOverScreen.css'
+import type { CategoryKey } from '../gameLogic'
+import { calcGrandTotal } from '../gameLogic'
 
-const ALL_CATEGORIES: { category: keyof Scores; label: string }[] = [
-  { category: 'ones', label: 'Ones' },
-  { category: 'twos', label: 'Twos' },
-  { category: 'threes', label: 'Threes' },
-  { category: 'fours', label: 'Fours' },
-  { category: 'fives', label: 'Fives' },
-  { category: 'sixes', label: 'Sixes' },
-  { category: 'threeOfAKind', label: '3 of a Kind' },
-  { category: 'fourOfAKind', label: '4 of a Kind' },
-  { category: 'fullHouse', label: 'Full House' },
-  { category: 'smallStraight', label: 'Sm. Straight' },
-  { category: 'largeStraight', label: 'Lg. Straight' },
-  { category: 'yahtzee', label: 'YAHTZEE' },
-  { category: 'chance', label: 'Chance' },
-];
+interface Props {
+  scores: Partial<Record<CategoryKey, number>>
+  fiveOfAKindBonus: number
+  highScore: number | null
+  isNewHighScore: boolean
+  onPlayAgain: () => void
+  onHome: () => void
+  theme: 'light' | 'dark'
+  onToggleTheme: () => void
+}
 
-type GameOverScreenProps = {
-  scores: Scores;
-  yahtzeeBonusCount: number;
-  onPlayAgain: () => void;
-};
-
-export function GameOverScreen({ scores, yahtzeeBonusCount, onPlayAgain }: GameOverScreenProps) {
-  const upperTotal = getUpperSectionTotal(scores);
-  const upperBonus = getUpperBonus(scores);
-  const lowerTotal = getLowerSectionTotal(scores);
-  const yahtzeeBonus = getYahtzeeBonusTotal(yahtzeeBonusCount);
-  const grandTotal = getGrandTotal(scores, yahtzeeBonusCount);
+export default function GameOverScreen({
+  scores, fiveOfAKindBonus, highScore, isNewHighScore,
+  onPlayAgain, onHome, theme, onToggleTheme,
+}: Props) {
+  const total = calcGrandTotal(scores, fiveOfAKindBonus)
 
   return (
-    <div className="game-over-screen">
-      <h1 className="game-over-screen__title">Game Over</h1>
-      <table className="game-over-screen__table">
-        <tbody>
-          {ALL_CATEGORIES.map(({ category, label }) => (
-            <tr key={category}>
-              <td>{label}</td>
-              <td>{scores[category] ?? 0}</td>
-            </tr>
-          ))}
-          <tr className="game-over-screen__subtotal-row">
-            <td>Upper Total</td>
-            <td>{upperTotal}</td>
-          </tr>
-          <tr className="game-over-screen__subtotal-row">
-            <td>Upper Bonus</td>
-            <td>{upperBonus}</td>
-          </tr>
-          <tr className="game-over-screen__subtotal-row">
-            <td>Lower Total</td>
-            <td>{lowerTotal}</td>
-          </tr>
-          <tr className="game-over-screen__subtotal-row">
-            <td>YAHTZEE Bonus</td>
-            <td>{yahtzeeBonus}</td>
-          </tr>
-          <tr className="game-over-screen__grand-total">
-            <td>Grand Total</td>
-            <td>{grandTotal}</td>
-          </tr>
-        </tbody>
-      </table>
-      <button className="game-over-screen__play-again" onClick={onPlayAgain}>
-        Play Again
-      </button>
+    <div className="gameover-screen">
+      <div className="gameover-panel">
+        <h2 className="gameover-title">Game Over</h2>
+
+        <div className="gameover-score">
+          <span className="gameover-score-label">Score</span>
+          <span className="gameover-score-value">{total}</span>
+        </div>
+
+        {isNewHighScore && (
+          <div className="gameover-new-best">New best!</div>
+        )}
+
+        {highScore !== null && !isNewHighScore && (
+          <div className="gameover-best">
+            <span className="gameover-best-label">Best</span>
+            <span className="gameover-best-value">{highScore}</span>
+          </div>
+        )}
+
+        <div className="gameover-actions">
+          <button className="btn btn-primary" onClick={onPlayAgain}>Play Again</button>
+          <button className="btn btn-secondary" onClick={onHome}>Home</button>
+        </div>
+
+        <div className="gameover-footer">
+          <button className="btn-icon" onClick={onToggleTheme} aria-label="Toggle theme">
+            {theme === 'light' ? '☾' : '☀'}
+          </button>
+          <a
+            className="btn-icon"
+            href="https://www.freecodecamp.org/donate"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Donate"
+          >
+            ♥
+          </a>
+        </div>
+      </div>
     </div>
-  );
+  )
 }

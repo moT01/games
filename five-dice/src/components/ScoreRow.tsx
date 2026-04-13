@@ -1,24 +1,65 @@
-import './ScoreRow.css';
+import './ScoreRow.css'
+import type { CategoryKey } from '../gameLogic'
 
-type ScoreRowProps = {
-  label: string;
-  score: number | null;
-  previewScore: number;
-  isLocked: boolean;
-  onScore: () => void;
-  canScore: boolean;
-};
+export const CATEGORY_LABELS: Record<CategoryKey, string> = {
+  ones: 'Ones',
+  twos: 'Twos',
+  threes: 'Threes',
+  fours: 'Fours',
+  fives: 'Fives',
+  sixes: 'Sixes',
+  threeOfAKind: 'Three of a Kind',
+  fourOfAKind: 'Four of a Kind',
+  fullHouse: 'Full House',
+  smallStraight: 'Small Straight',
+  largeStraight: 'Large Straight',
+  fiveOfAKind: 'Five of a Kind',
+  chance: 'Chance',
+}
 
-export function ScoreRow({ label, score, previewScore, isLocked, onScore, canScore }: ScoreRowProps) {
+interface Props {
+  categoryKey: CategoryKey
+  score?: number
+  potentialScore: number | null
+  rollCount: number
+  isBest?: boolean
+  onScore: (key: CategoryKey) => void
+}
+
+export default function ScoreRow({ categoryKey, score, potentialScore, rollCount, isBest, onScore }: Props) {
+  const locked = score !== undefined
+  const clickable = !locked && rollCount > 0
+
+  const handleClick = () => {
+    if (clickable) onScore(categoryKey)
+  }
+
+  const handleKey = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && clickable) onScore(categoryKey)
+  }
+
+  const displayScore = locked
+    ? score
+    : (rollCount > 0 && potentialScore !== null ? potentialScore : null)
+
+  const ariaLabel = `${CATEGORY_LABELS[categoryKey]}: ${
+    locked ? score : potentialScore !== null ? `potential ${potentialScore}` : 'not scored'
+  }`
+
   return (
-    <tr
-      className={`score-row${isLocked ? ' score-row--locked' : ''}${canScore ? ' score-row--scorable' : ''}`}
-      onClick={canScore ? onScore : undefined}
+    <div
+      className={`score-row ${locked ? 'score-row--locked' : ''} ${clickable ? 'score-row--clickable' : ''} ${isBest && clickable ? 'score-row--best' : ''}`}
+      onClick={handleClick}
+      onKeyDown={handleKey}
+      role={clickable ? 'button' : undefined}
+      tabIndex={clickable ? 0 : -1}
+      aria-label={ariaLabel}
+      aria-disabled={locked}
     >
-      <td className="score-row__label">{label}</td>
-      <td className={`score-row__value${!isLocked && canScore ? ' score-row__value--preview' : ''}`}>
-        {isLocked ? score : canScore ? previewScore : '—'}
-      </td>
-    </tr>
-  );
+      <span className="score-row-name">{CATEGORY_LABELS[categoryKey]}</span>
+      <span className={`score-row-value ${!locked && rollCount > 0 ? 'score-row-value--potential' : ''}`}>
+        {displayScore !== null ? displayScore : ''}
+      </span>
+    </div>
+  )
 }

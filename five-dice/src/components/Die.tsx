@@ -1,38 +1,57 @@
-import './Die.css';
-import type { Die as DieType } from '../gameLogic';
+import './Die.css'
 
-// 9-cell boolean map for a 3×3 pip grid (row-major: TL TC TR / ML MC MR / BL BC BR)
-const PIP_MAPS: Record<number, boolean[]> = {
-  1: [false, false, false, false, true,  false, false, false, false],
-  2: [false, false, true,  false, false, false, true,  false, false],
-  3: [false, false, true,  false, true,  false, true,  false, false],
-  4: [true,  false, true,  false, false, false, true,  false, true ],
-  5: [true,  false, true,  false, true,  false, true,  false, true ],
-  6: [true,  false, true,  true,  false, true,  true,  false, true ],
-};
+// 3x3 grid positions (0–8): TL TC TR / ML MC MR / BL BC BR
+const PIP_POSITIONS: Record<number, number[]> = {
+  1: [4],
+  2: [2, 6],
+  3: [2, 4, 6],
+  4: [0, 2, 6, 8],
+  5: [0, 2, 4, 6, 8],
+  6: [0, 2, 3, 5, 6, 8],
+}
 
-type DieProps = {
-  die: DieType;
-  onToggleHold: (id: number) => void;
-  disabled: boolean;
-  rolling: boolean;
-};
+interface Props {
+  index: number
+  value: number
+  held: boolean
+  rollCount: number
+  rolling: boolean
+  onToggleHold: (index: number) => void
+}
 
-export function Die({ die, onToggleHold, disabled, rolling }: DieProps) {
-  const pips = PIP_MAPS[die.value] ?? PIP_MAPS[1];
+export default function Die({ index, value, held, rollCount, rolling, onToggleHold }: Props) {
+  const canHold = rollCount > 0
+  const activePips = PIP_POSITIONS[value] ?? []
+
+  const handleClick = () => {
+    if (canHold) onToggleHold(index)
+  }
+
+  const handleKey = (e: React.KeyboardEvent) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      if (canHold) onToggleHold(index)
+    }
+  }
 
   return (
-    <button
-      className={`die${die.held ? ' die--held' : ''}${disabled ? ' die--disabled' : ''}${rolling ? ' die--rolling' : ''}`}
-      onClick={() => onToggleHold(die.id)}
-      disabled={disabled}
-      aria-label={`Die ${die.id + 1}, value ${die.value}${die.held ? ', held' : ''}`}
+    <div
+      className={`die ${held ? 'die--held' : ''} ${rolling ? 'die--rolling' : ''} ${canHold ? 'die--holdable' : ''}`}
+      onClick={handleClick}
+      onKeyDown={handleKey}
+      role="button"
+      tabIndex={canHold ? 0 : -1}
+      aria-label={`Die ${index + 1}: ${value}, ${held ? 'held' : 'not held'}`}
+      aria-pressed={held}
     >
-      <span className="die__pips">
-        {pips.map((active, i) => (
-          <span key={i} className={`die__pip${active ? ' die__pip--active' : ''}`} />
+      <div className="die-face">
+        {Array.from({ length: 9 }, (_, pos) => (
+          <div
+            key={pos}
+            className={`pip ${activePips.includes(pos) ? 'pip--active' : ''}`}
+          />
         ))}
-      </span>
-    </button>
-  );
+      </div>
+    </div>
+  )
 }

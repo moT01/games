@@ -1,0 +1,38 @@
+.roll-btn {
+  padding: var(--space-3) var(--space-7);
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(160deg, var(--color-accent-hover) 0%, var(--color-accent) 100%);
+  color: var(--gray-90);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--shadow-md), var(--shadow-accent);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  user-select: none;
+  min-width: 180px;
+}
+
+.roll-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-accent);
+}
+
+.roll-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.roll-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--blue-mid), var(--shadow-accent);
+}
+
+.roll-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}

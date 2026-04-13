@@ -1,88 +1,91 @@
-import './Scorecard.css';
-import { ScoreRow } from './ScoreRow';
-import type { ScoreCategory, Scores, Die } from '../gameLogic';
-import { calculateScore, getUpperSectionTotal, getUpperBonus, getYahtzeeBonusTotal, getGrandTotal } from '../gameLogic';
+import './ScoreCard.css'
+import ScoreRow from './ScoreRow'
+import type { Die, CategoryKey } from '../gameLogic'
+import {
+  UPPER_CATEGORIES, LOWER_CATEGORIES, ALL_CATEGORIES,
+  getPotentialScore, calcUpperTotal, calcGrandTotal,
+} from '../gameLogic'
 
-const UPPER: { category: ScoreCategory; label: string }[] = [
-  { category: 'ones', label: 'Ones' },
-  { category: 'twos', label: 'Twos' },
-  { category: 'threes', label: 'Threes' },
-  { category: 'fours', label: 'Fours' },
-  { category: 'fives', label: 'Fives' },
-  { category: 'sixes', label: 'Sixes' },
-];
+interface Props {
+  scores: Partial<Record<CategoryKey, number>>
+  dice: Die[]
+  rollCount: number
+  fiveOfAKindBonus: number
+  onScore: (key: CategoryKey) => void
+}
 
-const LOWER: { category: ScoreCategory; label: string }[] = [
-  { category: 'threeOfAKind', label: '3 of a Kind' },
-  { category: 'fourOfAKind', label: '4 of a Kind' },
-  { category: 'fullHouse', label: 'Full House' },
-  { category: 'smallStraight', label: 'Sm. Straight' },
-  { category: 'largeStraight', label: 'Lg. Straight' },
-  { category: 'yahtzee', label: 'YAHTZEE' },
-  { category: 'chance', label: 'Chance' },
-];
+export default function ScoreCard({ scores, dice, rollCount, fiveOfAKindBonus, onScore }: Props) {
+  const upperTotal = calcUpperTotal(scores)
+  const grandTotal = calcGrandTotal(scores, fiveOfAKindBonus)
+  const bonusReached = upperTotal >= 63
 
-type ScorecardProps = {
-  scores: Scores;
-  dice: Die[];
-  rollCount: number;
-  yahtzeeBonusCount: number;
-  onScore: (category: ScoreCategory) => void;
-  gameOver: boolean;
-};
-
-export function Scorecard({ scores, dice, rollCount, yahtzeeBonusCount, onScore, gameOver }: ScorecardProps) {
-  const upperTotal = getUpperSectionTotal(scores);
-  const upperBonus = getUpperBonus(scores);
-  const yahtzeeBonus = getYahtzeeBonusTotal(yahtzeeBonusCount);
-  const grandTotal = getGrandTotal(scores, yahtzeeBonusCount);
+  // Find the best unscored category to subtly highlight
+  let bestKey: CategoryKey | null = null
+  if (rollCount > 0) {
+    let bestScore = -1
+    for (const key of ALL_CATEGORIES) {
+      const p = getPotentialScore(key, dice, scores)
+      if (p !== null && p > bestScore) {
+        bestScore = p
+        bestKey = key
+      }
+    }
+  }
 
   return (
     <div className="scorecard">
-      <table className="scorecard__table">
-        <tbody>
-          <tr className="scorecard__section-header">
-            <td colSpan={2}>Upper Section</td>
-          </tr>
-          {UPPER.map(({ category, label }) => (
-            <ScoreRow
-              key={category}
-              label={label}
-              score={scores[category]}
-              previewScore={calculateScore(category, dice)}
-              isLocked={scores[category] !== null}
-              onScore={() => onScore(category)}
-              canScore={rollCount >= 1 && scores[category] === null && !gameOver}
-            />
-          ))}
-          <tr className="scorecard__bonus-row">
-            <td>Bonus (63+)</td>
-            <td>{upperBonus > 0 ? '+35' : `${upperTotal} / 63`}</td>
-          </tr>
-          <tr className="scorecard__section-header">
-            <td colSpan={2}>Lower Section</td>
-          </tr>
-          {LOWER.map(({ category, label }) => (
-            <ScoreRow
-              key={category}
-              label={label}
-              score={scores[category]}
-              previewScore={calculateScore(category, dice)}
-              isLocked={scores[category] !== null}
-              onScore={() => onScore(category)}
-              canScore={rollCount >= 1 && scores[category] === null && !gameOver}
-            />
-          ))}
-          <tr className="scorecard__bonus-row">
-            <td>YAHTZEE Bonus</td>
-            <td>{yahtzeeBonus > 0 ? `+${yahtzeeBonus}` : '0'}</td>
-          </tr>
-          <tr className="scorecard__total-row">
-            <td>Grand Total</td>
-            <td>{grandTotal}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="scorecard-section">
+        <div className="scorecard-section-header">Upper Section</div>
+        {UPPER_CATEGORIES.map(key => (
+          <ScoreRow
+            key={key}
+            categoryKey={key}
+            score={scores[key]}
+            potentialScore={getPotentialScore(key, dice, scores)}
+            rollCount={rollCount}
+            isBest={bestKey === key}
+            onScore={onScore}
+          />
+        ))}
+        <div className={`scorecard-bonus-row ${bonusReached ? 'scorecard-bonus-row--reached' : ''}`}>
+          <span>Upper Bonus</span>
+          <span className="scorecard-bonus-progress">
+            {bonusReached
+              ? '+35'
+              : `${upperTotal}/63`
+            }
+          </span>
+        </div>
+      </div>
+
+      <div className="scorecard-section">
+        <div className="scorecard-section-header">Lower Section</div>
+        {LOWER_CATEGORIES.map(key => (
+          <ScoreRow
+            key={key}
+            categoryKey={key}
+            score={scores[key]}
+            potentialScore={getPotentialScore(key, dice, scores)}
+            rollCount={rollCount}
+            isBest={bestKey === key}
+            onScore={onScore}
+          />
+        ))}
+      </div>
+
+      {fiveOfAKindBonus > 0 && (
+        <div className="scorecard-section">
+          <div className="scorecard-foakbonus-row">
+            <span>Five of a Kind Bonus</span>
+            <span>+{fiveOfAKindBonus}</span>
+          </div>
+        </div>
+      )}
+
+      <div className="scorecard-total-row">
+        <span>Total</span>
+        <span>{grandTotal}</span>
+      </div>
     </div>
-  );
+  )
 }

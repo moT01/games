@@ -1,93 +1,113 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { App } from './App';
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
+import App from './App'
 
-// All 13 scorecard category labels in order
-const ALL_CATEGORIES = [
-  'Ones', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes',
-  '3 of a Kind', '4 of a Kind', 'Full House',
-  'Sm. Straight', 'Lg. Straight', 'YAHTZEE', 'Chance',
-];
+// Minimal localStorage mock
+const store: Record<string, string> = {}
+const localStorageMock = {
+  getItem: (k: string) => store[k] ?? null,
+  setItem: (k: string, v: string) => { store[k] = v },
+  removeItem: (k: string) => { delete store[k] },
+  clear: () => { Object.keys(store).forEach(k => delete store[k]) },
+}
+vi.stubGlobal('localStorage', localStorageMock)
 
-function playFullGame() {
-  for (const label of ALL_CATEGORIES) {
-    fireEvent.click(screen.getByRole('button', { name: /Roll/i }));
-    fireEvent.click(screen.getByText(label).closest('tr')!);
-  }
+// Seed dice state: 5 rolled dice, no holds, rollCount=1
+function playingState(overrides = {}) {
+  return JSON.stringify({
+    dice: [1,2,3,4,5].map(v => ({ value: v, held: false })),
+    rollCount: 1,
+    scores: {},
+    fiveOfAKindBonus: 0,
+    gamePhase: 'playing',
+    ...overrides,
+  })
 }
 
-describe('App', () => {
-  it('initial render shows 5 dice and a Roll button', () => {
-    render(<App />);
-    expect(screen.getAllByRole('button', { name: /^Die/i })).toHaveLength(5);
-    expect(screen.getByRole('button', { name: 'Roll (1/3)' })).toBeTruthy();
-  });
+beforeEach(() => {
+  localStorageMock.clear()
+})
 
-  it('Roll button is enabled on first turn before rolling', () => {
-    render(<App />);
-    const btn = screen.getByRole('button', { name: 'Roll (1/3)' }) as HTMLButtonElement;
-    expect(btn.disabled).toBe(false);
-  });
+describe('HomeScreen', () => {
+  it('shows high score from localStorage', () => {
+    store['five-dice-high-score'] = '247'
+    render(<App />)
+    expect(screen.getByText('247')).toBeTruthy()
+  })
 
-  it('clicking Roll increments roll count label', () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (1/3)' }));
-    expect(screen.getByRole('button', { name: 'Roll (2/3)' })).toBeTruthy();
-  });
+  it('shows "No high score yet" when localStorage is empty', () => {
+    render(<App />)
+    expect(screen.getByText('No high score yet')).toBeTruthy()
+  })
 
-  it('after 3 rolls Roll button is disabled', () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (1/3)' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (2/3)' }));
-    fireEvent.click(screen.getByRole('button', { name: /Roll \(3\/3/i }));
-    const btn = screen.getByRole('button', { name: 'Must score' }) as HTMLButtonElement;
-    expect(btn.disabled).toBe(true);
-  });
+  it('clicking Play transitions to the play screen', () => {
+    render(<App />)
+    fireEvent.click(screen.getByText('Play'))
+    expect(screen.getByText('Roll')).toBeTruthy()
+  })
+})
 
-  it('clicking a die after rolling toggles its held appearance', () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (1/3)' }));
-    const die = screen.getAllByRole('button', { name: /^Die/i })[0];
-    fireEvent.click(die);
-    expect(die.className).toContain('die--held');
-  });
+describe('PlayScreen', () => {
+  beforeEach(() => {
+    store['five-dice-state'] = playingState()
+    render(<App />)
+  })
 
-  it('clicking an unscored category after rolling assigns a score and advances the turn', () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (1/3)' }));
-    fireEvent.click(screen.getByText('Chance').closest('tr')!);
-    expect(screen.getByText('Turn 2 of 13')).toBeTruthy();
-  });
+  it('Roll button is enabled at the start of a turn', () => {
+    // rollCount=1 so the button should NOT be disabled
+    const btn = screen.getByRole('button', { name: /roll/i })
+    expect(btn).not.toBeDisabled()
+  })
 
-  it('clicking an already-scored category does nothing', () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (1/3)' }));
-    const row = screen.getByText('Chance').closest('tr')!;
-    fireEvent.click(row); // score Chance — turn advances to 2
+  it('Roll button is disabled after 3 rolls', () => {
+    // Click Roll twice more (state starts at rollCount=1)
+    fireEvent.click(screen.getByRole('button', { name: /roll/i }))
+    fireEvent.click(screen.getByRole('button', { name: /roll/i }))
+    const btn = screen.getByRole('button', { name: /roll \(3\/3\)/i })
+    expect(btn).toBeDisabled()
+  })
 
-    fireEvent.click(screen.getByRole('button', { name: 'Roll (1/3)' }));
-    fireEvent.click(row); // click locked row — no action
-    expect(screen.getByText('Turn 2 of 13')).toBeTruthy(); // still turn 2
-  });
+  it('clicking a die toggles its held state', () => {
+    const die = screen.getByLabelText(/die 1/i)
+    expect(die.getAttribute('aria-pressed')).toBe('false')
+    fireEvent.click(die)
+    expect(die.getAttribute('aria-pressed')).toBe('true')
+  })
 
-  it('clicking Roll before rolling blocks scoring', () => {
-    render(<App />);
-    // Don't roll — click a category directly
-    fireEvent.click(screen.getByText('Chance').closest('tr')!);
-    expect(screen.getByText('Turn 1 of 13')).toBeTruthy();
-  });
+  it('clicking a scored category row has no effect', () => {
+    store['five-dice-state'] = playingState({ scores: { ones: 3 } })
+    render(<App />)
+    const onesRow = screen.getAllByLabelText(/ones/i)[0]
+    expect(onesRow.getAttribute('aria-disabled')).toBe('true')
+    expect(onesRow.getAttribute('role')).not.toBe('button')
+  })
+})
 
-  it('after 13 turns GameOverScreen renders with final score', () => {
-    render(<App />);
-    playFullGame();
-    expect(screen.getByText('Game Over')).toBeTruthy();
-  });
+describe('GameOver', () => {
+  it('scoring the final category triggers the game over screen', () => {
+    // 12 categories already scored, one remaining: chance
+    const scores = {
+      ones: 3, twos: 6, threes: 9, fours: 12, fives: 15, sixes: 18,
+      threeOfAKind: 25, fourOfAKind: 22, fullHouse: 25,
+      smallStraight: 30, largeStraight: 40, fiveOfAKind: 50,
+    }
+    store['five-dice-state'] = playingState({ scores, rollCount: 1 })
+    render(<App />)
+    const chanceRow = screen.getByLabelText(/chance/i)
+    fireEvent.click(chanceRow)
+    expect(screen.getByText('Game Over')).toBeTruthy()
+  })
 
-  it('Play Again button resets the game to initial state', () => {
-    render(<App />);
-    playFullGame();
-    fireEvent.click(screen.getByRole('button', { name: 'Play Again' }));
-    expect(screen.getByRole('button', { name: 'Roll (1/3)' })).toBeTruthy();
-    expect(screen.getByText('Turn 1 of 13')).toBeTruthy();
-  });
-});
+  it('game over screen shows updated high score when beaten', () => {
+    store['five-dice-high-score'] = '1'
+    const scores = {
+      ones: 3, twos: 6, threes: 9, fours: 12, fives: 15, sixes: 18,
+      threeOfAKind: 25, fourOfAKind: 22, fullHouse: 25,
+      smallStraight: 30, largeStraight: 40, fiveOfAKind: 50,
+    }
+    store['five-dice-state'] = playingState({ scores, rollCount: 1 })
+    render(<App />)
+    fireEvent.click(screen.getByLabelText(/chance/i))
+    expect(screen.getByText('New best!')).toBeTruthy()
+  })
+})

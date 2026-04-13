@@ -12,7 +12,8 @@ These features are required in every game. The planner must include all of them 
 
 ### Home Screen
 
-- The home screen should consist of all the main menu options, buttons, and everything else centered on the screen - with a border around the whole set of items.
+- The home screen should be the full width and height of the window.
+- It should contain all the main menu options, buttons, and everything else centered on the screen - with a border around the whole set of items.
 - Behind the items should be a background to match the game. Ideally, elegant and minimal - not overwhelming.
 
 ### Play Screen

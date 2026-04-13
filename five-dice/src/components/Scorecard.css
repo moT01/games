@@ -1,37 +1,76 @@
 .scorecard {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
 }
 
-.scorecard__table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--text-sm);
+.scorecard-section {
+  background: linear-gradient(160deg, var(--color-surface-raised) 0%, var(--color-surface) 100%);
   border: var(--border-default);
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-.scorecard__section-header td {
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-surface);
-  color: var(--color-text-muted);
+.scorecard-section-header {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
   font-weight: var(--weight-bold);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: var(--text-sm);
-}
-
-.scorecard__bonus-row td {
-  padding: var(--space-2) var(--space-3);
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
   border-bottom: var(--border-default);
-  color: var(--color-text-secondary);
-  font-style: italic;
+  background: var(--color-surface);
 }
 
-.scorecard__total-row td {
-  padding: var(--space-3);
-  border-top: 2px solid var(--color-accent);
+.scorecard-bonus-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border-top: var(--border-default);
+}
+
+.scorecard-bonus-progress {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  transition: color var(--transition-default);
+}
+
+.scorecard-bonus-row--reached .scorecard-bonus-progress {
+  color: var(--color-success);
   font-weight: var(--weight-bold);
-  font-size: var(--text-md);
+}
+
+.scorecard-foakbonus-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+}
+
+.scorecard-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(160deg, var(--color-surface-raised) 0%, var(--color-surface) 100%);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+}
+
+.scorecard-total-row span:last-child {
+  font-family: var(--font-mono);
   color: var(--color-accent);
 }

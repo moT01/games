@@ -1,90 +1,60 @@
-@keyframes die-shake {
-  0%   { transform: rotate(0deg) scale(1); }
-  20%  { transform: rotate(-10deg) scale(0.9); }
-  40%  { transform: rotate(10deg) scale(1.07); }
-  60%  { transform: rotate(-6deg) scale(0.96); }
-  80%  { transform: rotate(4deg) scale(1.02); }
-  100% { transform: rotate(0deg) scale(1); }
-}
-
 .die {
-  width: 88px;
-  height: 88px;
-  padding: var(--space-2);
-  background: linear-gradient(
-    160deg,
-    var(--color-surface-raised) 0%,
-    var(--color-surface) 100%
-  );
-  color: var(--color-text-primary);
-  border: 2px solid var(--color-border);
+  width: 64px;
+  height: 64px;
   border-radius: var(--radius-md);
+  background: linear-gradient(145deg, var(--color-die-bg) 0%, color-mix(in srgb, var(--color-die-bg) 80%, black) 100%);
+  border: 2px solid var(--color-border);
+  padding: var(--space-2);
+  cursor: default;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.die--holdable {
   cursor: pointer;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    var(--shadow-sm);
-  transition:
-    border-color var(--transition-fast),
-    background var(--transition-fast),
-    box-shadow var(--transition-fast),
-    transform var(--transition-fast),
-    color var(--transition-fast);
 }
 
-.die:hover:not(:disabled) {
-  border-color: var(--color-accent);
-  box-shadow:
-    inset 0 0 0 1px var(--color-accent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    var(--shadow-md);
-  transform: translateY(-1px);
+.die--holdable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-.die:active:not(:disabled) {
-  transform: translateY(0) scale(0.97);
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.3);
+.die--holdable:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.die--holdable:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--blue-mid);
 }
 
 .die--held {
-  background: linear-gradient(160deg, var(--yellow-dark) 0%, #3a2800 100%);
   border-color: var(--color-accent);
-  color: var(--color-accent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    var(--shadow-accent);
-}
-
-.die--held:hover:not(:disabled) {
-  box-shadow:
-    inset 0 0 0 1px var(--color-accent),
-    0 0 16px rgba(255, 191, 0, 0.45);
-  transform: translateY(-1px);
-}
-
-.die--disabled {
-  opacity: 0.35;
-  cursor: default;
+  box-shadow: var(--shadow-accent);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--color-die-bg) 85%, var(--color-accent)) 0%, color-mix(in srgb, var(--color-die-bg) 70%, var(--color-accent)) 100%);
 }
 
 .die--rolling {
-  animation: die-shake 0.35s ease-in-out;
+  animation: shake 0.35s ease;
 }
 
-.die__pips {
+.die-face {
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 100%;
-  height: 100%;
-  gap: var(--space-1);
-  pointer-events: none;
+  gap: 3px;
 }
 
-.die__pip {
+.pip {
   border-radius: 50%;
+  background: transparent;
+  transition: background var(--transition-fast);
 }
 
-.die__pip--active {
-  background: currentColor;
+.pip--active {
+  background: var(--color-die-pip);
 }
