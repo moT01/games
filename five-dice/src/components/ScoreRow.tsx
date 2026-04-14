@@ -58,8 +58,8 @@ export default function ScoreRow({ categoryKey, score, potentialScore, rollCount
       aria-disabled={locked}
     >
       <span className="score-row-name">{CATEGORY_LABELS[categoryKey]}</span>
-      <span className={`score-row-value ${!locked && rollCount > 0 ? 'score-row-value--potential' : ''}`}>
-        {displayScore !== null ? displayScore : ''}
+      <span className={`score-row-value ${!locked && rollCount > 0 ? 'score-row-value--potential' : ''} ${displayScore === null ? 'score-row-value--empty' : ''}`}>
+        {displayScore !== null ? displayScore : '—'}
       </span>
     </div>
   )
