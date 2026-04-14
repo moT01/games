@@ -12,6 +12,8 @@
 
 @media (min-width: 48rem) {
   .play-screen {
+    height: unset;
+    min-height: unset;
     max-width: 1000px;
     padding: var(--space-4) 0;
   }

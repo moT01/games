@@ -24,7 +24,7 @@ export default function HomeScreen({
 
         <div className="home-highscore">
           {highScore !== null
-            ? <><span className="home-highscore-label">Best</span><span className="home-highscore-value">{highScore}</span></>
+            ? <><span className="home-highscore-label">High Score</span><span className="home-highscore-value">{highScore}</span></>
             : <span className="home-highscore-label">No high score yet</span>
           }
         </div>
