@@ -48,26 +48,28 @@ describe('HomeScreen', () => {
 })
 
 describe('PlayScreen', () => {
-  beforeEach(() => {
+  it('Roll button is enabled at the start of a turn', () => {
     store['five-dice-state'] = playingState()
     render(<App />)
-  })
-
-  it('Roll button is enabled at the start of a turn', () => {
-    // rollCount=1 so the button should NOT be disabled
+    fireEvent.click(screen.getByText('Resume Game'))
     const btn = screen.getByRole('button', { name: /roll/i }) as HTMLButtonElement
     expect(btn.disabled).toBe(false)
   })
 
   it('Roll button is disabled after 3 rolls', () => {
-    // Click Roll twice more (state starts at rollCount=1)
+    store['five-dice-state'] = playingState()
+    render(<App />)
+    fireEvent.click(screen.getByText('Resume Game'))
     fireEvent.click(screen.getByRole('button', { name: /roll/i }))
     fireEvent.click(screen.getByRole('button', { name: /roll/i }))
-    const btn = screen.getByRole('button', { name: /roll \(3\/3\)/i }) as HTMLButtonElement
+    const btn = screen.getByRole('button', { name: /roll/i }) as HTMLButtonElement
     expect(btn.disabled).toBe(true)
   })
 
   it('clicking a die toggles its held state', () => {
+    store['five-dice-state'] = playingState()
+    render(<App />)
+    fireEvent.click(screen.getByText('Resume Game'))
     const die = screen.getByLabelText(/die 1/i)
     expect(die.getAttribute('aria-pressed')).toBe('false')
     fireEvent.click(die)
@@ -77,6 +79,7 @@ describe('PlayScreen', () => {
   it('clicking a scored category row has no effect', () => {
     store['five-dice-state'] = playingState({ scores: { ones: 3 } })
     render(<App />)
+    fireEvent.click(screen.getByText('Resume Game'))
     const onesRow = screen.getAllByLabelText(/ones/i)[0]
     expect(onesRow.getAttribute('aria-disabled')).toBe('true')
     expect(onesRow.getAttribute('role')).not.toBe('button')
@@ -93,7 +96,8 @@ describe('GameOver', () => {
     }
     store['five-dice-state'] = playingState({ scores, rollCount: 1 })
     render(<App />)
-    const chanceRow = screen.getByLabelText(/chance/i)
+    fireEvent.click(screen.getByText('Resume Game'))
+    const chanceRow = screen.getAllByLabelText(/chance/i)[0]
     fireEvent.click(chanceRow)
     expect(screen.getByText('Game Over')).toBeTruthy()
   })
@@ -107,7 +111,8 @@ describe('GameOver', () => {
     }
     store['five-dice-state'] = playingState({ scores, rollCount: 1 })
     render(<App />)
-    fireEvent.click(screen.getByLabelText(/chance/i))
+    fireEvent.click(screen.getByText('Resume Game'))
+    fireEvent.click(screen.getAllByLabelText(/chance/i)[0])
     expect(screen.getByText('New best!')).toBeTruthy()
   })
 })
