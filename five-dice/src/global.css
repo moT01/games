@@ -260,7 +260,6 @@ body {
 .die-3 { bottom: 15%; left: 5%; transform: rotate(20deg); }
 .die-4 { bottom: 20%; right: 10%; transform: rotate(-8deg); }
 .die-5 { top: 45%; left: 2%; transform: rotate(5deg); }
-.die-6 { bottom: 5%; right: 25%; transform: rotate(-25deg); }
 
 @media (min-width: 64rem) {
   .die-1 { top: 15%; left: 20%; }
