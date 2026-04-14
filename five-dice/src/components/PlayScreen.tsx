@@ -42,6 +42,8 @@ export default function PlayScreen({
   const getHint = () => {
     if (state.rollCount === 0) {
       const turn = Object.keys(state.scores).length + 1
+      if (turn === 1) return 'Roll to start your first turn'
+      if (turn === 13) return 'Roll to start your last turn'
       return `Roll to start turn ${turn} / 13`
     }
     if (state.rollCount < 3) return 'Click dice to hold, then roll again or pick a category'
