@@ -1,6 +1,7 @@
 import './ScoreRow.css'
 import type { CategoryKey } from '../gameLogic'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const CATEGORY_LABELS: Record<CategoryKey, string> = {
   ones: 'Ones',
   twos: 'Twos',
