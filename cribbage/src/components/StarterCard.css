@@ -1,0 +1,19 @@
+.starter-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.starter-card__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.starter-card__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 84px;
+}

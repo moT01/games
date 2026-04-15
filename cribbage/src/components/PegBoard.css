@@ -1,0 +1,70 @@
+.peg-board {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border-bottom: var(--border-default);
+}
+
+.peg-board__scores {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+}
+
+.peg-board__score--computer {
+  color: var(--color-danger);
+}
+
+.peg-board__score--human {
+  color: #198eee;
+}
+
+.peg-board__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.board-bg {
+  fill: #2d5a1b;
+}
+
+.hole {
+  fill: #1a3a0e;
+  stroke: #3a7a28;
+  stroke-width: 0.5;
+}
+
+.hole--skunk {
+  fill: #1a3a0e;
+  stroke: var(--color-accent);
+  stroke-width: 1;
+}
+
+.peg--front {
+  fill: #4a90d9;
+  stroke: #fff;
+  stroke-width: 0.8;
+}
+
+.peg--back {
+  fill: transparent;
+  stroke: #4a90d9;
+  stroke-width: 0.8;
+}
+
+.peg-board__svg .peg--front:nth-of-type(n+3) {
+  fill: #e05555;
+  stroke: #fff;
+}
+
+.peg-board__svg .peg--back:nth-of-type(n+4) {
+  stroke: #e05555;
+}
+
+.skunk-label {
+  font-size: 3px;
+  fill: var(--color-accent);
+  text-anchor: middle;
+}

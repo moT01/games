@@ -1,0 +1,33 @@
+import type { PeggingState } from '../types'
+import CardView from './CardView'
+import './PlayArea.css'
+
+interface Props {
+  pegging: PeggingState
+  lastScoringEvent: string | null
+}
+
+export default function PlayArea({ pegging, lastScoringEvent }: Props) {
+  const { currentSequence, currentCount } = pegging
+
+  return (
+    <div className="play-area">
+      <div className="play-area__count-row">
+        <div className="play-area__count-badge">{currentCount}</div>
+        <span className="play-area__count-label">running count</span>
+        {lastScoringEvent && (
+          <span className="play-area__event">{lastScoringEvent}</span>
+        )}
+      </div>
+
+      <div className="play-area__sequence">
+        {currentSequence.length === 0
+          ? <span className="play-area__empty">No cards played yet</span>
+          : currentSequence.map(card => (
+              <CardView key={card.id} card={card} />
+            ))
+        }
+      </div>
+    </div>
+  )
+}

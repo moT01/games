@@ -1,0 +1,75 @@
+.play-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.play-area__count-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.play-area__count-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-raised);
+  border: 2px solid var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+}
+
+.play-area__count-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.play-area__event {
+  font-size: var(--text-sm);
+  color: var(--color-success);
+  font-weight: var(--weight-bold);
+  margin-left: auto;
+}
+
+.play-area__sequence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-height: 100px;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: var(--border-default);
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.play-area__empty {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  align-self: center;
+}
+
+/* Go button — moved to GameBoard hand zone, keep style here */
+.btn--go {
+  background: var(--color-danger);
+  color: var(--gray-90);
+  border: none;
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  font-size: var(--text-md);
+  font-family: var(--font-body);
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

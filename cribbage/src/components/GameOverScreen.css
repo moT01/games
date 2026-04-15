@@ -1,0 +1,46 @@
+.game-over {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+}
+
+.game-over__heading {
+  font-size: var(--text-2xl);
+  color: var(--color-accent);
+}
+
+.game-over__scores {
+  display: flex;
+  gap: var(--space-7);
+}
+
+.game-over__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+}
+
+.game-over__score--winner {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-accent);
+}
+
+.game-over__score-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.game-over__score-value {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}

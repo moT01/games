@@ -1,0 +1,39 @@
+.crib-area {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+.crib-area__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.crib-area__cards {
+  display: flex;
+  gap: 3px;
+}
+
+.crib-area__card {
+  width: 32px;
+  height: 46px;
+  border-radius: var(--radius-sm);
+}
+
+.crib-area__count {
+  background: var(--color-surface-raised);
+  border: var(--border-default);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+}
