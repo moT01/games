@@ -119,11 +119,10 @@ export default function App() {
 
   const handleResume = useCallback(() => {
     if (!savedGame) return;
-    // Re-activate timer if it was running
     const resumed: GameState = {
       ...savedGame,
-      timerActive: false,
-      startTime: null,
+      timerActive: savedGame.moves > 0,
+      startTime: savedGame.moves > 0 ? Date.now() : null,
     };
     setGameState(resumed);
     setScreen('play');
