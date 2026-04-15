@@ -171,8 +171,8 @@ export function PlayScreen({
       )}
 
       <div className="play-screen__top-bar">
-        <button className="btn btn-secondary play-screen__icon-btn" onClick={handleHomeRequest} aria-label="Home">
-          ⌂
+        <button className="btn btn-secondary play-screen__icon-btn" onClick={handleHomeRequest} aria-label="Close">
+          ✕
         </button>
         <span className="play-screen__mode">{gameState.mode}</span>
         <div className="play-screen__top-actions">
