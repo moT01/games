@@ -60,6 +60,7 @@ export function makeInitialState(): GameState {
     cutForDeal: null,
     winner: null,
     lastScoringEvent: null,
+    lastComputerCard: null,
     handHistory: [],
   }
 }
@@ -257,10 +258,11 @@ export function reducer(state: GameState, action: Action): GameState {
     case 'DEAL_HANDS': {
       const deck = shuffle(createDeck())
       const { humanHand, computerHand, remainingDeck } = dealHands(deck)
+      const sortedHand = [...humanHand].sort((a, b) => rankOrder(a) - rankOrder(b))
       return {
         ...state,
         deck: remainingDeck,
-        humanHand,
+        humanHand: sortedHand,
         computerHand,
         crib: [],
         starterCard: null,
@@ -344,7 +346,7 @@ export function reducer(state: GameState, action: Action): GameState {
       const newCount = currentCount + cardValue(card)
       const { points, events } = scorePegging(currentSequence, card, currentCount)
 
-      let next: GameState = { ...state, humanHand: newHand }
+      let next: GameState = { ...state, humanHand: newHand, lastComputerCard: null }
       if (points > 0) {
         next = awardPoints(next, 'human', points, events.join(', '))
       }
@@ -421,7 +423,7 @@ export function reducer(state: GameState, action: Action): GameState {
       const newCount = currentCount + cardValue(card)
       const { points, events } = scorePegging(currentSequence, card, currentCount)
 
-      let next: GameState = { ...state, computerHand: newHand }
+      let next: GameState = { ...state, computerHand: newHand, lastComputerCard: card }
       if (points > 0) {
         next = awardPoints(next, 'computer', points, events.join(', '))
       }

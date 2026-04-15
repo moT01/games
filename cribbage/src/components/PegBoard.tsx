@@ -10,31 +10,31 @@ interface Props {
 
 const TOTAL_HOLES = 121
 const COLS = 60
-// Row 0: holes 1-60 left to right
-// Row 1: holes 61-121 right to left (61 = COLS+1 = col 59, 121 = col 0)
-
-const HOLE_R = 4
-const PEG_R = 3
-const COL_W = 10
-const ROW_H = 14
+const HOLE_R = 5
+const PEG_R = 4
+const COL_W = 13
+const ROW_H = 17
 const TRACK_H = ROW_H * 2 + 10
-const TRACK_GAP = 8
-const PAD_X = 10
-const PAD_Y = 6
+const TRACK_GAP = 10
+const PAD_X = 14
+const PAD_Y = 8
 const BOARD_W = PAD_X * 2 + COLS * COL_W
 const BOARD_H = PAD_Y * 2 + TRACK_H * 2 + TRACK_GAP
 
+// Skunk line at the right edge — between hole 60 (end of outbound) and 61 (start of return)
+const SKUNK_LINE_X = PAD_X + COLS * COL_W
+
 function holePos(hole: number, trackY: number): { x: number; y: number } {
-  if (hole === 0) return { x: -100, y: -100 } // off screen
-  const idx = hole - 1 // 0-based
+  if (hole === 0) return { x: -100, y: -100 }
+  const idx = hole - 1
   if (idx < COLS) {
-    // row 0: left to right
+    // Outbound: holes 1-60, left to right, bottom row of track
     const x = PAD_X + idx * COL_W + COL_W / 2
     const y = trackY + ROW_H + ROW_H / 2
     return { x, y }
   } else {
-    // row 1: right to left; idx 60 = hole 61 = rightmost
-    const col = idx - COLS // 0-based in row 1
+    // Return: holes 61-121, right to left, top row of track
+    const col = idx - COLS
     const x = PAD_X + (COLS - 1 - col) * COL_W + COL_W / 2
     const y = trackY + ROW_H / 2
     return { x, y }
@@ -59,13 +59,18 @@ function renderHoles(trackY: number) {
   return holes
 }
 
-function PegCircle({ x, y, front }: { x: number; y: number; front: boolean }) {
+function PegCircle({
+  x, y, front, player,
+}: {
+  x: number; y: number; front: boolean; player: 'human' | 'computer'
+}) {
+  const cls = `peg peg--${front ? 'front' : 'back'} peg--${player}`
   return (
     <circle
       cx={x}
       cy={y}
       r={PEG_R}
-      className={front ? 'peg peg--front' : 'peg peg--back'}
+      className={cls}
       style={{ transition: 'cx 0.3s ease, cy 0.3s ease' }}
     />
   )
@@ -80,29 +85,18 @@ export default function PegBoard({ humanPegs, computerPegs, humanScore, computer
   const cFront = holePos(computerPegs.front, compTrackY)
   const cBack = holePos(computerPegs.back, compTrackY)
 
+  // Skunk line spans from top of computer track to bottom of human track
+  const skunkTop = PAD_Y - 2
+  const skunkBottom = humanTrackY + TRACK_H + 2
+
   return (
     <div className="peg-board">
-      <div className="peg-board__scores">
-        <span className="peg-board__score peg-board__score--computer">
-          Computer: {computerScore}
-        </span>
-        <span className="peg-board__score peg-board__score--human">
-          You: {humanScore}
-        </span>
-      </div>
       <svg
         className="peg-board__svg"
         viewBox={`0 0 ${BOARD_W} ${BOARD_H}`}
         preserveAspectRatio="xMidYMid meet"
       >
-        <rect
-          x={0}
-          y={0}
-          width={BOARD_W}
-          height={BOARD_H}
-          rx={4}
-          className="board-bg"
-        />
+        <rect x={0} y={0} width={BOARD_W} height={BOARD_H} rx={4} className="board-bg" />
 
         {/* Computer track */}
         {renderHoles(compTrackY)}
@@ -110,22 +104,40 @@ export default function PegBoard({ humanPegs, computerPegs, humanScore, computer
         {/* Human track */}
         {renderHoles(humanTrackY)}
 
+        {/* Skunk line */}
+        <line
+          x1={SKUNK_LINE_X}
+          y1={skunkTop}
+          x2={SKUNK_LINE_X}
+          y2={skunkBottom}
+          className="skunk-line"
+        />
+
+        {/* Score labels inside SVG, flanking the board */}
+        <text x={PAD_X - 2} y={compTrackY + TRACK_H / 2 + 4} className="track-label track-label--computer" textAnchor="end">
+          {computerScore}
+        </text>
+        <text x={PAD_X - 2} y={humanTrackY + TRACK_H / 2 + 4} className="track-label track-label--human" textAnchor="end">
+          {humanScore}
+        </text>
+
         {/* Skunk label */}
         <text
-          x={holePos(61, humanTrackY).x}
-          y={humanTrackY + TRACK_H + 2}
+          x={SKUNK_LINE_X}
+          y={skunkBottom + 8}
           className="skunk-label"
+          textAnchor="middle"
         >
           61
         </text>
 
         {/* Human pegs */}
-        {humanPegs.back > 0 && <PegCircle x={hBack.x} y={hBack.y} front={false} />}
-        {humanPegs.front > 0 && <PegCircle x={hFront.x} y={hFront.y} front={true} />}
+        {humanPegs.back > 0 && <PegCircle x={hBack.x} y={hBack.y} front={false} player="human" />}
+        {humanPegs.front > 0 && <PegCircle x={hFront.x} y={hFront.y} front={true} player="human" />}
 
         {/* Computer pegs */}
-        {computerPegs.back > 0 && <PegCircle x={cBack.x} y={cBack.y} front={false} />}
-        {computerPegs.front > 0 && <PegCircle x={cFront.x} y={cFront.y} front={true} />}
+        {computerPegs.back > 0 && <PegCircle x={cBack.x} y={cBack.y} front={false} player="computer" />}
+        {computerPegs.front > 0 && <PegCircle x={cFront.x} y={cFront.y} front={true} player="computer" />}
       </svg>
     </div>
   )

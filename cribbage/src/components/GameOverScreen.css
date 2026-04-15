@@ -1,21 +1,53 @@
 .game-over {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-6);
-  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-over::before {
+  content: '\2660  \2665  \2666  \2663';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12rem;
+  color: var(--color-text-primary);
+  opacity: 0.03;
+  pointer-events: none;
+  letter-spacing: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.game-over__box {
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 320px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
 }
 
 .game-over__heading {
   font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
   color: var(--color-accent);
+  letter-spacing: 0.05em;
 }
 
 .game-over__scores {
   display: flex;
-  gap: var(--space-7);
+  gap: var(--space-5);
 }
 
 .game-over__score {
@@ -24,7 +56,7 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-4) var(--space-6);
-  background: var(--color-surface);
+  background: var(--color-surface-raised);
   border: var(--border-default);
   border-radius: var(--radius-md);
 }
@@ -37,6 +69,8 @@
 .game-over__score-label {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .game-over__score-value {

@@ -60,5 +60,6 @@ export interface GameState {
   cutForDeal: CutForDealState | null
   winner: 'human' | 'computer' | null
   lastScoringEvent: string | null
+  lastComputerCard: Card | null
   handHistory: string[]
 }

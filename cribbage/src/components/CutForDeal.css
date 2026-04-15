@@ -1,86 +1,137 @@
 .cut-for-deal {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+}
+
+.cut-for-deal__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-6);
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
 
-.cut-title {
-  font-size: var(--text-xl);
+.cut-for-deal__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
   color: var(--color-accent);
+  letter-spacing: 0.04em;
 }
 
-.cut-hint {
+.cut-for-deal__hint {
+  font-size: var(--text-md);
   color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  min-height: 1.5em;
 }
 
+/* Spread */
 .cut-spread {
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: center;
-  max-width: 800px;
+  align-items: flex-end;
+  height: 160px; /* card height (112) + max lift (48) */
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 4px; /* room for shadow */
 }
 
-.cut-spread__card {
+.cut-card {
+  position: relative;
   flex-shrink: 0;
-}
-
-.cut-reveal {
+  margin-left: -66px; /* 80px wide card, show 14px of each */
+  transition: transform 0.25s ease, z-index 0s;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-1);
-  animation: flipIn 0.3s ease;
 }
 
-@keyframes flipIn {
-  from { transform: rotateY(90deg); opacity: 0; }
-  to { transform: rotateY(0deg); opacity: 1; }
+.cut-card:first-child {
+  margin-left: 0;
 }
 
-.cut-reveal--human .card {
+/* Hover: lift the card so it's fully visible */
+.cut-card--clickable:hover {
+  transform: translateY(-20px);
+  z-index: 200 !important;
+}
+
+/* Revealed card: lift and show face */
+.cut-card--revealed {
+  transform: translateY(-44px);
+}
+
+.cut-card--revealed:hover {
+  transform: translateY(-44px); /* don't add extra lift */
+}
+
+.cut-card__back {
+  cursor: default;
+}
+
+.cut-card--clickable .cut-card__back {
+  cursor: pointer;
+}
+
+.cut-card__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  white-space: nowrap;
+}
+
+.cut-card--human .cut-card__label {
+  color: #198eee;
+}
+
+.cut-card--computer .cut-card__label {
+  color: var(--color-danger);
+}
+
+/* Outline on revealed cards */
+.cut-card--human .card {
   outline: 2px solid #198eee;
   outline-offset: 2px;
 }
 
-.cut-reveal--computer .card {
+.cut-card--computer .card {
   outline: 2px solid var(--color-danger);
   outline-offset: 2px;
 }
 
-.cut-reveal__label {
-  font-size: 0.65rem;
-  color: var(--color-text-muted);
+/* Flip animation for reveal */
+.cut-card--revealed .card {
+  animation: cardFlip 0.35s ease;
 }
 
+@keyframes cardFlip {
+  0%   { transform: rotateY(90deg); opacity: 0; }
+  100% { transform: rotateY(0deg);  opacity: 1; }
+}
+
+/* Result panel */
 .cut-result {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
-  margin-top: var(--space-4);
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-6);
   background: var(--color-surface);
   border: var(--border-default);
   border-radius: var(--radius-md);
-  min-width: 280px;
+  animation: fadeUp 0.3s ease;
 }
 
-.cut-result__label {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  color: var(--color-accent);
-  text-align: center;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .cut-result__cards {
   display: flex;
-  gap: var(--space-5);
   align-items: center;
+  gap: var(--space-5);
 }
 
 .cut-result__card-wrap {
@@ -88,6 +139,22 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-muted);
+}
+
+.cut-result__name {
   font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.cut-result__vs {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.cut-result__label {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  text-align: center;
 }

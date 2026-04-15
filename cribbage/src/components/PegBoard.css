@@ -1,23 +1,8 @@
 .peg-board {
   width: 100%;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-4);
   background: var(--color-surface);
   border-bottom: var(--border-default);
-}
-
-.peg-board__scores {
-  display: flex;
-  justify-content: space-between;
-  font-size: var(--text-sm);
-  margin-bottom: var(--space-1);
-}
-
-.peg-board__score--computer {
-  color: var(--color-danger);
-}
-
-.peg-board__score--human {
-  color: #198eee;
 }
 
 .peg-board__svg {
@@ -31,40 +16,63 @@
 }
 
 .hole {
-  fill: #1a3a0e;
-  stroke: #3a7a28;
-  stroke-width: 0.5;
+  fill: #142e0a;
+  stroke: #4a8a30;
+  stroke-width: 0.8;
 }
 
 .hole--skunk {
-  fill: #1a3a0e;
+  fill: #142e0a;
   stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+/* Human pegs — blue */
+.peg--human.peg--front {
+  fill: #4a90d9;
+  stroke: #fff;
   stroke-width: 1;
 }
 
-.peg--front {
-  fill: #4a90d9;
-  stroke: #fff;
-  stroke-width: 0.8;
-}
-
-.peg--back {
+.peg--human.peg--back {
   fill: transparent;
   stroke: #4a90d9;
-  stroke-width: 0.8;
+  stroke-width: 1.2;
 }
 
-.peg-board__svg .peg--front:nth-of-type(n+3) {
+/* Computer pegs — red */
+.peg--computer.peg--front {
   fill: #e05555;
   stroke: #fff;
+  stroke-width: 1;
 }
 
-.peg-board__svg .peg--back:nth-of-type(n+4) {
+.peg--computer.peg--back {
+  fill: transparent;
   stroke: #e05555;
+  stroke-width: 1.2;
+}
+
+.skunk-line {
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 2;
 }
 
 .skunk-label {
-  font-size: 3px;
+  font-size: 6px;
   fill: var(--color-accent);
-  text-anchor: middle;
+}
+
+.track-label {
+  font-size: 7px;
+  font-weight: bold;
+}
+
+.track-label--human {
+  fill: #4a90d9;
+}
+
+.track-label--computer {
+  fill: #e05555;
 }

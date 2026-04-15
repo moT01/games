@@ -16,78 +16,83 @@ interface Props {
 const RESULT_LABELS: Record<string, string> = {
   'human-deals': 'You deal first',
   'computer-deals': 'Computer deals first',
-  tie: 'Tie - cut again',
+  tie: 'Tie — cut again',
 }
 
-export default function CutForDeal({
-  deck,
-  humanCut,
-  computerCut,
-  result,
-  onHumanCut,
-  onComputerCut,
-  onContinue,
-}: Props) {
+export default function CutForDeal({ deck, humanCut, computerCut, result, onHumanCut, onComputerCut, onContinue }: Props) {
   useEffect(() => {
     if (humanCut && !computerCut) {
-      const t = setTimeout(onComputerCut, 600)
+      const t = setTimeout(onComputerCut, 700)
       return () => clearTimeout(t)
     }
   }, [humanCut, computerCut, onComputerCut])
 
   const canClick = !humanCut
 
+  let hint = 'Click anywhere on the deck to cut'
+  if (humanCut && !computerCut) hint = 'Computer is cutting...'
+  if (result !== 'pending') hint = RESULT_LABELS[result]
+
   return (
     <div className="cut-for-deal">
-      <h2 className="cut-title">Cut for Deal</h2>
-      <p className="cut-hint">
-        {canClick ? 'Click any card to cut' : 'Waiting...'}
-      </p>
+      <div className="cut-for-deal__inner">
+        <h1 className="cut-for-deal__title">Cut for Deal</h1>
+        <p className="cut-for-deal__hint">{hint}</p>
 
-      <div className="cut-spread">
-        {deck.map((card, i) => (
-          <div key={card.id} className="cut-spread__card">
-            {humanCut?.id === card.id ? (
-              <div className="cut-reveal cut-reveal--human">
-                <CardView card={card} />
-                <span className="cut-reveal__label">You</span>
-              </div>
-            ) : computerCut?.id === card.id ? (
-              <div className="cut-reveal cut-reveal--computer">
-                <CardView card={card} />
-                <span className="cut-reveal__label">Computer</span>
-              </div>
-            ) : (
-              <CardView
-                card={card}
-                faceDown
-                onClick={canClick ? () => onHumanCut(i) : undefined}
-              />
-            )}
-          </div>
-        ))}
-      </div>
+        <div className="cut-spread">
+          {deck.map((card, i) => {
+            const isHuman = humanCut?.id === card.id
+            const isComputer = computerCut?.id === card.id
+            const isRevealed = isHuman || isComputer
 
-      {result !== 'pending' && (
-        <div className="cut-result">
-          <p className="cut-result__label">{RESULT_LABELS[result]}</p>
-          {humanCut && computerCut && (
+            return (
+              <div
+                key={card.id}
+                className={[
+                  'cut-card',
+                  isRevealed ? 'cut-card--revealed' : '',
+                  isHuman ? 'cut-card--human' : '',
+                  isComputer ? 'cut-card--computer' : '',
+                  canClick && !isRevealed ? 'cut-card--clickable' : '',
+                ].filter(Boolean).join(' ')}
+                style={{ zIndex: isRevealed ? 100 : i }}
+                onClick={canClick && !isRevealed ? () => onHumanCut(i) : undefined}
+              >
+                {isRevealed ? (
+                  <CardView card={card} />
+                ) : (
+                  <div className="card card--back cut-card__back" />
+                )}
+                {isRevealed && (
+                  <span className="cut-card__label">
+                    {isHuman ? 'You' : 'Computer'}
+                  </span>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        {result !== 'pending' && humanCut && computerCut && (
+          <div className="cut-result">
             <div className="cut-result__cards">
-              <div className="cut-result__card-wrap">
+              <div className="cut-result__card-wrap cut-result__card-wrap--human">
                 <CardView card={humanCut} />
-                <span>You</span>
+                <span className="cut-result__name">You</span>
               </div>
-              <div className="cut-result__card-wrap">
+              <span className="cut-result__vs">vs</span>
+              <div className="cut-result__card-wrap cut-result__card-wrap--computer">
                 <CardView card={computerCut} />
-                <span>Computer</span>
+                <span className="cut-result__name">Computer</span>
               </div>
             </div>
-          )}
-          <button className="btn btn--primary" onClick={onContinue}>
-            {result === 'tie' ? 'Cut Again' : 'Continue'}
-          </button>
-        </div>
-      )}
+            <p className="cut-result__label">{RESULT_LABELS[result]}</p>
+            <button className="btn btn--primary" onClick={onContinue}>
+              {result === 'tie' ? 'Cut Again' : 'Continue'}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
