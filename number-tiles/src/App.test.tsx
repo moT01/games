@@ -131,15 +131,15 @@ describe('ConfirmModal — Home button', () => {
     // Make one move (tile 12 is adjacent to blank at index 10)
     fireEvent.click(screen.getByLabelText('Tile 12'));
 
-    fireEvent.click(screen.getByLabelText('Home'));
-    expect(screen.getByText(/Are you sure/i)).toBeTruthy();
+    fireEvent.click(screen.getByLabelText('Close'));
+    expect(screen.getByText(/progress/i)).toBeTruthy();
   });
 
   it('confirming the modal returns to Home screen', () => {
     renderApp();
     fireEvent.click(screen.getByText('Play'));
     fireEvent.click(screen.getByLabelText('Tile 12'));
-    fireEvent.click(screen.getByLabelText('Home'));
+    fireEvent.click(screen.getByLabelText('Close'));
 
     fireEvent.click(screen.getByText('Yes'));
     expect(screen.getByText('Play')).toBeTruthy();
@@ -150,10 +150,10 @@ describe('ConfirmModal — Home button', () => {
     renderApp();
     fireEvent.click(screen.getByText('Play'));
     fireEvent.click(screen.getByLabelText('Tile 12'));
-    fireEvent.click(screen.getByLabelText('Home'));
+    fireEvent.click(screen.getByLabelText('Close'));
 
     fireEvent.click(screen.getByText('Cancel'));
-    expect(screen.queryByText(/Are you sure/i)).toBeNull();
+    expect(screen.queryByText(/progress/i)).toBeNull();
     expect(screen.getByText('New Game')).toBeTruthy();
   });
 });
@@ -165,7 +165,7 @@ describe('ConfirmModal — New Game button', () => {
     fireEvent.click(screen.getByLabelText('Tile 12'));
 
     fireEvent.click(screen.getByText('New Game'));
-    expect(screen.getByText(/Are you sure/i)).toBeTruthy();
+    expect(screen.getByText(/progress/i)).toBeTruthy();
   });
 });
 

@@ -40,10 +40,11 @@ export function PlayScreen({
 }: PlayScreenProps) {
   const [showHelp, setShowHelp] = useState(false);
   const [confirmAction, setConfirmAction] = useState<'home' | 'newgame' | null>(null);
-  const [displaySeconds, setDisplaySeconds] = useState(gameState.elapsedSeconds);
+  const [tickSeconds, setTickSeconds] = useState(gameState.elapsedSeconds);
+  const displaySeconds = gameState.timerActive ? tickSeconds : gameState.elapsedSeconds;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const stateRef = useRef(gameState);
-  stateRef.current = gameState;
+  useEffect(() => { stateRef.current = gameState; });
 
   const n = modeToN(gameState.mode);
 
@@ -59,13 +60,11 @@ export function PlayScreen({
         const s = stateRef.current;
         if (s.startTime !== null) {
           const extra = Math.floor((Date.now() - s.startTime) / 1000);
-          setDisplaySeconds(s.elapsedSeconds + extra);
+          setTickSeconds(s.elapsedSeconds + extra);
         }
       };
       tick();
       intervalRef.current = setInterval(tick, 1000);
-    } else {
-      setDisplaySeconds(gameState.elapsedSeconds);
     }
 
     return () => {

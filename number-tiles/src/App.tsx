@@ -108,7 +108,6 @@ export default function App() {
   useEffect(() => {
     if (gameState && !gameState.won) {
       saveGame(gameState);
-      setSavedGame(loadSavedGame());
     }
   }, [gameState]);
 
