@@ -93,7 +93,7 @@ export function PlayScreen({
       moves: s.moves + 1,
       elapsedSeconds: solved ? newElapsed : s.elapsedSeconds,
       timerActive: !solved,
-      startTime: solved ? null : now,
+      startTime: solved ? null : (s.startTime ?? now),
       won: solved,
     };
 
@@ -155,7 +155,11 @@ export function PlayScreen({
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       {confirmAction && (
         <ConfirmModal
-          message="Are you sure? Your progress will be saved."
+          message={
+            confirmAction === 'home'
+              ? 'Go back to the menu? Your progress will be saved.'
+              : 'Start a new game? Your current progress will be lost.'
+          }
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />

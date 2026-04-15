@@ -63,6 +63,7 @@ export function HomeScreen({
         </a>
       </div>
 
+      <div className="home-screen__card">
       <h1 className="home-screen__title">Number Slider</h1>
       <p className="home-screen__subtitle">The sliding tile puzzle</p>
 
@@ -110,6 +111,7 @@ export function HomeScreen({
             Resume {savedGameMode}
           </button>
         )}
+      </div>
       </div>
     </div>
   );

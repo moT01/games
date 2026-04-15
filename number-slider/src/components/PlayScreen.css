@@ -36,6 +36,19 @@
   text-decoration: none;
 }
 
+/* .play-screen__card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+} */
+
 .play-screen__status {
   display: flex;
   gap: var(--space-6);

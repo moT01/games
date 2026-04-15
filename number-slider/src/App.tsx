@@ -104,6 +104,13 @@ export default function App() {
     localStorage.setItem('number-slider:theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (gameState && !gameState.won) {
+      saveGame(gameState);
+      setSavedGame(loadSavedGame());
+    }
+  }, [gameState]);
+
   const handlePlay = useCallback((mode: Mode) => {
     const state = newGame(mode);
     setGameState(state);
