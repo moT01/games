@@ -174,56 +174,58 @@ export function PlayScreen({
         />
       )}
 
-      <div className="play-screen__top-bar">
-        <button className="btn btn-secondary play-screen__icon-btn" onClick={handleHomeRequest} aria-label="Close">
-          ✕
+      <div className="play-screen__card">
+        <div className="play-screen__top-bar">
+          <button className="btn btn-secondary play-screen__icon-btn" onClick={handleHomeRequest} aria-label="Close">
+            ✕
+          </button>
+          <span className="play-screen__mode">{gameState.mode}</span>
+          <div className="play-screen__top-actions">
+            <button className="btn btn-secondary play-screen__icon-btn" onClick={() => setShowHelp(true)} aria-label="Help">
+              ?
+            </button>
+            <button className="btn btn-secondary play-screen__icon-btn" onClick={onToggleTheme} aria-label="Toggle theme">
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+            <a
+              className="btn btn-secondary play-screen__icon-btn"
+              href="https://www.freecodecamp.org/donate"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Donate"
+            >
+              ♥
+            </a>
+          </div>
+        </div>
+
+        <div className="play-screen__status">
+          <div className="play-screen__stat">
+            <span className="play-screen__stat-label">Moves</span>
+            <span
+              key={gameState.moves}
+              className="play-screen__stat-value play-screen__stat-value--pulse"
+            >
+              {gameState.moves}
+            </span>
+          </div>
+          <div className="play-screen__stat">
+            <span className="play-screen__stat-label">Time</span>
+            <span className="play-screen__stat-value">{formatTime(displaySeconds)}</span>
+          </div>
+        </div>
+
+        <Board
+          tiles={gameState.tiles}
+          n={n}
+          validMoveIndices={validMoveIndices}
+          onTileClick={handleTileClick}
+        />
+
+        <button className="btn btn-secondary play-screen__new-btn" onClick={handleNewGameRequest}>
+          New Game
         </button>
-        <span className="play-screen__mode">{gameState.mode}</span>
-        <div className="play-screen__top-actions">
-          <button className="btn btn-secondary play-screen__icon-btn" onClick={() => setShowHelp(true)} aria-label="Help">
-            ?
-          </button>
-          <button className="btn btn-secondary play-screen__icon-btn" onClick={onToggleTheme} aria-label="Toggle theme">
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
-          <a
-            className="btn btn-secondary play-screen__icon-btn"
-            href="https://www.freecodecamp.org/donate"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Donate"
-          >
-            ♥
-          </a>
-        </div>
       </div>
-
-      <div className="play-screen__status">
-        <div className="play-screen__stat">
-          <span className="play-screen__stat-label">Moves</span>
-          <span
-            key={gameState.moves}
-            className="play-screen__stat-value play-screen__stat-value--pulse"
-          >
-            {gameState.moves}
-          </span>
-        </div>
-        <div className="play-screen__stat">
-          <span className="play-screen__stat-label">Time</span>
-          <span className="play-screen__stat-value">{formatTime(displaySeconds)}</span>
-        </div>
-      </div>
-
-      <Board
-        tiles={gameState.tiles}
-        n={n}
-        validMoveIndices={validMoveIndices}
-        onTileClick={handleTileClick}
-      />
-
-      <button className="btn btn-secondary play-screen__new-btn" onClick={handleNewGameRequest}>
-        New Game
-      </button>
     </div>
   );
 }
