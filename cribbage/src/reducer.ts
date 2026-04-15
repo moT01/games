@@ -39,9 +39,6 @@ const DEFAULT_SHOW: ShowState = {
 }
 
 export function makeInitialState(): GameState {
-  const savedMode = localStorage.getItem('countingMode')
-  const countingMode: 'manual' | 'auto' =
-    savedMode === 'manual' ? 'manual' : 'auto'
   return {
     phase: 'home',
     deck: [],
@@ -54,7 +51,6 @@ export function makeInitialState(): GameState {
     humanPegs: { front: 0, back: 0 },
     computerPegs: { front: 0, back: 0 },
     dealer: 'human',
-    countingMode,
     pegging: { ...DEFAULT_PEGGING },
     show: { ...DEFAULT_SHOW },
     cutForDeal: null,
@@ -67,7 +63,6 @@ export function makeInitialState(): GameState {
 
 export type Action =
   | { type: 'SET_PHASE'; phase: Phase }
-  | { type: 'SET_COUNTING_MODE'; mode: 'manual' | 'auto' }
   | { type: 'START_CUT_FOR_DEAL' }
   | { type: 'HUMAN_CUT'; cardIndex: number }
   | { type: 'COMPUTER_CUT' }
@@ -132,10 +127,7 @@ function beginShow(state: GameState): GameState {
   const starter = state.starterCard!
   const hand =
     scorer === 'human' ? state.humanHand : state.computerHand
-  const combos =
-    state.countingMode === 'manual' && scorer === 'human'
-      ? allCombinations(hand, starter, false)
-      : []
+  const combos = scorer === 'human' ? allCombinations(hand, starter, false) : []
   return {
     ...state,
     phase: 'show',
@@ -193,11 +185,6 @@ function advanceShowScorer(state: GameState): GameState {
 
 export function reducer(state: GameState, action: Action): GameState {
   switch (action.type) {
-    case 'SET_COUNTING_MODE': {
-      localStorage.setItem('countingMode', action.mode)
-      return { ...state, countingMode: action.mode }
-    }
-
     case 'START_CUT_FOR_DEAL': {
       const deck = shuffle(createDeck())
       return {

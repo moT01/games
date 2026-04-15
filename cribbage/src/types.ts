@@ -54,7 +54,6 @@ export interface GameState {
   humanPegs: Pegs
   computerPegs: Pegs
   dealer: 'human' | 'computer'
-  countingMode: 'manual' | 'auto'
   pegging: PeggingState
   show: ShowState
   cutForDeal: CutForDealState | null
