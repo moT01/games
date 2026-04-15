@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-weight: var(--weight-bold);
   font-size: var(--text-xl);

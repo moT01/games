@@ -37,6 +37,7 @@ export function HomeScreen({
     <div className="home-screen">
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
 
+      <div className="home-screen__card">
       <div className="home-screen__top-bar">
         <button
           className="btn btn-secondary home-screen__icon-btn"
@@ -63,7 +64,6 @@ export function HomeScreen({
         </a>
       </div>
 
-      <div className="home-screen__card">
       <h1 className="home-screen__title">Number Slider</h1>
       <p className="home-screen__subtitle">The sliding tile puzzle</p>
 
