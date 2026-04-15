@@ -113,7 +113,10 @@
 }
 
 [data-theme='light'] body {
-  background-image: radial-gradient(circle, var(--gray-15) 1px, transparent 1px);
+  background-image:
+    radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, var(--color-bg) 80%),
+    radial-gradient(circle, var(--gray-15) 1px, transparent 1px);
+  background-size: 100% 100%, 28px 28px;
 }
 
 #root {
@@ -130,8 +133,10 @@ body {
   line-height: var(--line-height-normal);
   color: var(--color-text-primary);
   background-color: var(--color-bg);
-  background-image: radial-gradient(circle, var(--gray-75) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image:
+    radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, var(--color-bg) 80%),
+    radial-gradient(circle, var(--gray-75) 1px, transparent 1px);
+  background-size: 100% 100%, 28px 28px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
