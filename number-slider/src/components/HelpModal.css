@@ -4,7 +4,7 @@
   overflow-y: auto;
 }
 
-.help-modal {
+.modal-card.help-modal {
   max-width: 480px;
   display: flex;
   flex-direction: column;

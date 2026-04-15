@@ -116,6 +116,10 @@
   background-image: radial-gradient(circle, var(--gray-15) 1px, transparent 1px);
 }
 
+#root {
+  width: 350px;
+}
+
 body {
   font-family: var(--font-body);
   font-size: var(--text-md);
