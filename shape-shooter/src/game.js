@@ -144,7 +144,7 @@ export class Game {
     this.state.wave = wave;
     this.state.waveState = 'active';
     this.state.spawnQueue = getWaveComposition(wave);
-    const baseInterval = Math.max(0.6, 2.5 - wave * 0.05);
+    const baseInterval = Math.max(0.4, 1.2 - wave * 0.04);
     this.state.spawnTimer = baseInterval * (0.5 + Math.random() * 1.3);
     this.player.invincibleTimer = 1.5;
     this.timedPowerupTimer = 20;
@@ -245,7 +245,7 @@ export class Game {
       const type = this.state.spawnQueue.pop();
       const enemy = spawnEnemyAtEdge(type, this.W, this.H, this.state.wave);
       this.enemies.push(enemy);
-      const baseInterval = Math.max(0.6, 2.5 - this.state.wave * 0.05);
+      const baseInterval = Math.max(0.4, 1.2 - this.state.wave * 0.04);
       const jitterMin = Math.max(0.5, 0.7 - this.state.wave * 0.005);
       this.state.spawnTimer = baseInterval * (jitterMin + Math.random() * (1.8 - jitterMin));
     }

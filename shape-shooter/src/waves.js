@@ -1,11 +1,11 @@
 export const WAVE_ENEMY_STATS = {
-  drifter:  { hp: 1,  maxHp: 1,  speed: 80,  scoreValue: 10,  shootCooldown: 0,   size: 14 },
-  chaser:   { hp: 2,  maxHp: 2,  speed: 100, scoreValue: 20,  shootCooldown: 0,   size: 13 },
-  shooter:  { hp: 2,  maxHp: 2,  speed: 40,  scoreValue: 25,  shootCooldown: 2.5, size: 15 },
-  swarmer:  { hp: 1,  maxHp: 1,  speed: 150, scoreValue: 5,   shootCooldown: 0,   size: 7  },
-  splitter: { hp: 2,  maxHp: 2,  speed: 70,  scoreValue: 30,  shootCooldown: 0,   size: 16 },
-  dasher:   { hp: 2,  maxHp: 2,  speed: 60,  scoreValue: 35,  shootCooldown: 0,   size: 14 },
-  tank:     { hp: 10, maxHp: 10, speed: 30,  scoreValue: 80,  shootCooldown: 4,   size: 22 },
+  drifter:  { hp: 1,  maxHp: 1,  speed: 115, scoreValue: 10,  shootCooldown: 0,   size: 14 },
+  chaser:   { hp: 2,  maxHp: 2,  speed: 140, scoreValue: 20,  shootCooldown: 0,   size: 13 },
+  shooter:  { hp: 2,  maxHp: 2,  speed: 60,  scoreValue: 25,  shootCooldown: 2.0, size: 15 },
+  swarmer:  { hp: 1,  maxHp: 1,  speed: 200, scoreValue: 5,   shootCooldown: 0,   size: 7  },
+  splitter: { hp: 2,  maxHp: 2,  speed: 100, scoreValue: 30,  shootCooldown: 0,   size: 16 },
+  dasher:   { hp: 2,  maxHp: 2,  speed: 85,  scoreValue: 35,  shootCooldown: 0,   size: 14 },
+  tank:     { hp: 10, maxHp: 10, speed: 35,  scoreValue: 80,  shootCooldown: 3.5, size: 22 },
 };
 
 function weighted(options) {

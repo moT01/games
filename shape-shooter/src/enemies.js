@@ -89,10 +89,10 @@ export function updateChaser(enemy, dt, playerX, playerY, W, H) {
   while (diff < -Math.PI) diff += Math.PI * 2;
   const turnRate = 2.5;
   enemy.angle += Math.sign(diff) * Math.min(Math.abs(diff), turnRate * dt);
-  enemy.vx += Math.cos(enemy.angle) * 200 * dt;
-  enemy.vy += Math.sin(enemy.angle) * 200 * dt;
+  enemy.vx += Math.cos(enemy.angle) * 280 * dt;
+  enemy.vy += Math.sin(enemy.angle) * 280 * dt;
   const cur = Math.sqrt(enemy.vx * enemy.vx + enemy.vy * enemy.vy);
-  const maxSpd = 130;
+  const maxSpd = 175;
   if (cur > maxSpd) { enemy.vx = enemy.vx / cur * maxSpd; enemy.vy = enemy.vy / cur * maxSpd; }
   enemy.x += enemy.vx * dt;
   enemy.y += enemy.vy * dt;
