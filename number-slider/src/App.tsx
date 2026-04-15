@@ -24,8 +24,8 @@ export interface BestScore {
 
 export type BestScores = Partial<Record<Mode, BestScore>>;
 
-const BEST_SCORES_KEY = 'number-slider:best-scores';
-const SAVED_GAME_KEY = 'number-slider:saved-game';
+const BEST_SCORES_KEY = 'number-tiles:best-scores';
+const SAVED_GAME_KEY = 'number-tiles:saved-game';
 
 function modeToN(mode: Mode): number {
   return parseInt(mode[0], 10);
@@ -74,7 +74,7 @@ function clearSavedGame(): void {
 }
 
 function loadTheme(): 'dark' | 'light' {
-  return (localStorage.getItem('number-slider:theme') as 'dark' | 'light') || 'dark';
+  return (localStorage.getItem('number-tiles:theme') as 'dark' | 'light') || 'dark';
 }
 
 function newGame(mode: Mode): GameState {
@@ -102,7 +102,7 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('number-slider:theme', theme);
+    localStorage.setItem('number-tiles:theme', theme);
   }, [theme]);
 
   useEffect(() => {

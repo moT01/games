@@ -66,7 +66,7 @@ export function HomeScreen({
         </a>
       </div>
 
-      <h1 className="home-screen__title">Number Slider</h1>
+      <h1 className="home-screen__title">Number Tiles</h1>
       <p className="home-screen__subtitle">The sliding tile puzzle</p>
 
       <div className="home-screen__mode-select">

@@ -177,7 +177,7 @@ describe('Theme toggle', () => {
     fireEvent.click(screen.getByLabelText('Toggle theme'));
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
-    expect(localStorage.getItem('number-slider:theme')).toBe('light');
+    expect(localStorage.getItem('number-tiles:theme')).toBe('light');
   });
 });
 
