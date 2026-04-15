@@ -8,6 +8,7 @@ interface HomeScreenProps {
   theme: 'dark' | 'light';
   hasSavedGame: boolean;
   savedGameMode: Mode | undefined;
+  defaultMode: Mode;
   onPlay: (mode: Mode) => void;
   onResume: () => void;
   onToggleTheme: () => void;
@@ -26,11 +27,12 @@ export function HomeScreen({
   theme,
   hasSavedGame,
   savedGameMode,
+  defaultMode,
   onPlay,
   onResume,
   onToggleTheme,
 }: HomeScreenProps) {
-  const [selectedMode, setSelectedMode] = useState<Mode>('4x4');
+  const [selectedMode, setSelectedMode] = useState<Mode>(defaultMode);
   const [showHelp, setShowHelp] = useState(false);
 
   return (

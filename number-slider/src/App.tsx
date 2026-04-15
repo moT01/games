@@ -98,6 +98,7 @@ export default function App() {
   const [bestScores, setBestScores] = useState<BestScores>(loadBestScores);
   const [theme, setTheme] = useState<'dark' | 'light'>(loadTheme);
   const [savedGame, setSavedGame] = useState<GameState | null>(loadSavedGame);
+  const [lastMode, setLastMode] = useState<Mode>(loadSavedGame()?.mode ?? '4x4');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -112,6 +113,7 @@ export default function App() {
   }, [gameState]);
 
   const handlePlay = useCallback((mode: Mode) => {
+    setLastMode(mode);
     const state = newGame(mode);
     setGameState(state);
     setScreen('play');
@@ -119,6 +121,7 @@ export default function App() {
 
   const handleResume = useCallback(() => {
     if (!savedGame) return;
+    setLastMode(savedGame.mode);
     const resumed: GameState = {
       ...savedGame,
       timerActive: savedGame.moves > 0,
@@ -181,6 +184,7 @@ export default function App() {
           theme={theme}
           hasSavedGame={!!savedGame}
           savedGameMode={savedGame?.mode}
+          defaultMode={lastMode}
           onPlay={handlePlay}
           onResume={handleResume}
           onToggleTheme={toggleTheme}
