@@ -276,6 +276,8 @@ function applyMove(row, col, player) {
   }
 }
 
+const MIN_AI_MS = 500;
+
 function triggerAI() {
   state.aiThinking = true;
   render();
@@ -283,12 +285,15 @@ function triggerAI() {
 }
 
 function runAI() {
+  const start = Date.now();
   const aiPlayer = state.humanPlayer === 1 ? 2 : 1;
   const move = getBestMove(state.board, aiPlayer);
-  state.aiThinking = false;
-  if (move) {
-    applyMove(move[0], move[1], aiPlayer);
-  }
+  const elapsed = Date.now() - start;
+  const delay = Math.max(0, MIN_AI_MS - elapsed);
+  setTimeout(() => {
+    state.aiThinking = false;
+    if (move) applyMove(move[0], move[1], aiPlayer);
+  }, delay);
 }
 
 // ── Rendering ────────────────────────────────────────────────────────────────
