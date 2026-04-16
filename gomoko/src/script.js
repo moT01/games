@@ -217,27 +217,6 @@ function loadState() {
   }
 }
 
-// ── Audio ────────────────────────────────────────────────────────────────────
-
-let audioCtx = null;
-let soundEnabled = true;
-
-function playPlaceSound() {
-  if (!soundEnabled) return;
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.frequency.setValueAtTime(520, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(260, audioCtx.currentTime + 0.08);
-    gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-    osc.start(audioCtx.currentTime);
-    osc.stop(audioCtx.currentTime + 0.12);
-  } catch (_) {}
-}
 
 // ── Game actions ─────────────────────────────────────────────────────────────
 
@@ -264,7 +243,6 @@ function handleCellClick(row, col) {
 function applyMove(row, col, player) {
   state.board = placeStone(state.board, row, col, player);
   state.lastMove = [row, col];
-  playPlaceSound();
 
   const { won, winLine } = checkWin(state.board, row, col, player);
   if (won) {
@@ -623,7 +601,6 @@ function renderHome() {
       <div class="home-footer">
         <button class="btn btn-icon" id="theme-btn-home" aria-label="Toggle theme"></button>
         <a class="btn btn-secondary btn-sm" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">Donate</a>
-        <button class="btn btn-icon sound-btn" id="sound-btn-home" aria-label="Toggle sound"></button>
       </div>
     </div>
   `;
@@ -648,10 +625,8 @@ function renderHome() {
 
   screen.querySelector('#help-btn-home').addEventListener('click', openHelp);
   screen.querySelector('#theme-btn-home').addEventListener('click', toggleTheme);
-  screen.querySelector('#sound-btn-home').addEventListener('click', toggleSound);
 
   updateThemeBtn(screen.querySelector('#theme-btn-home'));
-  updateSoundBtn(screen.querySelector('#sound-btn-home'));
 
   app.appendChild(screen);
 }
@@ -721,16 +696,13 @@ function renderPlay() {
     <button class="btn btn-icon" id="help-btn-play" aria-label="Help">?</button>
     <button class="btn btn-icon" id="theme-btn-play" aria-label="Toggle theme"></button>
     <a class="btn btn-secondary btn-sm" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">Donate</a>
-    <button class="btn btn-icon sound-btn" id="sound-btn-play" aria-label="Toggle sound"></button>
   `;
 
   controls.querySelector('#new-game-btn').addEventListener('click', onNewGame);
   controls.querySelector('#help-btn-play').addEventListener('click', openHelp);
   controls.querySelector('#theme-btn-play').addEventListener('click', toggleTheme);
-  controls.querySelector('#sound-btn-play').addEventListener('click', toggleSound);
 
   updateThemeBtn(controls.querySelector('#theme-btn-play'));
-  updateSoundBtn(controls.querySelector('#sound-btn-play'));
 
   screen.appendChild(statusBar);
   screen.appendChild(boardWrap);
@@ -758,7 +730,7 @@ function render() {
   }
 }
 
-// ── Theme / Sound ─────────────────────────────────────────────────────────────
+// ── Theme ─────────────────────────────────────────────────────────────────────
 
 function getTheme() {
   return localStorage.getItem(THEME_KEY) || 'dark';
@@ -784,16 +756,6 @@ function updateThemeBtn(btn) {
   btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
 }
 
-function toggleSound() {
-  soundEnabled = !soundEnabled;
-  document.querySelectorAll('.sound-btn').forEach(btn => updateSoundBtn(btn));
-}
-
-function updateSoundBtn(btn) {
-  if (!btn) return;
-  btn.textContent = soundEnabled ? 'On' : 'Off';
-  btn.setAttribute('aria-label', soundEnabled ? 'Disable sound' : 'Enable sound');
-}
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 
