@@ -88,8 +88,12 @@
   align-items: center;
   width: 100%;
   gap: var(--space-2);
-  padding-bottom: var(--space-3);
+  padding: var(--space-2) 0;
   border-bottom: var(--border-default);
+}
+
+.home-card .top-bar {
+  padding: var(--space-1) 0 var(--space-3);
 }
 
 .top-bar-left {
@@ -296,16 +300,21 @@
   padding: var(--space-4) var(--space-3);
 }
 
-.play-content {
+.play-card {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--space-3);
-  width: min(90vw, 90vh);
+  width: min(90vw, calc(90vh - 60px));
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
 }
 
-.play-content .top-bar {
-  padding-bottom: var(--space-3);
+.play-card .top-bar {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-default);
 }
 
 /* ── Status Bar ─────────────────────────────────────────────────────────────── */
@@ -324,40 +333,37 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
 }
 
 .board-svg {
   width: 100%;
   height: 100%;
   display: block;
-  border-radius: var(--radius-lg);
 }
 
 .board-bg {
-  fill: #dcb483;
-}
-
-.dark-palette .board-bg {
-  fill: #5c3d1e;
+  fill: var(--gray-85);
 }
 
 .light-palette .board-bg {
-  fill: #dcb483;
+  fill: var(--gray-05);
 }
 
 .grid-line {
-  stroke: rgba(0, 0, 0, 0.35);
+  stroke: rgba(255, 255, 255, 0.1);
   stroke-width: 1;
 }
 
-.dark-palette .grid-line {
-  stroke: rgba(0, 0, 0, 0.5);
+.light-palette .grid-line {
+  stroke: rgba(0, 0, 0, 0.14);
 }
 
 .star-point {
-  fill: rgba(0, 0, 0, 0.5);
+  fill: rgba(255, 255, 255, 0.25);
+}
+
+.light-palette .star-point {
+  fill: rgba(0, 0, 0, 0.3);
 }
 
 /* ── Hit Areas ──────────────────────────────────────────────────────────────── */
@@ -372,9 +378,14 @@
 }
 
 .hit-area.clickable:hover {
-  fill: rgba(255, 255, 255, 0.12);
-  stroke: rgba(255, 255, 255, 0.25);
+  fill: rgba(255, 255, 255, 0.08);
+  stroke: rgba(255, 255, 255, 0.2);
   stroke-width: 1;
+}
+
+.light-palette .hit-area.clickable:hover {
+  fill: rgba(0, 0, 0, 0.07);
+  stroke: rgba(0, 0, 0, 0.15);
 }
 
 .hit-area.clickable:focus-visible {

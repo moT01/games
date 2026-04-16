@@ -690,7 +690,7 @@ function renderPlay() {
   screen.className = 'play-screen';
 
   const content = document.createElement('div');
-  content.className = 'play-content';
+  content.className = 'play-card';
 
   // Top bar
   let statusText = '';
