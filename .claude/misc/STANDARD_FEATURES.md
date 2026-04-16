@@ -4,7 +4,8 @@ These features are required in every game. The planner must include all of them 
 
 ## UI & Layout
 
-- Light/dark theme toggle — persisted to local storage
+- Use the colors in `global.css` for themes
+- Light/dark theme toggle — persisted to local storage - use the `.light-palette` and `.dark-palette` classes in `global.css`
 - Donate button — visible on every screen
 - Home screen and play screen (no routing, conditional render)
 - Confirmation modal for destructive actions (new game, quit)
