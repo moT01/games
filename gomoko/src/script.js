@@ -652,7 +652,7 @@ function renderHome() {
       </div>
       <div class="color-picker${savedMode === 'hvh' ? ' color-picker-hidden' : ''}" id="diff-picker" role="group" aria-label="Difficulty">
         <span class="color-picker-label">Difficulty</span>
-        <button class="mode-btn${savedDiff === 'easy' ? ' mode-active' : ''}" data-diff="easy" aria-pressed="${savedDiff === 'easy'}">Easy</button>
+        <button class="mode-btn${savedDiff === 'easy' ? ' mode-active' : ''}" data-diff="easy" aria-pressed="${savedDiff === 'easy'}">Normal</button>
         <button class="mode-btn${savedDiff === 'hard' ? ' mode-active' : ''}" data-diff="hard" aria-pressed="${savedDiff === 'hard'}">Hard</button>
       </div>
       <button class="btn btn-primary btn-lg" id="start-btn" aria-label="${hasSavedGame ? 'Start new game' : 'Start game'}">${hasSavedGame ? 'New Game' : 'Start Game'}</button>
