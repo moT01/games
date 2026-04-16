@@ -193,7 +193,7 @@
 
 .mode-toggle-sm .mode-btn {
   padding: var(--space-2) var(--space-3);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }
 
 .hard-label {
