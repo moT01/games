@@ -653,19 +653,22 @@ function renderHelpModal() {
 
 let confirmCallback = null;
 
-function showConfirmModal(cb) {
+function showConfirmModal(cb, opts = {}) {
   confirmCallback = cb;
   const existing = document.getElementById('confirm-backdrop');
   if (existing) existing.remove();
+  const title = opts.title || 'Start a new game?';
+  const body = opts.body || 'Your current game will be lost.';
+  const okLabel = opts.okLabel || 'New Game';
   const div = document.createElement('div');
   div.innerHTML = `
     <div class="modal-backdrop" id="confirm-backdrop">
       <div class="modal-card" role="dialog" aria-modal="true">
-        <h2 class="modal-title">Start a new game?</h2>
-        <p class="modal-body">Your current game will be lost.</p>
+        <h2 class="modal-title">${title}</h2>
+        <p class="modal-body-text">${body}</p>
         <div class="modal-actions">
           <button class="secondary-btn" id="confirm-cancel">Cancel</button>
-          <button class="primary-btn" id="confirm-ok">New Game</button>
+          <button class="primary-btn" id="confirm-ok">${okLabel}</button>
         </div>
       </div>
     </div>
@@ -752,8 +755,13 @@ function attachEvents() {
   document.getElementById('close-btn')?.addEventListener('click', () => {
     if (state.status === 'playing') {
       showConfirmModal(() => {
+        saveState();
         state.status = 'idle';
         render();
+      }, {
+        title: 'Quit Game',
+        body: 'Return to the main menu? You can resume your game from there.',
+        okLabel: 'Quit',
       });
     } else {
       state.status = 'idle';
