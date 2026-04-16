@@ -29,7 +29,7 @@ export default function CutForDeal({ deck, humanCut, computerCut, result, onHuma
 
   const canClick = !humanCut
 
-  let hint = 'Click anywhere on the deck to cut'
+  let hint = 'Click the deck to cut — low card deals first'
   if (humanCut && !computerCut) hint = 'Computer is cutting...'
   if (result !== 'pending') hint = RESULT_LABELS[result]
 
@@ -74,19 +74,8 @@ export default function CutForDeal({ deck, humanCut, computerCut, result, onHuma
         </div>
 
         {result !== 'pending' && humanCut && computerCut && (
-          <div className="cut-result">
-            <div className="cut-result__cards">
-              <div className="cut-result__card-wrap cut-result__card-wrap--human">
-                <CardView card={humanCut} />
-                <span className="cut-result__name">You</span>
-              </div>
-              <span className="cut-result__vs">vs</span>
-              <div className="cut-result__card-wrap cut-result__card-wrap--computer">
-                <CardView card={computerCut} />
-                <span className="cut-result__name">Computer</span>
-              </div>
-            </div>
-            <p className="cut-result__label">{RESULT_LABELS[result]}</p>
+          <div className="cut-continue">
+            <p className="cut-continue__label">{RESULT_LABELS[result]}</p>
             <button className="btn btn--primary" onClick={onContinue}>
               {result === 'tie' ? 'Cut Again' : 'Continue'}
             </button>
