@@ -745,7 +745,7 @@ function renderPlay() {
     if (state.status === 'draw') {
       resultText = 'Draw!';
     } else if (state.mode === 'hvc') {
-      resultText = state.winner === state.humanPlayer ? 'You win!' : 'Computer wins!';
+      resultText = state.winner === state.humanPlayer ? 'You win!' : 'You lose';
     } else {
       const winner = state.winner === 1 ? 'Dark' : 'Light';
       resultText = `${winner} wins!`;

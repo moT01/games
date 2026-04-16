@@ -28,6 +28,7 @@ Every game should look polished and intentional — not like a default browser U
 
 ## Buttons
 
+- Use the icons in `./claude/icons` when applicable.
 - Primary buttons use a subtle gradient on `--color-accent`, not flat color
 - Secondary buttons use surface colors with a border
 - Every button must have hover (lift `-1px`, stronger shadow), active (scale down, push shadow inward), and disabled (`opacity: 0.4`) states

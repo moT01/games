@@ -13,12 +13,15 @@ These features are required in every game. The planner must include all of them 
 
 ### Home Screen
 
+- The home screen should have 3 buttons at the top - rules/help, theme, and donate. Use the svg code in the html files in the `./claude/icons` folder.
 - The home screen should be the full width and height of the window.
 - It should contain all the main menu options, buttons, and everything else centered on the screen - with a border around the whole set of items.
 - Behind the items should be a background to match the game. Ideally, elegant and minimal - not overwhelming.
 
 ### Play Screen
 
+- The game screen should have 4 buttons at the top - close, rules/help, theme, and donate. Use the svg code in the html files in the `./claude/icons` folder.
+- There should be a horizontal rule below those 4 buttons.
 - The play screen should fill the whole window if possible.
 - It should be responsive
 
