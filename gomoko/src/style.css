@@ -275,6 +275,7 @@
 .stats-row {
   display: flex;
   justify-content: space-between;
+  width: 20%;
   font-size: var(--text-xs);
   color: var(--color-text-muted);
 }
@@ -658,11 +659,19 @@
   border: var(--border-default);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
-  font-size: var(--text-sm);
   padding: var(--space-1) var(--space-2);
   cursor: pointer;
   transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+  pointer-events: none;
 }
 
 .modal-close:hover {

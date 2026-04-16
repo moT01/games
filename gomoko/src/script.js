@@ -237,17 +237,17 @@ function saveState() {
 
 function loadStats() {
   try {
-    return JSON.parse(localStorage.getItem(STATS_KEY)) || { normal: { w: 0, l: 0, d: 0 }, hard: { w: 0, l: 0, d: 0 } };
+    return JSON.parse(localStorage.getItem(STATS_KEY)) || { normal: 0, hard: 0 };
   } catch (_) {
-    return { normal: { w: 0, l: 0, d: 0 }, hard: { w: 0, l: 0, d: 0 } };
+    return { normal: 0, hard: 0 };
   }
 }
 
-function recordResult(result) {
+function recordWin() {
   if (state.mode !== 'hvc') return;
   const diff = state.difficulty === 'hard' ? 'hard' : 'normal';
   const stats = loadStats();
-  stats[diff][result]++;
+  stats[diff]++;
   try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (_) {}
 }
 
@@ -298,7 +298,7 @@ function applyMove(row, col, player) {
     state.winner = player;
     state.winLine = winLine;
     state.currentPlayer = player;
-    recordResult(player === state.humanPlayer ? 'w' : 'l');
+    if (player === state.humanPlayer) recordWin();
     saveState();
     render();
     return;
@@ -306,7 +306,6 @@ function applyMove(row, col, player) {
 
   if (checkDraw(state.board)) {
     state.status = 'draw';
-    recordResult('d');
     saveState();
     render();
     return;
@@ -507,7 +506,7 @@ function buildHelpModal() {
 
   panel.innerHTML = `
     <h2 class="modal-title">How to Play</h2>
-    <button class="modal-close" aria-label="Close help">X</button>
+    <button class="modal-close" aria-label="Close help">${ICON_X}</button>
     <div class="modal-body">
       <h3>Objective</h3>
       <p>Be the first to place exactly 5 of your stones in an unbroken row — horizontally, vertically, or diagonally. Six or more in a row does not win.</p>
@@ -637,12 +636,11 @@ function onNewGame() {
 
 function renderStats() {
   const s = loadStats();
-  const fmt = r => `${r.w}W ${r.l}L ${r.d}D`;
   return `
     <div class="stats-block">
-      <span class="stats-heading">Record</span>
-      <div class="stats-row"><span class="stats-label">Normal</span><span class="stats-record">${fmt(s.normal)}</span></div>
-      <div class="stats-row"><span class="stats-label">Hard</span><span class="stats-record">${fmt(s.hard)}</span></div>
+      <span class="stats-heading">Wins</span>
+      <div class="stats-row"><span class="stats-label">Normal</span>${s.normal}</div>
+      <div class="stats-row"><span class="stats-label">Hard</span>${s.hard}</div>
     </div>
   `;
 }
@@ -888,10 +886,4 @@ function updateThemeBtn(btn) {
 
 applyTheme(getTheme());
 
-const saved = loadState();
-if (saved && saved.status === 'playing') {
-  state = saved;
-  render();
-} else {
-  render();
-}
+render();
