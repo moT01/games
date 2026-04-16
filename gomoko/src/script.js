@@ -72,8 +72,9 @@ function getCandidates(board) {
     for (let c = 0; c < 15; c++) {
       if (board[r][c] !== 0) {
         hasStone = true;
-        for (let dr = -2; dr <= 2; dr++) {
-          for (let dc = -2; dc <= 2; dc++) {
+        for (let dr = -1; dr <= 1; dr++) {
+          for (let dc = -1; dc <= 1; dc++) {
+            if (dr === 0 && dc === 0) continue;
             const nr = r + dr;
             const nc = c + dc;
             if (
@@ -91,6 +92,25 @@ function getCandidates(board) {
     }
   }
   return hasStone ? candidates : [[7, 7]];
+}
+
+function orderScore(board, r, c, player) {
+  const opponent = player === 1 ? 2 : 1;
+  const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+  let score = 0;
+  for (const [dr, dc] of dirs) {
+    let p = 0, o = 0;
+    for (let i = -4; i <= 4; i++) {
+      const nr = r + dr * i;
+      const nc = c + dc * i;
+      if (nr < 0 || nr >= 15 || nc < 0 || nc >= 15) continue;
+      const cell = board[nr][nc];
+      if (cell === player) p++;
+      else if (cell === opponent) o++;
+    }
+    score += p * p + o * o;
+  }
+  return score;
 }
 
 function scoreWindow(window, player) {
@@ -154,17 +174,12 @@ function negamax(board, depth, alpha, beta, player) {
     return { score: 0, move: null };
   }
 
-  // Move ordering: score each candidate shallowly
-  const scored = candidates.map(([r, c]) => {
-    const next = placeStone(board, r, c, player);
-    return { move: [r, c], score: scoreBoard(next, player) };
-  });
-  scored.sort((a, b) => b.score - a.score);
+  candidates.sort((a, b) => orderScore(board, b[0], b[1], player) - orderScore(board, a[0], a[1], player));
 
-  let bestMove = scored[0].move;
+  let bestMove = candidates[0];
   let bestScore = -Infinity;
 
-  for (const { move: [r, c] } of scored) {
+  for (const [r, c] of candidates) {
     const next = placeStone(board, r, c, player);
     const { won } = checkWin(next, r, c, player);
     if (won) {
