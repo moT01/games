@@ -420,13 +420,13 @@ function buildBoard() {
         if (!svg.querySelector(`#${gradId}`)) {
           if (cell === 1) {
             defs.appendChild(svgEl('radialGradient', { id: 'grad-dark', cx: '30%', cy: '25%', r: '70%' }, [
-              svgEl('stop', { offset: '0%', 'stop-color': '#4da6ff' }),
-              svgEl('stop', { offset: '100%', 'stop-color': '#0a0a23' }),
+              svgEl('stop', { offset: '0%', 'stop-color': '#66b3ff' }),
+              svgEl('stop', { offset: '100%', 'stop-color': '#0066cc' }),
             ]));
           } else {
             defs.appendChild(svgEl('radialGradient', { id: 'grad-light', cx: '30%', cy: '25%', r: '70%' }, [
-              svgEl('stop', { offset: '0%', 'stop-color': '#ffffff' }),
-              svgEl('stop', { offset: '100%', 'stop-color': '#c8d8e8' }),
+              svgEl('stop', { offset: '0%', 'stop-color': '#f8e1a0' }),
+              svgEl('stop', { offset: '100%', 'stop-color': '#edb312' }),
             ]));
           }
         }
@@ -437,7 +437,7 @@ function buildBoard() {
           r: STONE_R,
           class: `stone stone-${cell === 1 ? 'dark' : 'light'}${isWin ? ' stone-win' : ''}`,
           fill: `url(#${gradId})`,
-          stroke: cell === 1 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.18)',
+          stroke: cell === 1 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.5)',
           'stroke-width': '1',
         });
         svg.appendChild(stone);
