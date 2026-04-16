@@ -185,8 +185,9 @@ function getBestMove(board, player) {
 const STORAGE_KEY = 'gomoko_state';
 const THEME_KEY = 'gomoko_theme';
 const MODE_KEY = 'gomoko_mode';
+const COLOR_KEY = 'gomoko_color';
 
-function makeInitialState(mode = 'hvc') {
+function makeInitialState(mode = 'hvc', humanPlayer = 1) {
   return {
     board: createBoard(),
     currentPlayer: 1,
@@ -195,6 +196,7 @@ function makeInitialState(mode = 'hvc') {
     winLine: [],
     lastMove: null,
     mode,
+    humanPlayer,
     aiThinking: false,
   };
 }
@@ -220,22 +222,24 @@ function loadState() {
 
 // ── Game actions ─────────────────────────────────────────────────────────────
 
-function startGame(mode) {
-  state = makeInitialState(mode);
+function startGame(mode, humanPlayer) {
+  const hp = humanPlayer ?? parseInt(localStorage.getItem(COLOR_KEY) || '1');
+  state = makeInitialState(mode, hp);
   state.status = 'playing';
   saveState();
   render();
+  if (mode === 'hvc' && hp === 2) triggerAI();
 }
 
 function resetGame() {
-  startGame(state.mode);
+  startGame(state.mode, state.humanPlayer);
 }
 
 function handleCellClick(row, col) {
   if (state.status !== 'playing') return;
   if (state.aiThinking) return;
   if (state.board[row][col] !== 0) return;
-  if (state.mode === 'hvc' && state.currentPlayer !== 1) return;
+  if (state.mode === 'hvc' && state.currentPlayer !== state.humanPlayer) return;
 
   applyMove(row, col, state.currentPlayer);
 }
@@ -264,7 +268,7 @@ function applyMove(row, col, player) {
 
   state.currentPlayer = player === 1 ? 2 : 1;
 
-  if (state.mode === 'hvc' && state.currentPlayer === 2) {
+  if (state.mode === 'hvc' && state.currentPlayer !== state.humanPlayer) {
     triggerAI();
   } else {
     saveState();
@@ -279,10 +283,11 @@ function triggerAI() {
 }
 
 function runAI() {
-  const move = getBestMove(state.board, 2);
+  const aiPlayer = state.humanPlayer === 1 ? 2 : 1;
+  const move = getBestMove(state.board, aiPlayer);
   state.aiThinking = false;
   if (move) {
-    applyMove(move[0], move[1], 2);
+    applyMove(move[0], move[1], aiPlayer);
   }
 }
 
@@ -576,6 +581,7 @@ function onNewGame() {
 
 function renderHome() {
   const savedMode = localStorage.getItem(MODE_KEY) || 'hvc';
+  const savedColor = parseInt(localStorage.getItem(COLOR_KEY) || '1');
   state.mode = savedMode;
 
   const app = document.getElementById('app');
@@ -594,6 +600,12 @@ function renderHome() {
         <button class="mode-btn${savedMode === 'hvc' ? ' mode-active' : ''}" data-mode="hvc" aria-pressed="${savedMode === 'hvc'}">vs Computer</button>
         <button class="mode-btn${savedMode === 'hvh' ? ' mode-active' : ''}" data-mode="hvh" aria-pressed="${savedMode === 'hvh'}">vs Human</button>
       </div>
+      <div class="color-picker${savedMode === 'hvh' ? ' color-picker-hidden' : ''}" role="group" aria-label="Play as">
+        <span class="color-picker-label">Play as</span>
+        <button class="mode-btn${savedColor === 1 ? ' mode-active' : ''}" data-color="1" aria-pressed="${savedColor === 1}">Dark</button>
+        <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
+        <span class="color-picker-hint">Dark goes first</span>
+      </div>
       <div class="home-actions">
         <button class="btn btn-primary btn-lg" id="start-btn" aria-label="Start game">Start Game</button>
         <button class="btn btn-secondary" id="help-btn-home" aria-label="Help">?</button>
@@ -606,14 +618,27 @@ function renderHome() {
   `;
 
   // Mode buttons
-  screen.querySelectorAll('.mode-btn').forEach(btn => {
+  screen.querySelectorAll('.mode-btn[data-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.mode;
       state.mode = mode;
       localStorage.setItem(MODE_KEY, mode);
-      screen.querySelectorAll('.mode-btn').forEach(b => {
+      screen.querySelectorAll('.mode-btn[data-mode]').forEach(b => {
         b.classList.toggle('mode-active', b.dataset.mode === mode);
         b.setAttribute('aria-pressed', b.dataset.mode === mode);
+      });
+      screen.querySelector('.color-picker').classList.toggle('color-picker-hidden', mode === 'hvh');
+    });
+  });
+
+  // Color buttons
+  screen.querySelectorAll('.mode-btn[data-color]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const color = parseInt(btn.dataset.color);
+      localStorage.setItem(COLOR_KEY, color);
+      screen.querySelectorAll('.mode-btn[data-color]').forEach(b => {
+        b.classList.toggle('mode-active', parseInt(b.dataset.color) === color);
+        b.setAttribute('aria-pressed', parseInt(b.dataset.color) === color);
       });
     });
   });
@@ -668,6 +693,8 @@ function renderPlay() {
     let resultText = '';
     if (state.status === 'draw') {
       resultText = 'Draw!';
+    } else if (state.mode === 'hvc') {
+      resultText = state.winner === state.humanPlayer ? 'You win!' : 'Computer wins!';
     } else {
       const winner = state.winner === 1 ? 'Dark' : 'Light';
       resultText = `${winner} wins!`;

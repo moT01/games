@@ -124,6 +124,35 @@
   box-shadow: inset 0 0 0 2px var(--blue-mid);
 }
 
+.color-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.color-picker-hidden {
+  display: none;
+}
+
+.color-picker .mode-btn {
+  flex: 1;
+  border-radius: var(--radius-md);
+  border: var(--border-default);
+}
+
+.color-picker-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.color-picker-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
 
 .btn {
