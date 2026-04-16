@@ -198,8 +198,8 @@ function negamax(board, depth, alpha, beta, player) {
   return { score: bestScore, move: bestMove };
 }
 
-function getBestMove(board, player) {
-  const { move } = negamax(board, 4, -Infinity, Infinity, player);
+function getBestMove(board, player, depth = 4) {
+  const { move } = negamax(board, depth, -Infinity, Infinity, player);
   return move || [7, 7];
 }
 
@@ -209,8 +209,9 @@ const STORAGE_KEY = 'gomoko_state';
 const THEME_KEY = 'gomoko_theme';
 const MODE_KEY = 'gomoko_mode';
 const COLOR_KEY = 'gomoko_color';
+const DIFF_KEY = 'gomoko_diff';
 
-function makeInitialState(mode = 'hvc', humanPlayer = 1) {
+function makeInitialState(mode = 'hvc', humanPlayer = 1, difficulty = 'hard') {
   return {
     board: createBoard(),
     currentPlayer: 1,
@@ -220,6 +221,7 @@ function makeInitialState(mode = 'hvc', humanPlayer = 1) {
     lastMove: null,
     mode,
     humanPlayer,
+    difficulty,
     aiThinking: false,
   };
 }
@@ -247,8 +249,9 @@ function loadState() {
 
 function startGame(mode, humanPlayer) {
   const hp = humanPlayer ?? parseInt(localStorage.getItem(COLOR_KEY) || '1');
+  const diff = localStorage.getItem(DIFF_KEY) || 'hard';
   localStorage.removeItem(STORAGE_KEY);
-  state = makeInitialState(mode, hp);
+  state = makeInitialState(mode, hp, diff);
   state.status = 'playing';
   saveState();
   render();
@@ -311,7 +314,8 @@ function triggerAI() {
 function runAI() {
   const start = Date.now();
   const aiPlayer = state.humanPlayer === 1 ? 2 : 1;
-  const move = getBestMove(state.board, aiPlayer);
+  const depth = state.difficulty === 'easy' ? 2 : 4;
+  const move = getBestMove(state.board, aiPlayer, depth);
   const elapsed = Date.now() - start;
   const delay = Math.max(0, MIN_AI_MS - elapsed);
   setTimeout(() => {
@@ -615,6 +619,7 @@ function onNewGame() {
 function renderHome() {
   const savedMode = localStorage.getItem(MODE_KEY) || 'hvc';
   const savedColor = parseInt(localStorage.getItem(COLOR_KEY) || '1');
+  const savedDiff = localStorage.getItem(DIFF_KEY) || 'hard';
   const hasSavedGame = loadState()?.status === 'playing';
   state.mode = savedMode;
 
@@ -645,6 +650,11 @@ function renderHome() {
         <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
         <span class="color-picker-hint">Dark goes first</span>
       </div>
+      <div class="color-picker${savedMode === 'hvh' ? ' color-picker-hidden' : ''}" id="diff-picker" role="group" aria-label="Difficulty">
+        <span class="color-picker-label">Difficulty</span>
+        <button class="mode-btn${savedDiff === 'easy' ? ' mode-active' : ''}" data-diff="easy" aria-pressed="${savedDiff === 'easy'}">Easy</button>
+        <button class="mode-btn${savedDiff === 'hard' ? ' mode-active' : ''}" data-diff="hard" aria-pressed="${savedDiff === 'hard'}">Hard</button>
+      </div>
       <button class="btn btn-primary btn-lg" id="start-btn" aria-label="${hasSavedGame ? 'Start new game' : 'Start game'}">${hasSavedGame ? 'New Game' : 'Start Game'}</button>
       ${hasSavedGame ? `<button class="btn btn-secondary btn-lg" id="resume-btn" aria-label="Resume game">Resume Game</button>` : ''}
     </div>
@@ -672,7 +682,7 @@ function renderHome() {
         b.classList.toggle('mode-active', b.dataset.mode === mode);
         b.setAttribute('aria-pressed', b.dataset.mode === mode);
       });
-      screen.querySelector('.color-picker').classList.toggle('color-picker-hidden', mode === 'hvh');
+      screen.querySelectorAll('.color-picker').forEach(el => el.classList.toggle('color-picker-hidden', mode === 'hvh'));
     });
   });
 
@@ -684,6 +694,18 @@ function renderHome() {
       screen.querySelectorAll('.mode-btn[data-color]').forEach(b => {
         b.classList.toggle('mode-active', parseInt(b.dataset.color) === color);
         b.setAttribute('aria-pressed', parseInt(b.dataset.color) === color);
+      });
+    });
+  });
+
+  // Difficulty buttons
+  screen.querySelectorAll('.mode-btn[data-diff]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const diff = btn.dataset.diff;
+      localStorage.setItem(DIFF_KEY, diff);
+      screen.querySelectorAll('.mode-btn[data-diff]').forEach(b => {
+        b.classList.toggle('mode-active', b.dataset.diff === diff);
+        b.setAttribute('aria-pressed', b.dataset.diff === diff);
       });
     });
   });
