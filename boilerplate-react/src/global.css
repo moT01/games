@@ -56,6 +56,7 @@
   /* Typography */
   --font-body: 'Lato', sans-serif;
   --font-mono: 'Inconsolata', monospace;
+  --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-md: 1rem;
   --text-lg: 1.25rem;

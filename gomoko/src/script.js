@@ -210,6 +210,7 @@ const THEME_KEY = 'gomoko_theme';
 const MODE_KEY = 'gomoko_mode';
 const COLOR_KEY = 'gomoko_color';
 const DIFF_KEY = 'gomoko_diff';
+const STATS_KEY = 'gomoko_stats';
 
 function makeInitialState(mode = 'hvc', humanPlayer = 1, difficulty = 'hard') {
   return {
@@ -232,6 +233,22 @@ function saveState() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (_) {}
+}
+
+function loadStats() {
+  try {
+    return JSON.parse(localStorage.getItem(STATS_KEY)) || { normal: { w: 0, l: 0, d: 0 }, hard: { w: 0, l: 0, d: 0 } };
+  } catch (_) {
+    return { normal: { w: 0, l: 0, d: 0 }, hard: { w: 0, l: 0, d: 0 } };
+  }
+}
+
+function recordResult(result) {
+  if (state.mode !== 'hvc') return;
+  const diff = state.difficulty === 'hard' ? 'hard' : 'normal';
+  const stats = loadStats();
+  stats[diff][result]++;
+  try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (_) {}
 }
 
 function loadState() {
@@ -281,6 +298,7 @@ function applyMove(row, col, player) {
     state.winner = player;
     state.winLine = winLine;
     state.currentPlayer = player;
+    recordResult(player === state.humanPlayer ? 'w' : 'l');
     saveState();
     render();
     return;
@@ -288,6 +306,7 @@ function applyMove(row, col, player) {
 
   if (checkDraw(state.board)) {
     state.status = 'draw';
+    recordResult('d');
     saveState();
     render();
     return;
@@ -616,6 +635,18 @@ function onNewGame() {
 
 // ── Home Screen ──────────────────────────────────────────────────────────────
 
+function renderStats() {
+  const s = loadStats();
+  const fmt = r => `${r.w}W ${r.l}L ${r.d}D`;
+  return `
+    <div class="stats-block">
+      <span class="stats-heading">Record</span>
+      <div class="stats-row"><span class="stats-label">Normal</span><span class="stats-record">${fmt(s.normal)}</span></div>
+      <div class="stats-row"><span class="stats-label">Hard</span><span class="stats-record">${fmt(s.hard)}</span></div>
+    </div>
+  `;
+}
+
 function renderHome() {
   const savedMode = localStorage.getItem(MODE_KEY) || 'hvc';
   const savedColor = parseInt(localStorage.getItem(COLOR_KEY) || '1');
@@ -642,17 +673,20 @@ function renderHome() {
       </div>
       <div class="mode-toggle" role="group" aria-label="Game mode">
         <button class="mode-btn${savedMode === 'hvc' ? ' mode-active' : ''}" data-mode="hvc" aria-pressed="${savedMode === 'hvc'}">vs Computer</button>
-        <button class="mode-btn${savedMode === 'hvh' ? ' mode-active' : ''}" data-mode="hvh" aria-pressed="${savedMode === 'hvh'}">vs Human</button>
+        <button class="mode-btn${savedMode === 'hvh' ? ' mode-active' : ''}" data-mode="hvh" aria-pressed="${savedMode === 'hvh'}">2 Players</button>
       </div>
-      <div class="hvc-row${savedMode === 'hvh' ? ' color-picker-hidden' : ''}">
-        <div class="mode-toggle mode-toggle-sm" role="group" aria-label="Play as">
-          <button class="mode-btn${savedColor === 1 ? ' mode-active' : ''}" data-color="1" aria-pressed="${savedColor === 1}">Dark (goes first)</button>
-          <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
+      <div class="hvc-settings${savedMode === 'hvh' ? ' color-picker-hidden' : ''}">
+        ${renderStats()}
+        <div class="hvc-row">
+          <div class="mode-toggle mode-toggle-sm" role="group" aria-label="Play as">
+            <button class="mode-btn${savedColor === 1 ? ' mode-active' : ''}" data-color="1" aria-pressed="${savedColor === 1}">Dark (goes first)</button>
+            <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
+          </div>
+          <label class="hard-label" aria-label="Hard difficulty">
+            <input type="checkbox" class="hard-checkbox" ${savedDiff === 'hard' ? 'checked' : ''}>
+            Hard mode
+          </label>
         </div>
-        <label class="hard-label" aria-label="Hard difficulty">
-          <input type="checkbox" class="hard-checkbox" ${savedDiff === 'hard' ? 'checked' : ''}>
-          Hard mode
-</label>
       </div>
       <button class="btn btn-primary btn-lg" id="start-btn" aria-label="${hasSavedGame ? 'Start new game' : 'Start game'}">${hasSavedGame ? 'New Game' : 'Start Game'}</button>
       ${hasSavedGame ? `<button class="btn btn-secondary btn-lg" id="resume-btn" aria-label="Resume game">Resume Game</button>` : ''}
@@ -681,7 +715,8 @@ function renderHome() {
         b.classList.toggle('mode-active', b.dataset.mode === mode);
         b.setAttribute('aria-pressed', b.dataset.mode === mode);
       });
-      screen.querySelector('.hvc-row').classList.toggle('color-picker-hidden', mode === 'hvh');
+      const isHvh = mode === 'hvh';
+      screen.querySelector('.hvc-settings').classList[isHvh ? 'add' : 'remove']('color-picker-hidden');
     });
   });
 
