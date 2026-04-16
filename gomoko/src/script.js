@@ -224,6 +224,7 @@ function loadState() {
 
 function startGame(mode, humanPlayer) {
   const hp = humanPlayer ?? parseInt(localStorage.getItem(COLOR_KEY) || '1');
+  localStorage.removeItem(STORAGE_KEY);
   state = makeInitialState(mode, hp);
   state.status = 'playing';
   saveState();
@@ -522,7 +523,7 @@ function closeHelp() {
 
 let confirmCallback = null;
 
-function openConfirm(onConfirm) {
+function openConfirm(onConfirm, { title = 'New Game', body = 'Start a new game? Current progress will be lost.', okLabel = 'New Game' } = {}) {
   if (document.getElementById('confirm-modal')) return;
   confirmCallback = onConfirm;
 
@@ -531,23 +532,24 @@ function openConfirm(onConfirm) {
   backdrop.id = 'confirm-modal';
   backdrop.setAttribute('role', 'dialog');
   backdrop.setAttribute('aria-modal', 'true');
-  backdrop.setAttribute('aria-label', 'Confirm new game');
+  backdrop.setAttribute('aria-label', title);
 
   const panel = document.createElement('div');
   panel.className = 'modal-panel modal-panel-sm';
   panel.innerHTML = `
-    <h2 class="modal-title">New Game</h2>
-    <p class="modal-body-text">Start a new game? Current progress will be lost.</p>
+    <h2 class="modal-title">${title}</h2>
+    <p class="modal-body-text">${body}</p>
     <div class="modal-actions">
       <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
-      <button class="btn btn-primary" id="confirm-ok">New Game</button>
+      <button class="btn btn-primary" id="confirm-ok">${okLabel}</button>
     </div>
   `;
 
   panel.querySelector('#confirm-cancel').addEventListener('click', closeConfirm);
   panel.querySelector('#confirm-ok').addEventListener('click', () => {
+    const cb = confirmCallback;
     closeConfirm();
-    if (confirmCallback) confirmCallback();
+    if (cb) cb();
   });
 
   document.addEventListener('keydown', confirmKeyHandler);
@@ -561,8 +563,9 @@ function confirmKeyHandler(e) {
   if (e.key === 'Escape') closeConfirm();
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
+    const cb = confirmCallback;
     closeConfirm();
-    if (confirmCallback) confirmCallback();
+    if (cb) cb();
   }
 }
 
@@ -587,6 +590,7 @@ function onNewGame() {
 function renderHome() {
   const savedMode = localStorage.getItem(MODE_KEY) || 'hvc';
   const savedColor = parseInt(localStorage.getItem(COLOR_KEY) || '1');
+  const hasSavedGame = loadState()?.status === 'playing';
   state.mode = savedMode;
 
   const app = document.getElementById('app');
@@ -597,9 +601,17 @@ function renderHome() {
 
   screen.innerHTML = `
     <div class="home-card">
-      <div class="home-header">
-        <h1 class="home-title">Gomoko</h1>
-        <p class="home-subtitle">Five in a row wins</p>
+      <div class="top-bar">
+        <div class="top-bar-left"></div>
+        <div class="top-bar-center">
+          <h1 class="home-title">Gomoko</h1>
+          <p class="home-subtitle">Five in a row wins</p>
+        </div>
+        <div class="top-bar-right">
+          <button class="btn btn-icon" id="help-btn-home" aria-label="Help">?</button>
+          <button class="btn btn-icon" id="theme-btn-home" aria-label="Toggle theme"></button>
+          <button class="btn btn-icon btn-donate" id="donate-btn-home" aria-label="Donate">&#9829;</button>
+        </div>
       </div>
       <div class="mode-toggle" role="group" aria-label="Game mode">
         <button class="mode-btn${savedMode === 'hvc' ? ' mode-active' : ''}" data-mode="hvc" aria-pressed="${savedMode === 'hvc'}">vs Computer</button>
@@ -611,16 +623,22 @@ function renderHome() {
         <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
         <span class="color-picker-hint">Dark goes first</span>
       </div>
-      <div class="home-actions">
-        <button class="btn btn-primary btn-lg" id="start-btn" aria-label="Start game">Start Game</button>
-        <button class="btn btn-secondary" id="help-btn-home" aria-label="Help">?</button>
-      </div>
-      <div class="home-footer">
-        <button class="btn btn-icon" id="theme-btn-home" aria-label="Toggle theme"></button>
-        <a class="btn btn-secondary btn-sm" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">Donate</a>
-      </div>
+      <button class="btn btn-primary btn-lg" id="start-btn" aria-label="${hasSavedGame ? 'Start new game' : 'Start game'}">${hasSavedGame ? 'New Game' : 'Start Game'}</button>
+      ${hasSavedGame ? `<button class="btn btn-secondary btn-lg" id="resume-btn" aria-label="Resume game">Resume Game</button>` : ''}
     </div>
   `;
+
+  // Resume button
+  const resumeBtn = screen.querySelector('#resume-btn');
+  if (resumeBtn) {
+    resumeBtn.addEventListener('click', () => {
+      const saved = loadState();
+      if (saved) {
+        state = saved;
+        render();
+      }
+    });
+  }
 
   // Mode buttons
   screen.querySelectorAll('.mode-btn[data-mode]').forEach(btn => {
@@ -655,6 +673,7 @@ function renderHome() {
 
   screen.querySelector('#help-btn-home').addEventListener('click', openHelp);
   screen.querySelector('#theme-btn-home').addEventListener('click', toggleTheme);
+  screen.querySelector('#donate-btn-home').addEventListener('click', () => window.open('https://www.freecodecamp.org/donate', '_blank', 'noopener'));
 
   updateThemeBtn(screen.querySelector('#theme-btn-home'));
 
@@ -670,18 +689,40 @@ function renderPlay() {
   const screen = document.createElement('div');
   screen.className = 'play-screen';
 
-  // Status bar
-  const statusBar = document.createElement('div');
-  statusBar.className = 'status-bar';
+  const content = document.createElement('div');
+  content.className = 'play-content';
 
+  // Top bar
+  let statusText = '';
   if (state.status === 'playing') {
-    if (state.aiThinking) {
-      statusBar.textContent = 'Thinking...';
-    } else {
-      const playerName = state.currentPlayer === 1 ? 'Dark' : 'Light';
-      statusBar.textContent = `${playerName}'s turn`;
-    }
+    statusText = state.aiThinking ? 'Thinking...' : `${state.currentPlayer === 1 ? 'Dark' : 'Light'}'s turn`;
   }
+
+  const topBar = document.createElement('div');
+  topBar.className = 'top-bar';
+  topBar.innerHTML = `
+    <div class="top-bar-left">
+      <button class="btn btn-icon" id="new-game-btn" aria-label="New game">&#10005;</button>
+    </div>
+    <div class="top-bar-center status-bar">${statusText}</div>
+    <div class="top-bar-right">
+      <button class="btn btn-icon" id="help-btn-play" aria-label="Help">?</button>
+      <button class="btn btn-icon" id="theme-btn-play" aria-label="Toggle theme"></button>
+      <button class="btn btn-icon btn-donate" id="donate-btn-play" aria-label="Donate">&#9829;</button>
+    </div>
+  `;
+
+  topBar.querySelector('#new-game-btn').addEventListener('click', () => {
+    if (state.status === 'playing') {
+      openConfirm(goHome, { title: 'Quit Game', body: 'Return to the main menu? You can resume your game from there.', okLabel: 'Quit' });
+    } else {
+      goHome();
+    }
+  });
+  topBar.querySelector('#help-btn-play').addEventListener('click', openHelp);
+  topBar.querySelector('#theme-btn-play').addEventListener('click', toggleTheme);
+  topBar.querySelector('#donate-btn-play').addEventListener('click', () => window.open('https://www.freecodecamp.org/donate', '_blank', 'noopener'));
+  updateThemeBtn(topBar.querySelector('#theme-btn-play'));
 
   // Board
   const boardWrap = document.createElement('div');
@@ -720,25 +761,9 @@ function renderPlay() {
     boardWrap.appendChild(overlay);
   }
 
-  // Controls bar
-  const controls = document.createElement('div');
-  controls.className = 'controls-bar';
-  controls.innerHTML = `
-    <button class="btn btn-secondary" id="new-game-btn" aria-label="New game">New Game</button>
-    <button class="btn btn-icon" id="help-btn-play" aria-label="Help">?</button>
-    <button class="btn btn-icon" id="theme-btn-play" aria-label="Toggle theme"></button>
-    <a class="btn btn-secondary btn-sm" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">Donate</a>
-  `;
-
-  controls.querySelector('#new-game-btn').addEventListener('click', onNewGame);
-  controls.querySelector('#help-btn-play').addEventListener('click', openHelp);
-  controls.querySelector('#theme-btn-play').addEventListener('click', toggleTheme);
-
-  updateThemeBtn(controls.querySelector('#theme-btn-play'));
-
-  screen.appendChild(statusBar);
-  screen.appendChild(boardWrap);
-  screen.appendChild(controls);
+  content.appendChild(topBar);
+  content.appendChild(boardWrap);
+  screen.appendChild(content);
   app.appendChild(screen);
 
   // Animate overlay in
@@ -750,7 +775,6 @@ function renderPlay() {
 
 function goHome() {
   state = makeInitialState(state.mode);
-  localStorage.removeItem(STORAGE_KEY);
   render();
 }
 
@@ -784,7 +808,7 @@ function toggleTheme() {
 function updateThemeBtn(btn) {
   if (!btn) return;
   const theme = getTheme();
-  btn.textContent = theme === 'dark' ? 'Sun' : 'Moon';
+  btn.textContent = theme === 'dark' ? '☀' : '☾';
   btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
 }
 
