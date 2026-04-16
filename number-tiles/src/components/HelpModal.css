@@ -1,11 +1,7 @@
-.help-modal-overlay {
-  align-items: flex-start;
-  padding: var(--space-7) var(--space-5);
-  overflow-y: auto;
-}
-
 .modal-card.help-modal {
   max-width: 480px;
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
