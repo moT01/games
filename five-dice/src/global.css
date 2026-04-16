@@ -221,6 +221,12 @@ body {
   transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.btn-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
 .btn-icon:hover {
   color: var(--color-accent);
   background: var(--color-surface-raised);

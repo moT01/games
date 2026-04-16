@@ -33,6 +33,12 @@
   transition: color var(--transition-fast), background var(--transition-fast);
 }
 
+.modal-close svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
 .modal-close:hover {
   color: var(--color-text-primary);
   background: var(--color-border);

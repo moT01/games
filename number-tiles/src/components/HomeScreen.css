@@ -14,13 +14,6 @@
   border-bottom: var(--border-default);
 }
 
-.home-screen__icon-btn {
-  padding: var(--space-2) var(--space-3);
-  font-size: var(--text-md);
-  min-width: 40px;
-  text-decoration: none;
-  text-align: center;
-}
 
 .home-screen__card {
   width: 100%;

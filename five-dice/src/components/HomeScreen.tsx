@@ -1,5 +1,6 @@
 import './HomeScreen.css'
 import HelpModal from './HelpModal'
+import { IconHeart, IconMoon, IconQuestion, IconSun } from './Icons'
 
 interface Props {
   highScore: number | null
@@ -41,9 +42,9 @@ export default function HomeScreen({
         </div>
 
         <div className="home-footer">
-          <button className="btn-icon" onClick={onHelp} aria-label="Help and rules">?</button>
+          <button className="btn-icon" onClick={onHelp} aria-label="Help and rules"><IconQuestion /></button>
           <button className="btn-icon" onClick={onToggleTheme} aria-label="Toggle theme">
-            {theme === 'light' ? '☾' : '☀'}
+            {theme === 'light' ? <IconMoon /> : <IconSun />}
           </button>
           <a
             className="btn-icon"
@@ -52,7 +53,7 @@ export default function HomeScreen({
             rel="noopener noreferrer"
             aria-label="Donate"
           >
-            ♥
+            <IconHeart />
           </a>
         </div>
       </div>

@@ -158,6 +158,25 @@ h1, h2, h3, .title {
   box-shadow: 0 0 0 3px rgba(153, 201, 255, 0.5);
 }
 
+/* Icon buttons */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
 /* Buttons */
 .btn {
   font-family: var(--font-body);

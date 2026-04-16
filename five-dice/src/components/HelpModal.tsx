@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import './HelpModal.css'
 import { useFocusTrap } from '../hooks/useFocusTrap'
+import { IconX } from './Icons'
 
 interface Props {
   onClose: () => void
@@ -19,7 +20,7 @@ export default function HelpModal({ onClose }: Props) {
       onClick={e => { if (e.target === e.currentTarget) onClose() }}
     >
       <div className="modal-panel" ref={panelRef}>
-        <button className="modal-close" onClick={onClose} aria-label="Close help">×</button>
+        <button className="modal-close" onClick={onClose} aria-label="Close help"><IconX /></button>
         <h2>How to Play</h2>
 
         <section>

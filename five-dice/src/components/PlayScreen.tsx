@@ -7,6 +7,7 @@ import ScoreCard from './ScoreCard'
 import HelpModal from './HelpModal'
 import ConfirmModal from './ConfirmModal'
 import BackgroundDice from './BackgroundDice'
+import { IconHeart, IconMoon, IconQuestion, IconSun, IconX } from './Icons'
 
 interface Props {
   state: GameState
@@ -54,11 +55,11 @@ export default function PlayScreen({
     <div className="play-screen">
       <BackgroundDice />
       <div className="play-header">
-        <button className="btn-icon" onClick={onQuit} aria-label="Quit game">✕</button>
+        <button className="btn-icon" onClick={onQuit} aria-label="Quit game"><IconX /></button>
         <div className="play-header-actions">
-          <button className="btn-icon" onClick={onHelp} aria-label="Help and rules">?</button>
+          <button className="btn-icon" onClick={onHelp} aria-label="Help and rules"><IconQuestion /></button>
           <button className="btn-icon" onClick={onToggleTheme} aria-label="Toggle theme">
-            {theme === 'light' ? '☾' : '☀'}
+            {theme === 'light' ? <IconMoon /> : <IconSun />}
           </button>
           <a
             className="btn-icon"
@@ -67,7 +68,7 @@ export default function PlayScreen({
             rel="noopener noreferrer"
             aria-label="Donate"
           >
-            ♥
+            <IconHeart />
           </a>
         </div>
       </div>
