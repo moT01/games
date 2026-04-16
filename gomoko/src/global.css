@@ -114,6 +114,49 @@ body {
   justify-content: center;
   padding: var(--space-5);
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(255, 255, 255, 0.04) 80px,
+      rgba(255, 255, 255, 0.04) 81px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(255, 255, 255, 0.04) 80px,
+      rgba(255, 255, 255, 0.04) 81px
+    );
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+.light-palette::before {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(0, 0, 0, 0.04) 80px,
+      rgba(0, 0, 0, 0.04) 81px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(0, 0, 0, 0.04) 80px,
+      rgba(0, 0, 0, 0.04) 81px
+    );
 }
 
 .dark-palette {

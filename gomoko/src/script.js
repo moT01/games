@@ -838,7 +838,7 @@ function renderPlay() {
   // Animate overlay in
   if (state.status === 'won' || state.status === 'draw') {
     const overlay = screen.querySelector('.game-over-overlay');
-    if (overlay) requestAnimationFrame(() => overlay.classList.add('overlay-visible'));
+    if (overlay) setTimeout(() => overlay.classList.add('overlay-visible'), 2000);
   }
 }
 

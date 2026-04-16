@@ -9,44 +9,6 @@
 
 /* ── Home Screen ────────────────────────────────────────────────────────────── */
 
-.home-screen,
-.play-screen {
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 80px,
-      rgba(255, 255, 255, 0.04) 80px,
-      rgba(255, 255, 255, 0.04) 81px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 80px,
-      rgba(255, 255, 255, 0.04) 80px,
-      rgba(255, 255, 255, 0.04) 81px
-    );
-}
-
-.light-palette .home-screen,
-.light-palette .play-screen {
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 80px,
-      rgba(0, 0, 0, 0.04) 80px,
-      rgba(0, 0, 0, 0.04) 81px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 80px,
-      rgba(0, 0, 0, 0.04) 80px,
-      rgba(0, 0, 0, 0.04) 81px
-    );
-}
-
 .home-screen {
   display: flex;
   align-items: center;
