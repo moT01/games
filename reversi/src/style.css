@@ -356,12 +356,30 @@
 
 .play-screen {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--space-5);
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  width: min(min(88vw, 88vh), 580px);
+  background: linear-gradient(160deg, var(--color-surface) 0%, var(--color-surface-raised) 100%);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+
+.game-body {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 600px;
-  padding: var(--space-2) var(--space-4) var(--space-5);
-  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-4);
+  gap: var(--space-2);
 }
 
 .header-rule {
@@ -433,7 +451,7 @@
 
 .board-wrapper {
   position: relative;
-  width: min(min(80vw, 80vh), 560px);
+  width: 100%;
   aspect-ratio: 1;
 }
 
@@ -744,8 +762,8 @@
 /* ── Responsive ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 480px) {
-  .board-wrapper {
-    width: min(90vw, 90vh);
+  .game-container {
+    width: min(95vw, 95vh);
   }
 
   .game-over-card {
