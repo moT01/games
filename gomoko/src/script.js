@@ -644,16 +644,15 @@ function renderHome() {
         <button class="mode-btn${savedMode === 'hvc' ? ' mode-active' : ''}" data-mode="hvc" aria-pressed="${savedMode === 'hvc'}">vs Computer</button>
         <button class="mode-btn${savedMode === 'hvh' ? ' mode-active' : ''}" data-mode="hvh" aria-pressed="${savedMode === 'hvh'}">vs Human</button>
       </div>
-      <div class="color-picker${savedMode === 'hvh' ? ' color-picker-hidden' : ''}" role="group" aria-label="Play as">
-        <span class="color-picker-label">Play as</span>
-        <button class="mode-btn${savedColor === 1 ? ' mode-active' : ''}" data-color="1" aria-pressed="${savedColor === 1}">Dark</button>
-        <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
-        <span class="color-picker-hint">Dark goes first</span>
-      </div>
-      <div class="color-picker${savedMode === 'hvh' ? ' color-picker-hidden' : ''}" id="diff-picker" role="group" aria-label="Difficulty">
-        <span class="color-picker-label">Difficulty</span>
-        <button class="mode-btn${savedDiff === 'easy' ? ' mode-active' : ''}" data-diff="easy" aria-pressed="${savedDiff === 'easy'}">Normal</button>
-        <button class="mode-btn${savedDiff === 'hard' ? ' mode-active' : ''}" data-diff="hard" aria-pressed="${savedDiff === 'hard'}">Hard</button>
+      <div class="hvc-row${savedMode === 'hvh' ? ' color-picker-hidden' : ''}">
+        <div class="mode-toggle mode-toggle-sm" role="group" aria-label="Play as">
+          <button class="mode-btn${savedColor === 1 ? ' mode-active' : ''}" data-color="1" aria-pressed="${savedColor === 1}">Dark (goes first)</button>
+          <button class="mode-btn${savedColor === 2 ? ' mode-active' : ''}" data-color="2" aria-pressed="${savedColor === 2}">Light</button>
+        </div>
+        <label class="hard-label" aria-label="Hard difficulty">
+          <input type="checkbox" class="hard-checkbox" ${savedDiff === 'hard' ? 'checked' : ''}>
+          Hard mode
+</label>
       </div>
       <button class="btn btn-primary btn-lg" id="start-btn" aria-label="${hasSavedGame ? 'Start new game' : 'Start game'}">${hasSavedGame ? 'New Game' : 'Start Game'}</button>
       ${hasSavedGame ? `<button class="btn btn-secondary btn-lg" id="resume-btn" aria-label="Resume game">Resume Game</button>` : ''}
@@ -682,7 +681,7 @@ function renderHome() {
         b.classList.toggle('mode-active', b.dataset.mode === mode);
         b.setAttribute('aria-pressed', b.dataset.mode === mode);
       });
-      screen.querySelectorAll('.color-picker').forEach(el => el.classList.toggle('color-picker-hidden', mode === 'hvh'));
+      screen.querySelector('.hvc-row').classList.toggle('color-picker-hidden', mode === 'hvh');
     });
   });
 
@@ -698,16 +697,9 @@ function renderHome() {
     });
   });
 
-  // Difficulty buttons
-  screen.querySelectorAll('.mode-btn[data-diff]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const diff = btn.dataset.diff;
-      localStorage.setItem(DIFF_KEY, diff);
-      screen.querySelectorAll('.mode-btn[data-diff]').forEach(b => {
-        b.classList.toggle('mode-active', b.dataset.diff === diff);
-        b.setAttribute('aria-pressed', b.dataset.diff === diff);
-      });
-    });
+  // Difficulty checkbox
+  screen.querySelector('.hard-checkbox').addEventListener('change', e => {
+    localStorage.setItem(DIFF_KEY, e.target.checked ? 'hard' : 'easy');
   });
 
   screen.querySelector('#start-btn').addEventListener('click', () => {

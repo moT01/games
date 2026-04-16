@@ -87,7 +87,6 @@
 }
 
 .home-card .mode-toggle,
-.home-card .color-picker,
 .home-card .btn-lg {
   width: calc(100% - var(--space-5) * 2);
 }
@@ -180,33 +179,76 @@
   box-shadow: inset 0 0 0 2px var(--blue-mid);
 }
 
-.color-picker {
+.hvc-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: calc(100% - var(--space-5) * 2);
+}
+
+.hvc-row .mode-toggle {
+  flex: 1;
+  width: auto;
+}
+
+.mode-toggle-sm .mode-btn {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.hard-label {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  width: 100%;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hard-label:has(.hard-checkbox:checked) {
+  color: var(--color-text-primary);
+}
+
+.hard-checkbox {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hard-checkbox:checked {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  border-color: var(--color-accent);
+}
+
+.hard-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid var(--gray-90);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.hard-checkbox:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--blue-mid);
 }
 
 .color-picker-hidden {
   display: none;
-}
-
-.color-picker .mode-btn {
-  flex: 1;
-  border-radius: var(--radius-md);
-  border: var(--border-default);
-}
-
-.color-picker-label {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  white-space: nowrap;
-}
-
-.color-picker-hint {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  white-space: nowrap;
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
