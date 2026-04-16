@@ -379,7 +379,7 @@ function buildBoard() {
         state.status === 'playing' &&
         !state.aiThinking &&
         isEmpty &&
-        (state.mode === 'hvh' || state.currentPlayer === 1)
+        (state.mode === 'hvh' || state.currentPlayer === state.humanPlayer)
       );
 
       const label = `Row ${r + 1}, Column ${c + 1}, ${cell === 0 ? 'empty' : cell === 1 ? 'dark' : 'light'}`;
