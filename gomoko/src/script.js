@@ -601,17 +601,14 @@ function renderHome() {
 
   screen.innerHTML = `
     <div class="home-card">
-      <div class="top-bar">
-        <div class="top-bar-left"></div>
-        <div class="top-bar-center">
-          <h1 class="home-title">Gomoko</h1>
-          <p class="home-subtitle">Five in a row wins</p>
-        </div>
-        <div class="top-bar-right">
-          <button class="btn btn-icon" id="help-btn-home" aria-label="Help">?</button>
-          <button class="btn btn-icon" id="theme-btn-home" aria-label="Toggle theme"></button>
-          <button class="btn btn-icon btn-donate" id="donate-btn-home" aria-label="Donate">&#9829;</button>
-        </div>
+      <div class="home-top-btns">
+        <button class="btn btn-icon" id="help-btn-home" aria-label="Help">?</button>
+        <button class="btn btn-icon" id="theme-btn-home" aria-label="Toggle theme"></button>
+        <button class="btn btn-icon btn-donate" id="donate-btn-home" aria-label="Donate">&#9829;</button>
+      </div>
+      <div class="home-header">
+        <h1 class="home-title">Gomoko</h1>
+        <p class="home-subtitle">Five in a row wins</p>
       </div>
       <div class="mode-toggle" role="group" aria-label="Game mode">
         <button class="mode-btn${savedMode === 'hvc' ? ' mode-active' : ''}" data-mode="hvc" aria-pressed="${savedMode === 'hvc'}">vs Computer</button>
