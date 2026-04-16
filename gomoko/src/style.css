@@ -135,12 +135,6 @@
   color: var(--yellow-gold);
 }
 
-.btn-donate:hover:not(:disabled) {
-  color: var(--yellow-light);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
 /* ── Mode Toggle ────────────────────────────────────────────────────────────── */
 
 .mode-toggle {
@@ -282,6 +276,13 @@
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
   box-shadow: var(--shadow-sm);
+}
+
+.btn-icon svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  pointer-events: none;
 }
 
 .btn-icon:hover:not(:disabled) {
