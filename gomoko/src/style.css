@@ -528,7 +528,7 @@
   filter: drop-shadow(0 0 6px var(--yellow-gold)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
   transform-box: fill-box;
   transform-origin: center;
-  animation: stone-pulse 600ms ease 120ms both;
+  animation: stone-appear 120ms ease forwards, stone-pulse 600ms ease 120ms both;
 }
 
 @keyframes stone-pulse {
