@@ -9,46 +9,51 @@
 
 /* ── Home Screen ────────────────────────────────────────────────────────────── */
 
+.home-screen,
+.play-screen {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(255, 255, 255, 0.04) 80px,
+      rgba(255, 255, 255, 0.04) 81px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(255, 255, 255, 0.04) 80px,
+      rgba(255, 255, 255, 0.04) 81px
+    );
+}
+
+.light-palette .home-screen,
+.light-palette .play-screen {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(0, 0, 0, 0.04) 80px,
+      rgba(0, 0, 0, 0.04) 81px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(0, 0, 0, 0.04) 80px,
+      rgba(0, 0, 0, 0.04) 81px
+    );
+}
+
 .home-screen {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 30px,
-      rgba(255, 255, 255, 0.04) 30px,
-      rgba(255, 255, 255, 0.04) 31px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 30px,
-      rgba(255, 255, 255, 0.04) 30px,
-      rgba(255, 255, 255, 0.04) 31px
-    );
   padding: var(--space-5);
-}
-
-.light-palette .home-screen {
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 30px,
-      rgba(0, 0, 0, 0.06) 30px,
-      rgba(0, 0, 0, 0.06) 31px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 30px,
-      rgba(0, 0, 0, 0.06) 30px,
-      rgba(0, 0, 0, 0.06) 31px
-    );
 }
 
 .home-card {
@@ -315,7 +320,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 530px;
   width: 100%;
   padding: var(--space-4) var(--space-3);
 }
@@ -335,6 +340,15 @@
 .play-card .top-bar {
   padding: var(--space-2) var(--space-3);
   border-bottom: var(--border-default);
+}
+
+.light-palette .play-card {
+  background: var(--gray-10);
+}
+
+.light-palette .play-card .btn-icon {
+  background: linear-gradient(135deg, var(--gray-15) 0%, var(--gray-10) 100%);
+  border-color: var(--gray-15);
 }
 
 /* ── Status Bar ─────────────────────────────────────────────────────────────── */
@@ -366,7 +380,7 @@
 }
 
 .light-palette .board-bg {
-  fill: var(--gray-05);
+  fill: var(--gray-10);
 }
 
 .grid-line {
@@ -427,11 +441,11 @@
 }
 
 .stone-dark {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
 .stone-light {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 .stone-win {
