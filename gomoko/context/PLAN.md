@@ -133,58 +133,58 @@ Evaluate each line of 5 consecutive cells in all 4 directions. Score is computed
 ---
 
 ## Game Logic
-- [ ] `createBoard()` — return a fresh 15x15 array of 0s
-- [ ] `placestone(board, row, col, player)` — return new board with stone placed (immutable copy)
-- [ ] `checkWin(board, row, col, player)` — check all 4 directions from [row,col]; for each direction count the full consecutive run including the placed stone; return `{ won: true, winLine: [row,col][] }` only if the run is exactly 5 (not 4, not 6+); winLine contains the 5 cells
-- [ ] `checkDraw(board)` — return true if all 225 cells are non-zero and no winner
-- [ ] `countInDirection(board, row, col, dr, dc, player)` — count consecutive stones for player in one direction, stopping at edge or different stone; used inside `checkWin`
-- [ ] `getCandidates(board)` — return empty cells within radius 2 of any stone; return `[[7,7]]` if board empty
-- [ ] `scoreBoard(board, player)` — score all lines of 5 windows across the board for both players; return net score from `player`'s perspective using the pattern score table
-- [ ] `negamax(board, depth, alpha, beta, player)` — recursive negamax with alpha-beta; calls `getCandidates`, sorts by `scoreBoard` at depth 0 leaf, returns `{ score, move }`
-- [ ] `getBestMove(board, player)` — entry point; calls `negamax` at depth 4; returns `[row, col]`
-- [ ] `handleCellClick(row, col)` — validate move, place stone, `checkWin`, `checkDraw`, switch player, trigger AI if HvC mode
-- [ ] `triggerAI()` — set `aiThinking = true`, `setTimeout(runAI, 50)`, call `getBestMove`, place stone, check win/draw, set `aiThinking = false`, re-render
-- [ ] `startGame(mode)` — reset all state, set mode, set `status = 'playing'`, render home→play transition
-- [ ] `resetGame()` — same as `startGame` with current mode; requires confirmation modal if `status === 'playing'`
-- [ ] `saveState()` / `loadState()` — persist/restore full game state to localStorage key `gomoko_state`
-- [ ] On page load: attempt `loadState()`; if saved state exists and `status === 'playing'`, resume; otherwise show home screen
+- [x] `createBoard()` — return a fresh 15x15 array of 0s
+- [x] `placestone(board, row, col, player)` — return new board with stone placed (immutable copy)
+- [x] `checkWin(board, row, col, player)` — check all 4 directions from [row,col]; for each direction count the full consecutive run including the placed stone; return `{ won: true, winLine: [row,col][] }` only if the run is exactly 5 (not 4, not 6+); winLine contains the 5 cells
+- [x] `checkDraw(board)` — return true if all 225 cells are non-zero and no winner
+- [x] `countInDirection(board, row, col, dr, dc, player)` — count consecutive stones for player in one direction, stopping at edge or different stone; used inside `checkWin`
+- [x] `getCandidates(board)` — return empty cells within radius 2 of any stone; return `[[7,7]]` if board empty
+- [x] `scoreBoard(board, player)` — score all lines of 5 windows across the board for both players; return net score from `player`'s perspective using the pattern score table
+- [x] `negamax(board, depth, alpha, beta, player)` — recursive negamax with alpha-beta; calls `getCandidates`, sorts by `scoreBoard` at depth 0 leaf, returns `{ score, move }`
+- [x] `getBestMove(board, player)` — entry point; calls `negamax` at depth 4; returns `[row, col]`
+- [x] `handleCellClick(row, col)` — validate move, place stone, `checkWin`, `checkDraw`, switch player, trigger AI if HvC mode
+- [x] `triggerAI()` — set `aiThinking = true`, `setTimeout(runAI, 50)`, call `getBestMove`, place stone, check win/draw, set `aiThinking = false`, re-render
+- [x] `startGame(mode)` — reset all state, set mode, set `status = 'playing'`, render home→play transition
+- [x] `resetGame()` — same as `startGame` with current mode; requires confirmation modal if `status === 'playing'`
+- [x] `saveState()` / `loadState()` — persist/restore full game state to localStorage key `gomoko_state`
+- [x] On page load: attempt `loadState()`; if saved state exists and `status === 'playing'`, resume; otherwise show home screen
 
 ---
 
 ## UI & Rendering
-- [ ] Home screen — centered card with game title, mode toggle (HvC / HvH), start button, help button, theme toggle, donate button; board ghost pattern as background
-- [ ] Play screen — full-window layout: board centered, status bar above (whose turn / AI thinking...), new-game button below
-- [ ] Board rendered as SVG: grid lines, star points at (3,3), (3,7), (3,11), (7,7), (11,3), (11,7), (11,11) (0-indexed), stone circles for placed pieces
-- [ ] Last-move indicator — small dot in the center of the most recently placed stone
-- [ ] Win-line highlight — change the fill of the 5 winning stones to a distinct highlight color (`--yellow-gold` glow/ring)
-- [ ] HelpModal — "?" button always visible; overlay with rules and strategy guide; close on backdrop click or Escape
-- [ ] Confirmation modal — appears when clicking New Game during an active game; "Cancel" and "New Game" buttons
-- [ ] Game-over overlay — semi-transparent overlay on board, shows result text, "Play Again" and "Home" buttons
-- [ ] AI thinking indicator — "Thinking..." text replaces whose-turn indicator; board cursor changes to not-allowed
-- [ ] Donate button — visible on home and play screens; links to donate URL
-- [ ] Theme toggle — sun/moon icon; toggles `.light-palette` / `.dark-palette` class on `<body>`; saves to localStorage key `gomoko_theme`
+- [x] Home screen — centered card with game title, mode toggle (HvC / HvH), start button, help button, theme toggle, donate button; board ghost pattern as background
+- [x] Play screen — full-window layout: board centered, status bar above (whose turn / AI thinking...), new-game button below
+- [x] Board rendered as SVG: grid lines, star points at (3,3), (3,7), (3,11), (7,7), (11,3), (11,7), (11,11) (0-indexed), stone circles for placed pieces
+- [x] Last-move indicator — small dot in the center of the most recently placed stone
+- [x] Win-line highlight — change the fill of the 5 winning stones to a distinct highlight color (`--yellow-gold` glow/ring)
+- [x] HelpModal — "?" button always visible; overlay with rules and strategy guide; close on backdrop click or Escape
+- [x] Confirmation modal — appears when clicking New Game during an active game; "Cancel" and "New Game" buttons
+- [x] Game-over overlay — semi-transparent overlay on board, shows result text, "Play Again" and "Home" buttons
+- [x] AI thinking indicator — "Thinking..." text replaces whose-turn indicator; board cursor changes to not-allowed
+- [x] Donate button — visible on home and play screens; links to donate URL
+- [x] Theme toggle — sun/moon icon; toggles `.light-palette` / `.dark-palette` class on `<body>`; saves to localStorage key `gomoko_theme`
 
 ---
 
 ## Styling
-- [ ] `style.css` — all game-specific styles
-- [ ] Theme via `.light-palette` / `.dark-palette` on `<body>`; use global palette variables throughout (`--primary-background`, `--primary-color`, `--secondary-background`, etc.)
-- [ ] Board background: warm wood tone (`#dcb483`) in light mode, dark wood (`#5c3d1e`) in dark mode
-- [ ] Player 1 stone: blue — radial gradient from `--blue-light` center to `--blue-mid` edge, with a subtle dark shadow; player 2 stone: light — radial gradient from `#ffffff` center to `--gray-10` edge with shadow
-- [ ] Win highlight: `--yellow-gold` ring or glow on winning stones
-- [ ] Home screen: full-height centered card, faint grid-lines as background pattern using `repeating-linear-gradient`
-- [ ] Responsive board: board size = `min(90vw, 90vh)`, SVG scales with viewBox
-- [ ] Smooth stone placement: CSS transition on stone opacity (fade in over 120ms)
-- [ ] Modal backdrop: `rgba(0,0,0,0.5)` semi-transparent overlay
+- [x] `style.css` — all game-specific styles
+- [x] Theme via `.light-palette` / `.dark-palette` on `<body>`; use global palette variables throughout (`--primary-background`, `--primary-color`, `--secondary-background`, etc.)
+- [x] Board background: warm wood tone (`#dcb483`) in light mode, dark wood (`#5c3d1e`) in dark mode
+- [x] Player 1 stone: blue — radial gradient from `--blue-light` center to `--blue-mid` edge, with a subtle dark shadow; player 2 stone: light — radial gradient from `#ffffff` center to `--gray-10` edge with shadow
+- [x] Win highlight: `--yellow-gold` ring or glow on winning stones
+- [x] Home screen: full-height centered card, faint grid-lines as background pattern using `repeating-linear-gradient`
+- [x] Responsive board: board size = `min(90vw, 90vh)`, SVG scales with viewBox
+- [x] Smooth stone placement: CSS transition on stone opacity (fade in over 120ms)
+- [x] Modal backdrop: `rgba(0,0,0,0.5)` semi-transparent overlay
 
 ---
 
 ## Polish
-- [ ] Light/dark theme toggle — toggles `.light-palette` / `.dark-palette` on `<body>`, persisted to localStorage key `gomoko_theme`
-- [ ] Game state persisted and resumed on reload (skip if `status === 'idle'`)
-- [ ] Last selected mode persisted to localStorage key `gomoko_mode`
-- [ ] Keyboard navigation: Enter/Space to confirm modals, Escape to close modals
-- [ ] ARIA labels on all interactive elements (board cells, buttons, modals)
-- [ ] Board cells are `role="button"` with `aria-label="Row X, Column Y, empty/dark/light"`
-- [ ] Subtle sound: stone-place click (short beep via Web Audio API — single oscillator burst, no files) — can be disabled
-- [ ] Animate winning line: brief pulse on winning stones after win detected
+- [x] Light/dark theme toggle — toggles `.light-palette` / `.dark-palette` on `<body>`, persisted to localStorage key `gomoko_theme`
+- [x] Game state persisted and resumed on reload (skip if `status === 'idle'`)
+- [x] Last selected mode persisted to localStorage key `gomoko_mode`
+- [x] Keyboard navigation: Enter/Space to confirm modals, Escape to close modals
+- [x] ARIA labels on all interactive elements (board cells, buttons, modals)
+- [x] Board cells are `role="button"` with `aria-label="Row X, Column Y, empty/dark/light"`
+- [x] Subtle sound: stone-place click (short beep via Web Audio API — single oscillator burst, no files) — can be disabled
+- [x] Animate winning line: brief pulse on winning stones after win detected

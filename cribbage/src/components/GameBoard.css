@@ -119,8 +119,68 @@ a.game-board__icon-btn {
   font-size: var(--text-sm);
 }
 
+/* Deck stack + starter slot */
+.game-board__deck-area {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.game-board__deck-stack {
+  width: 56px;
+  height: 78px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  border: var(--border-default);
+  box-shadow: 2px 2px 0 var(--color-border), 4px 4px 0 var(--color-border);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
 /* Peg board */
 .game-board .peg-board {
+  flex-shrink: 0;
+}
+
+/* Event strip */
+.game-board__event-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-1) var(--space-5);
+  background: var(--color-surface);
+  border-bottom: var(--border-default);
+  min-height: 32px;
+  flex-shrink: 0;
+}
+
+.game-board__event-strip--empty {
+  border-bottom: var(--border-default);
+}
+
+.game-board__event-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.game-board__event-strip--gold .game-board__event-text {
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+}
+
+.game-board__event-strip--muted .game-board__event-text {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.game-board__event-badge {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 1px var(--space-2);
   flex-shrink: 0;
 }
 
@@ -207,4 +267,27 @@ a.game-board__icon-btn {
   align-items: center;
   gap: var(--space-3);
   min-height: 40px;
+}
+
+/* Cut for deal inside GameBoard center */
+.game-board__cut-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
+  flex: 1;
+}
+
+.game-board__cut-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+}
+
+.game-board__cut-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  min-height: 1.2em;
 }

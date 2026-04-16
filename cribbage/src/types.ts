@@ -63,4 +63,5 @@ export interface GameState {
   lastScoringEvent: string | null
   lastComputerCard: Card | null
   handHistory: string[]
+  eventMessage: { text: string; type: 'info' | 'muted' | 'gold'; points?: number } | null
 }

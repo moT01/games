@@ -3,16 +3,14 @@ import { reducer, makeInitialState } from './reducer'
 import type { Card } from './gameLogic'
 
 import HomeScreen from './components/HomeScreen'
-import CutForDeal from './components/CutForDeal'
 import GameBoard from './components/GameBoard'
 import GameOverScreen from './components/GameOverScreen'
-import ScoringToast from './components/ScoringToast'
 import HelpModal from './components/HelpModal'
 import ConfirmModal from './components/ConfirmModal'
 
 import './App.css'
 
-const PLAY_PHASES = new Set(['dealing', 'discard', 'cut', 'play', 'show', 'summary'])
+const PLAY_PHASES = new Set(['cutForDeal', 'dealing', 'discard', 'cut', 'play', 'show', 'summary'])
 const DONATE_URL = 'https://www.freecodecamp.org/donate'
 
 export default function App() {
@@ -43,6 +41,14 @@ export default function App() {
       dispatch({ type: 'DEAL_HANDS' })
     }
   }, [state.phase])
+
+  // Auto-fire computer cut after human cuts in cutForDeal
+  useEffect(() => {
+    if (state.phase !== 'cutForDeal') return
+    if (!state.cutForDeal?.humanCut || state.cutForDeal.computerCut) return
+    const t = setTimeout(() => dispatch({ type: 'COMPUTER_CUT' }), 700)
+    return () => clearTimeout(t)
+  }, [state.phase, state.cutForDeal?.humanCut, state.cutForDeal?.computerCut])
 
   useEffect(() => {
     if (state.phase === 'cut' && state.dealer === 'human') {
@@ -86,12 +92,10 @@ export default function App() {
   }
 
   const isPlayPhase = PLAY_PHASES.has(state.phase)
-  const showCornerBtns = !isPlayPhase
 
   return (
     <div className="app">
-      {/* Corner buttons for non-game screens (home, cutForDeal) */}
-      {showCornerBtns && (
+      {state.phase === 'home' && (
         <div className="app-corner">
           <button className="app-corner__btn" onClick={toggleTheme} aria-label="Toggle theme">
             {theme === 'dark' ? '☀' : '☽'}
@@ -105,18 +109,6 @@ export default function App() {
       {state.phase === 'home' && (
         <HomeScreen
           onStart={() => dispatch({ type: 'START_CUT_FOR_DEAL' })}
-        />
-      )}
-
-      {state.phase === 'cutForDeal' && state.cutForDeal && (
-        <CutForDeal
-          deck={state.cutForDeal.deck}
-          humanCut={state.cutForDeal.humanCut}
-          computerCut={state.cutForDeal.computerCut}
-          result={state.cutForDeal.result}
-          onHumanCut={idx => dispatch({ type: 'HUMAN_CUT', cardIndex: idx })}
-          onComputerCut={() => dispatch({ type: 'COMPUTER_CUT' })}
-          onContinue={() => dispatch({ type: 'FINISH_CUT_FOR_DEAL' })}
         />
       )}
 
@@ -143,11 +135,6 @@ export default function App() {
           onPlayAgain={() => dispatch({ type: 'PLAY_AGAIN' })}
         />
       )}
-
-      <ScoringToast
-        message={state.lastScoringEvent}
-        onDone={() => dispatch({ type: 'CLEAR_SCORING_EVENT' })}
-      />
 
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
 

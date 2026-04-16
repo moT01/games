@@ -16,6 +16,14 @@ import {
 } from './gameLogic'
 import type { Card } from './gameLogic'
 
+const SUIT_LABEL: Record<string, string> = {
+  hearts: 'Hearts', diamonds: 'Diamonds', clubs: 'Clubs', spades: 'Spades',
+}
+
+function cardLabel(card: Card): string {
+  return `${card.rank} of ${SUIT_LABEL[card.suit]}`
+}
+
 const DEFAULT_PEGGING: PeggingState = {
   currentCount: 0,
   currentSequence: [],
@@ -60,6 +68,7 @@ export function makeInitialState(): GameState {
     lastScoringEvent: null,
     lastComputerCard: null,
     handHistory: [],
+    eventMessage: null,
   }
 }
 
@@ -86,6 +95,7 @@ export type Action =
   | { type: 'SHOW_DONE' }
   | { type: 'NEXT_HAND' }
   | { type: 'PLAY_AGAIN' }
+  | { type: 'SET_EVENT_MESSAGE'; message: GameState['eventMessage'] }
 
 function awardPoints(
   state: GameState,
@@ -99,6 +109,7 @@ function awardPoints(
   const newScore = state[scoreKey] + points
   const newPegs = advancePegs(state[pegsKey], points)
   const newHistory = [...state.handHistory, event]
+  const eventMsg: GameState['eventMessage'] = { text: event, type: 'gold', points }
   if (checkWin(newScore)) {
     return {
       ...state,
@@ -108,6 +119,7 @@ function awardPoints(
       phase: 'gameover',
       lastScoringEvent: event,
       handHistory: newHistory,
+      eventMessage: eventMsg,
     }
   }
   return {
@@ -116,6 +128,7 @@ function awardPoints(
     [pegsKey]: newPegs,
     lastScoringEvent: event,
     handHistory: newHistory,
+    eventMessage: eventMsg,
   }
 }
 
@@ -135,9 +148,11 @@ function beginShow(state: GameState): GameState {
   }
   const hand = scorer === 'human' ? restored.humanHand : restored.computerHand
   const combos = scorer === 'human' ? allCombinations(hand, starter, false) : []
+  const scorerLabel = scorer === 'human' ? 'Your Hand' : "Opponent's Hand"
   return {
     ...restored,
     phase: 'show',
+    eventMessage: { text: `Counting ${scorerLabel}...`, type: 'muted' },
     show: {
       ...DEFAULT_SHOW,
       scorer,
@@ -160,7 +175,7 @@ function advanceShowScorer(state: GameState): GameState {
   }
 
   if (next === null) {
-    return { ...state, show: { ...state.show, scorer: null }, phase: 'summary' }
+    return { ...state, show: { ...state.show, scorer: null }, phase: 'summary', eventMessage: { text: 'Hand complete', type: 'muted' } }
   }
 
   const starter = state.starterCard!
@@ -171,14 +186,17 @@ function advanceShowScorer(state: GameState): GameState {
         ? state.humanHand
         : state.computerHand
   const isCrib = next === 'crib'
-  const isHumanTurn =
-    (next === 'human' || (isCrib && dealer === 'human')) &&
-    state.countingMode === 'manual'
+  const isHumanTurn = next === 'human' || (isCrib && dealer === 'human')
 
   const combos = isHumanTurn ? allCombinations(hand, starter, isCrib) : []
 
+  const nextLabel = next === 'crib'
+    ? (dealer === 'human' ? 'Your Crib' : "Opponent's Crib")
+    : next === 'human' ? 'Your Hand' : "Opponent's Hand"
+
   return {
     ...state,
+    eventMessage: { text: `Counting ${nextLabel}...`, type: 'muted' },
     show: {
       ...DEFAULT_SHOW,
       scorer: next,
@@ -197,6 +215,7 @@ export function reducer(state: GameState, action: Action): GameState {
       return {
         ...state,
         phase: 'cutForDeal',
+        eventMessage: null,
         cutForDeal: {
           deck,
           humanCut: null,
@@ -211,6 +230,7 @@ export function reducer(state: GameState, action: Action): GameState {
       const card = state.cutForDeal.deck[action.cardIndex]
       return {
         ...state,
+        eventMessage: { text: 'Opponent is cutting...', type: 'muted' },
         cutForDeal: { ...state.cutForDeal, humanCut: card },
       }
     }
@@ -228,8 +248,11 @@ export function reducer(state: GameState, action: Action): GameState {
       if (humanRank < compRank) result = 'human-deals'
       else if (compRank < humanRank) result = 'computer-deals'
       else result = 'tie'
+      const resultLabel = result === 'human-deals' ? 'You deal' : result === 'computer-deals' ? 'Opponent deals' : 'Tie, cut again'
+      const cutMsg = `You cut ${cardLabel(state.cutForDeal.humanCut)}, Opponent cut ${cardLabel(card)}. ${resultLabel}.`
       return {
         ...state,
+        eventMessage: { text: cutMsg, type: 'info' },
         cutForDeal: { ...state.cutForDeal, computerCut: card, result },
       }
     }
@@ -264,6 +287,7 @@ export function reducer(state: GameState, action: Action): GameState {
         show: { ...DEFAULT_SHOW },
         handHistory: [],
         lastScoringEvent: null,
+        eventMessage: { text: 'Dealing...', type: 'muted' },
         phase: 'discard',
       }
     }
@@ -277,6 +301,7 @@ export function reducer(state: GameState, action: Action): GameState {
         ...state,
         humanHand: newHand,
         crib: [...state.crib, c1, c2],
+        eventMessage: { text: 'Opponent is discarding...', type: 'muted' },
       }
     }
 
@@ -285,20 +310,29 @@ export function reducer(state: GameState, action: Action): GameState {
       const newHand = state.computerHand.filter(
         c => c.id !== c1.id && c.id !== c2.id
       )
+      const cutInstruction = state.dealer === 'computer'
+        ? 'Cut the deck to reveal the starter'
+        : 'Opponent is cutting the deck...'
       return {
         ...state,
         computerHand: newHand,
         crib: [...state.crib, c1, c2],
+        eventMessage: { text: cutInstruction, type: 'muted' },
         phase: 'cut',
       }
     }
 
     case 'CUT_STARTER': {
       const card = state.deck[Math.floor(Math.random() * state.deck.length)]
-      let next: GameState = { ...state, starterCard: card }
+      let next: GameState = {
+        ...state,
+        starterCard: card,
+        eventMessage: { text: cardLabel(card), type: 'info' },
+      }
       if (card.rank === 'J') {
         const pts = 2
-        const event = 'Nibs! Dealer scores 2'
+        const dealerLabel = next.dealer === 'human' ? 'You' : 'Opponent'
+        const event = `His Heels! 2 points for ${dealerLabel}`
         next = awardPoints(next, next.dealer, pts, event)
       }
       if (next.phase === 'gameover') return next
@@ -342,9 +376,15 @@ export function reducer(state: GameState, action: Action): GameState {
       const newCount = currentCount + cardValue(card)
       const { points, events } = scorePegging(currentSequence, card, currentCount)
 
+      let playMsg = `You played ${cardLabel(card)}`
       let next: GameState = { ...state, humanHand: newHand, lastComputerCard: null }
       if (points > 0) {
-        next = awardPoints(next, 'human', points, events.join(', '))
+        const combo = events.join(', ')
+        next = awardPoints(next, 'human', points, combo)
+        // awardPoints sets eventMessage to gold; prepend the play label
+        next = { ...next, eventMessage: { text: `${playMsg}: ${combo}`, type: 'gold', points } }
+      } else {
+        next = { ...next, eventMessage: { text: playMsg, type: 'info' } }
       }
       if (next.phase === 'gameover') return next
 
@@ -366,6 +406,10 @@ export function reducer(state: GameState, action: Action): GameState {
       const resetCount = newCount === 31
       const seq = resetCount ? [] : newSeq
       const cnt = resetCount ? 0 : newCount
+
+      if (resetCount && points === 0) {
+        next = { ...next, eventMessage: { text: `31! 2 points for You`, type: 'gold', points: 2 } }
+      }
 
       const hCanPlay = canPlay(newHand, cnt)
       const cCanPlay = canPlay(next.computerHand, cnt)
@@ -393,9 +437,12 @@ export function reducer(state: GameState, action: Action): GameState {
       if (!canPlay(state.computerHand, currentCount)) {
         // computer must go
         const goPoints = resolveGo(currentSequence, currentCount)
-        let next: GameState = state
+        let next: GameState = {
+          ...state,
+          eventMessage: { text: 'Opponent says Go', type: 'muted' },
+        }
         if (goPoints > 0) {
-          next = awardPoints(next, 'computer', goPoints, 'Go for 1')
+          next = awardPoints(next, 'computer', goPoints, 'Go: 1 point for Opponent')
         }
         if (next.phase === 'gameover') return next
         return {
@@ -419,9 +466,14 @@ export function reducer(state: GameState, action: Action): GameState {
       const newCount = currentCount + cardValue(card)
       const { points, events } = scorePegging(currentSequence, card, currentCount)
 
+      let compPlayMsg = `Opponent plays ${cardLabel(card)}`
       let next: GameState = { ...state, computerHand: newHand, lastComputerCard: card }
       if (points > 0) {
-        next = awardPoints(next, 'computer', points, events.join(', '))
+        const combo = events.join(', ')
+        next = awardPoints(next, 'computer', points, combo)
+        next = { ...next, eventMessage: { text: `${compPlayMsg}: ${combo}`, type: 'gold', points } }
+      } else {
+        next = { ...next, eventMessage: { text: compPlayMsg, type: 'muted' } }
       }
       if (next.phase === 'gameover') return next
 
@@ -442,6 +494,10 @@ export function reducer(state: GameState, action: Action): GameState {
       const resetCount = newCount === 31
       const seq = resetCount ? [] : newSeq
       const cnt = resetCount ? 0 : newCount
+
+      if (resetCount && points === 0) {
+        next = { ...next, eventMessage: { text: `31! 2 points for Opponent`, type: 'gold', points: 2 } }
+      }
 
       const hCanPlay = canPlay(next.humanHand, cnt)
       const cCanPlay = canPlay(newHand, cnt)
@@ -464,9 +520,9 @@ export function reducer(state: GameState, action: Action): GameState {
     case 'DECLARE_GO': {
       // Human declares go
       const goPoints = resolveGo(state.pegging.currentSequence, state.pegging.currentCount)
-      let next: GameState = state
+      let next: GameState = { ...state, eventMessage: { text: 'You say Go', type: 'muted' } }
       if (goPoints > 0) {
-        next = awardPoints(next, 'computer', goPoints, 'Go for 1')
+        next = awardPoints(next, 'computer', goPoints, 'Go: 1 point for Opponent')
       }
       if (next.phase === 'gameover') return next
       return {
@@ -501,13 +557,16 @@ export function reducer(state: GameState, action: Action): GameState {
       const player =
         scorer === 'crib' ? state.dealer : scorer
       const breakdown = scoreHand(hand, starter, isCrib)
-      const label =
+      const handLabel =
         scorer === 'crib'
-          ? `Crib: ${breakdown.total} pts`
-          : `${scorer === 'human' ? 'You' : 'Opponent'} show: ${breakdown.total} pts`
+          ? (state.dealer === 'human' ? 'Your Crib' : "Opponent's Crib")
+          : scorer === 'human' ? 'Your Hand' : "Opponent's Hand"
+      const label = `${breakdown.total} points in ${handLabel}`
 
       let next = awardPoints(state, player, breakdown.total, label)
       if (next.phase === 'gameover') return next
+
+      next = { ...next, eventMessage: { text: label, type: 'gold', points: breakdown.total } }
 
       const breakdownKey =
         scorer === 'human'
@@ -585,13 +644,15 @@ export function reducer(state: GameState, action: Action): GameState {
       const total = claimedCombos.reduce((s, c) => s + c.points, 0)
       const player =
         scorer === 'crib' ? state.dealer : scorer
-      const label =
+      const handLabel =
         scorer === 'crib'
-          ? `Crib: ${total} pts`
-          : `${scorer === 'human' ? 'You' : 'Opponent'} show: ${total} pts`
+          ? (state.dealer === 'human' ? 'Your Crib' : "Opponent's Crib")
+          : scorer === 'human' ? 'Your Hand' : "Opponent's Hand"
+      const label = `${total} points in ${handLabel}`
 
       let next = awardPoints(state, player, total, label)
       if (next.phase === 'gameover') return next
+      next = { ...next, eventMessage: { text: label, type: 'gold', points: total } }
 
       const hand =
         scorer === 'crib'
@@ -629,12 +690,17 @@ export function reducer(state: GameState, action: Action): GameState {
         show: { ...DEFAULT_SHOW },
         handHistory: [],
         lastScoringEvent: null,
+        eventMessage: { text: 'Dealing...', type: 'muted' },
         phase: 'discard',
       }
     }
 
     case 'PLAY_AGAIN': {
       return { ...makeInitialState(), phase: 'home' }
+    }
+
+    case 'SET_EVENT_MESSAGE': {
+      return { ...state, eventMessage: action.message }
     }
 
     default:

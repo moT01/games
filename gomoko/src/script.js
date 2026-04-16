@@ -1,0 +1,808 @@
+// ── Board helpers ────────────────────────────────────────────────────────────
+
+function createBoard() {
+  return Array.from({ length: 15 }, () => new Array(15).fill(0));
+}
+
+function placeStone(board, row, col, player) {
+  const next = board.map(r => r.slice());
+  next[row][col] = player;
+  return next;
+}
+
+function countInDirection(board, row, col, dr, dc, player) {
+  let count = 0;
+  let r = row + dr;
+  let c = col + dc;
+  while (r >= 0 && r < 15 && c >= 0 && c < 15 && board[r][c] === player) {
+    count++;
+    r += dr;
+    c += dc;
+  }
+  return count;
+}
+
+function checkWin(board, row, col, player) {
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [1, 1],
+    [1, -1],
+  ];
+  for (const [dr, dc] of directions) {
+    const fwd = countInDirection(board, row, col, dr, dc, player);
+    const bwd = countInDirection(board, row, col, -dr, -dc, player);
+    const total = 1 + fwd + bwd;
+    if (total === 5) {
+      const winLine = [];
+      for (let i = -bwd; i <= fwd; i++) {
+        winLine.push([row + dr * i, col + dc * i]);
+      }
+      return { won: true, winLine };
+    }
+  }
+  return { won: false, winLine: [] };
+}
+
+function checkDraw(board) {
+  for (let r = 0; r < 15; r++) {
+    for (let c = 0; c < 15; c++) {
+      if (board[r][c] === 0) return false;
+    }
+  }
+  return true;
+}
+
+// ── AI helpers ───────────────────────────────────────────────────────────────
+
+function getCandidates(board) {
+  let hasStone = false;
+  const candidates = [];
+  const marked = Array.from({ length: 15 }, () => new Array(15).fill(false));
+
+  for (let r = 0; r < 15; r++) {
+    for (let c = 0; c < 15; c++) {
+      if (board[r][c] !== 0) {
+        hasStone = true;
+        for (let dr = -2; dr <= 2; dr++) {
+          for (let dc = -2; dc <= 2; dc++) {
+            const nr = r + dr;
+            const nc = c + dc;
+            if (
+              nr >= 0 && nr < 15 &&
+              nc >= 0 && nc < 15 &&
+              board[nr][nc] === 0 &&
+              !marked[nr][nc]
+            ) {
+              marked[nr][nc] = true;
+              candidates.push([nr, nc]);
+            }
+          }
+        }
+      }
+    }
+  }
+  return hasStone ? candidates : [[7, 7]];
+}
+
+function scoreWindow(window, player) {
+  const opponent = player === 1 ? 2 : 1;
+  let p = 0;
+  let o = 0;
+  for (const cell of window) {
+    if (cell === player) p++;
+    else if (cell === opponent) o++;
+  }
+  if (o > 0 && p > 0) return 0;
+  if (o > 0) return -scoreCount(o);
+  if (p > 0) return scoreCount(p);
+  return 0;
+}
+
+function scoreCount(n) {
+  if (n === 5) return 100000000;
+  if (n === 4) return 100000;
+  if (n === 3) return 5000;
+  if (n === 2) return 100;
+  return 0;
+}
+
+function scoreBoard(board, player) {
+  let score = 0;
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [1, 1],
+    [1, -1],
+  ];
+
+  for (const [dr, dc] of directions) {
+    for (let r = 0; r < 15; r++) {
+      for (let c = 0; c < 15; c++) {
+        const window = [];
+        let valid = true;
+        for (let i = 0; i < 5; i++) {
+          const nr = r + dr * i;
+          const nc = c + dc * i;
+          if (nr < 0 || nr >= 15 || nc < 0 || nc >= 15) { valid = false; break; }
+          window.push(board[nr][nc]);
+        }
+        if (valid) score += scoreWindow(window, player);
+      }
+    }
+  }
+  return score;
+}
+
+function negamax(board, depth, alpha, beta, player) {
+  const opponent = player === 1 ? 2 : 1;
+
+  if (depth === 0) {
+    return { score: scoreBoard(board, player), move: null };
+  }
+
+  const candidates = getCandidates(board);
+  if (candidates.length === 0) {
+    return { score: 0, move: null };
+  }
+
+  // Move ordering: score each candidate shallowly
+  const scored = candidates.map(([r, c]) => {
+    const next = placeStone(board, r, c, player);
+    return { move: [r, c], score: scoreBoard(next, player) };
+  });
+  scored.sort((a, b) => b.score - a.score);
+
+  let bestMove = scored[0].move;
+  let bestScore = -Infinity;
+
+  for (const { move: [r, c] } of scored) {
+    const next = placeStone(board, r, c, player);
+    const { won } = checkWin(next, r, c, player);
+    if (won) {
+      return { score: 100000000 + depth, move: [r, c] };
+    }
+    const { score } = negamax(next, depth - 1, -beta, -alpha, opponent);
+    const s = -score;
+    if (s > bestScore) {
+      bestScore = s;
+      bestMove = [r, c];
+    }
+    if (s > alpha) alpha = s;
+    if (alpha >= beta) break;
+  }
+
+  return { score: bestScore, move: bestMove };
+}
+
+function getBestMove(board, player) {
+  const { move } = negamax(board, 4, -Infinity, Infinity, player);
+  return move || [7, 7];
+}
+
+// ── State ────────────────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'gomoko_state';
+const THEME_KEY = 'gomoko_theme';
+const MODE_KEY = 'gomoko_mode';
+
+function makeInitialState(mode = 'hvc') {
+  return {
+    board: createBoard(),
+    currentPlayer: 1,
+    status: 'idle',
+    winner: null,
+    winLine: [],
+    lastMove: null,
+    mode,
+    aiThinking: false,
+  };
+}
+
+let state = makeInitialState();
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (_) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (_) {
+    return null;
+  }
+}
+
+// ── Audio ────────────────────────────────────────────────────────────────────
+
+let audioCtx = null;
+let soundEnabled = true;
+
+function playPlaceSound() {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(260, audioCtx.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.12);
+  } catch (_) {}
+}
+
+// ── Game actions ─────────────────────────────────────────────────────────────
+
+function startGame(mode) {
+  state = makeInitialState(mode);
+  state.status = 'playing';
+  saveState();
+  render();
+}
+
+function resetGame() {
+  startGame(state.mode);
+}
+
+function handleCellClick(row, col) {
+  if (state.status !== 'playing') return;
+  if (state.aiThinking) return;
+  if (state.board[row][col] !== 0) return;
+  if (state.mode === 'hvc' && state.currentPlayer !== 1) return;
+
+  applyMove(row, col, state.currentPlayer);
+}
+
+function applyMove(row, col, player) {
+  state.board = placeStone(state.board, row, col, player);
+  state.lastMove = [row, col];
+  playPlaceSound();
+
+  const { won, winLine } = checkWin(state.board, row, col, player);
+  if (won) {
+    state.status = 'won';
+    state.winner = player;
+    state.winLine = winLine;
+    state.currentPlayer = player;
+    saveState();
+    render();
+    return;
+  }
+
+  if (checkDraw(state.board)) {
+    state.status = 'draw';
+    saveState();
+    render();
+    return;
+  }
+
+  state.currentPlayer = player === 1 ? 2 : 1;
+
+  if (state.mode === 'hvc' && state.currentPlayer === 2) {
+    triggerAI();
+  } else {
+    saveState();
+    render();
+  }
+}
+
+function triggerAI() {
+  state.aiThinking = true;
+  render();
+  setTimeout(runAI, 50);
+}
+
+function runAI() {
+  const move = getBestMove(state.board, 2);
+  state.aiThinking = false;
+  if (move) {
+    applyMove(move[0], move[1], 2);
+  }
+}
+
+// ── Rendering ────────────────────────────────────────────────────────────────
+
+const CELL = 32; // px per grid cell
+const BOARD_PX = CELL * 14; // 14 gaps between 15 lines
+const PAD = 24;
+const SVG_SIZE = BOARD_PX + PAD * 2;
+const STONE_R = 13;
+
+const STAR_POINTS = [
+  [3, 3], [3, 7], [3, 11],
+  [7, 7],
+  [11, 3], [11, 7], [11, 11],
+];
+
+function cx(col) { return PAD + col * CELL; }
+function cy(row) { return PAD + row * CELL; }
+
+function svgEl(tag, attrs = {}, children = []) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  for (const child of children) el.appendChild(child);
+  return el;
+}
+
+function buildBoard() {
+  const svg = svgEl('svg', {
+    viewBox: `0 0 ${SVG_SIZE} ${SVG_SIZE}`,
+    class: 'board-svg',
+    role: 'grid',
+    'aria-label': 'Gomoku board',
+  });
+
+  // Board background
+  const bg = svgEl('rect', {
+    x: 0, y: 0, width: SVG_SIZE, height: SVG_SIZE,
+    class: 'board-bg',
+    rx: 8,
+  });
+  svg.appendChild(bg);
+
+  // Grid lines
+  for (let i = 0; i < 15; i++) {
+    svg.appendChild(svgEl('line', {
+      x1: cx(i), y1: cy(0), x2: cx(i), y2: cy(14),
+      class: 'grid-line',
+    }));
+    svg.appendChild(svgEl('line', {
+      x1: cx(0), y1: cy(i), x2: cx(14), y2: cy(i),
+      class: 'grid-line',
+    }));
+  }
+
+  // Star points
+  for (const [r, c] of STAR_POINTS) {
+    svg.appendChild(svgEl('circle', {
+      cx: cx(c), cy: cy(r), r: 3,
+      class: 'star-point',
+    }));
+  }
+
+  // Hit areas + stones
+  const winSet = new Set(state.winLine.map(([r, c]) => `${r},${c}`));
+
+  for (let r = 0; r < 15; r++) {
+    for (let c = 0; c < 15; c++) {
+      const cell = state.board[r][c];
+      const isLast = state.lastMove && state.lastMove[0] === r && state.lastMove[1] === c;
+      const isWin = winSet.has(`${r},${c}`);
+      const isEmpty = cell === 0;
+
+      const canClick = (
+        state.status === 'playing' &&
+        !state.aiThinking &&
+        isEmpty &&
+        (state.mode === 'hvh' || state.currentPlayer === 1)
+      );
+
+      const label = `Row ${r + 1}, Column ${c + 1}, ${cell === 0 ? 'empty' : cell === 1 ? 'dark' : 'light'}`;
+
+      const hitArea = svgEl('rect', {
+        x: cx(c) - CELL / 2,
+        y: cy(r) - CELL / 2,
+        width: CELL,
+        height: CELL,
+        class: `hit-area${canClick ? ' clickable' : ''}`,
+        role: 'button',
+        'aria-label': label,
+        tabindex: canClick ? '0' : '-1',
+        'data-row': r,
+        'data-col': c,
+      });
+
+      if (canClick) {
+        hitArea.addEventListener('click', () => handleCellClick(r, c));
+        hitArea.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleCellClick(r, c);
+          }
+        });
+      }
+
+      svg.appendChild(hitArea);
+
+      if (cell !== 0) {
+        const defs = svg.querySelector('defs') || (() => {
+          const d = svgEl('defs');
+          svg.insertBefore(d, svg.firstChild);
+          return d;
+        })();
+
+        const gradId = cell === 1 ? 'grad-dark' : 'grad-light';
+        if (!svg.querySelector(`#${gradId}`)) {
+          if (cell === 1) {
+            defs.appendChild(svgEl('radialGradient', { id: 'grad-dark', cx: '35%', cy: '30%', r: '65%' }, [
+              svgEl('stop', { offset: '0%', 'stop-color': 'var(--blue-light)' }),
+              svgEl('stop', { offset: '100%', 'stop-color': 'var(--blue-mid)' }),
+            ]));
+          } else {
+            defs.appendChild(svgEl('radialGradient', { id: 'grad-light', cx: '35%', cy: '30%', r: '65%' }, [
+              svgEl('stop', { offset: '0%', 'stop-color': '#ffffff' }),
+              svgEl('stop', { offset: '100%', 'stop-color': 'var(--gray-10)' }),
+            ]));
+          }
+        }
+
+        const stone = svgEl('circle', {
+          cx: cx(c),
+          cy: cy(r),
+          r: STONE_R,
+          class: `stone stone-${cell === 1 ? 'dark' : 'light'}${isWin ? ' stone-win' : ''}`,
+          fill: `url(#${gradId})`,
+        });
+        svg.appendChild(stone);
+
+        if (isLast) {
+          svg.appendChild(svgEl('circle', {
+            cx: cx(c), cy: cy(r), r: 3,
+            class: `last-move-dot last-move-${cell === 1 ? 'dark' : 'light'}`,
+          }));
+        }
+      }
+    }
+  }
+
+  return svg;
+}
+
+// ── Modals ───────────────────────────────────────────────────────────────────
+
+function buildHelpModal() {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop';
+  backdrop.setAttribute('role', 'dialog');
+  backdrop.setAttribute('aria-modal', 'true');
+  backdrop.setAttribute('aria-label', 'Help');
+
+  const panel = document.createElement('div');
+  panel.className = 'modal-panel';
+
+  panel.innerHTML = `
+    <h2 class="modal-title">How to Play</h2>
+    <button class="modal-close" aria-label="Close help">X</button>
+    <div class="modal-body">
+      <h3>Objective</h3>
+      <p>Be the first to place exactly 5 of your stones in an unbroken row — horizontally, vertically, or diagonally. Six or more in a row does not win.</p>
+      <h3>Rules</h3>
+      <ul>
+        <li>Dark always goes first</li>
+        <li>Players alternate placing one stone per turn</li>
+        <li>A stone cannot be moved once placed</li>
+        <li>Exactly 5 consecutive stones of the same color wins; 6 or more does not</li>
+        <li>If the board fills with no winner, the game is a draw</li>
+      </ul>
+      <h3>Key Strategies</h3>
+      <ul>
+        <li>Build toward open fours (_XXXX_) — your opponent must block immediately or lose</li>
+        <li>Create two simultaneous threats your opponent cannot both block</li>
+        <li>Play in the center early; edge and corner stones have fewer winning directions</li>
+        <li>Block your opponent's open threes immediately, not after they become open fours</li>
+      </ul>
+      <h3>Common Mistakes</h3>
+      <ul>
+        <li>Ignoring an opponent's open three — it becomes an unstoppable open four next turn</li>
+        <li>Playing only in a straight line — it's predictable and easy to block</li>
+        <li>Building closed fours instead of open fours — closed fours give the opponent time to respond</li>
+      </ul>
+      <h3>Tips for Beginners</h3>
+      <ul>
+        <li>Start at the center every game as dark</li>
+        <li>Think of your stones as creating two threats at once</li>
+        <li>A sequence of 3 is urgent, 4 is critical</li>
+        <li>A draw is rare — focus on attacking rather than defending</li>
+      </ul>
+    </div>
+  `;
+
+  panel.querySelector('.modal-close').addEventListener('click', closeHelp);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeHelp(); });
+  document.addEventListener('keydown', helpEscHandler);
+
+  backdrop.appendChild(panel);
+  return backdrop;
+}
+
+function helpEscHandler(e) {
+  if (e.key === 'Escape') closeHelp();
+}
+
+function openHelp() {
+  if (document.getElementById('help-modal')) return;
+  const modal = buildHelpModal();
+  modal.id = 'help-modal';
+  document.body.appendChild(modal);
+  requestAnimationFrame(() => modal.classList.add('modal-visible'));
+}
+
+function closeHelp() {
+  const modal = document.getElementById('help-modal');
+  if (!modal) return;
+  document.removeEventListener('keydown', helpEscHandler);
+  modal.remove();
+}
+
+let confirmCallback = null;
+
+function openConfirm(onConfirm) {
+  if (document.getElementById('confirm-modal')) return;
+  confirmCallback = onConfirm;
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop';
+  backdrop.id = 'confirm-modal';
+  backdrop.setAttribute('role', 'dialog');
+  backdrop.setAttribute('aria-modal', 'true');
+  backdrop.setAttribute('aria-label', 'Confirm new game');
+
+  const panel = document.createElement('div');
+  panel.className = 'modal-panel modal-panel-sm';
+  panel.innerHTML = `
+    <h2 class="modal-title">New Game</h2>
+    <p class="modal-body-text">Start a new game? Current progress will be lost.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+      <button class="btn btn-primary" id="confirm-ok">New Game</button>
+    </div>
+  `;
+
+  panel.querySelector('#confirm-cancel').addEventListener('click', closeConfirm);
+  panel.querySelector('#confirm-ok').addEventListener('click', () => {
+    closeConfirm();
+    if (confirmCallback) confirmCallback();
+  });
+
+  document.addEventListener('keydown', confirmKeyHandler);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeConfirm(); });
+  backdrop.appendChild(panel);
+  document.body.appendChild(backdrop);
+  requestAnimationFrame(() => backdrop.classList.add('modal-visible'));
+}
+
+function confirmKeyHandler(e) {
+  if (e.key === 'Escape') closeConfirm();
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    closeConfirm();
+    if (confirmCallback) confirmCallback();
+  }
+}
+
+function closeConfirm() {
+  const modal = document.getElementById('confirm-modal');
+  if (!modal) return;
+  document.removeEventListener('keydown', confirmKeyHandler);
+  modal.remove();
+  confirmCallback = null;
+}
+
+function onNewGame() {
+  if (state.status === 'playing') {
+    openConfirm(resetGame);
+  } else {
+    resetGame();
+  }
+}
+
+// ── Home Screen ──────────────────────────────────────────────────────────────
+
+function renderHome() {
+  const savedMode = localStorage.getItem(MODE_KEY) || 'hvc';
+  state.mode = savedMode;
+
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  const screen = document.createElement('div');
+  screen.className = 'home-screen';
+
+  screen.innerHTML = `
+    <div class="home-card">
+      <div class="home-header">
+        <h1 class="home-title">Gomoko</h1>
+        <p class="home-subtitle">Five in a row wins</p>
+      </div>
+      <div class="mode-toggle" role="group" aria-label="Game mode">
+        <button class="mode-btn${savedMode === 'hvc' ? ' mode-active' : ''}" data-mode="hvc" aria-pressed="${savedMode === 'hvc'}">vs Computer</button>
+        <button class="mode-btn${savedMode === 'hvh' ? ' mode-active' : ''}" data-mode="hvh" aria-pressed="${savedMode === 'hvh'}">vs Human</button>
+      </div>
+      <div class="home-actions">
+        <button class="btn btn-primary btn-lg" id="start-btn" aria-label="Start game">Start Game</button>
+        <button class="btn btn-secondary" id="help-btn-home" aria-label="Help">?</button>
+      </div>
+      <div class="home-footer">
+        <button class="btn btn-icon" id="theme-btn-home" aria-label="Toggle theme"></button>
+        <a class="btn btn-secondary btn-sm" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">Donate</a>
+        <button class="btn btn-icon sound-btn" id="sound-btn-home" aria-label="Toggle sound"></button>
+      </div>
+    </div>
+  `;
+
+  // Mode buttons
+  screen.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      state.mode = mode;
+      localStorage.setItem(MODE_KEY, mode);
+      screen.querySelectorAll('.mode-btn').forEach(b => {
+        b.classList.toggle('mode-active', b.dataset.mode === mode);
+        b.setAttribute('aria-pressed', b.dataset.mode === mode);
+      });
+    });
+  });
+
+  screen.querySelector('#start-btn').addEventListener('click', () => {
+    localStorage.setItem(MODE_KEY, state.mode);
+    startGame(state.mode);
+  });
+
+  screen.querySelector('#help-btn-home').addEventListener('click', openHelp);
+  screen.querySelector('#theme-btn-home').addEventListener('click', toggleTheme);
+  screen.querySelector('#sound-btn-home').addEventListener('click', toggleSound);
+
+  updateThemeBtn(screen.querySelector('#theme-btn-home'));
+  updateSoundBtn(screen.querySelector('#sound-btn-home'));
+
+  app.appendChild(screen);
+}
+
+// ── Play Screen ──────────────────────────────────────────────────────────────
+
+function renderPlay() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  const screen = document.createElement('div');
+  screen.className = 'play-screen';
+
+  // Status bar
+  const statusBar = document.createElement('div');
+  statusBar.className = 'status-bar';
+
+  if (state.status === 'playing') {
+    if (state.aiThinking) {
+      statusBar.textContent = 'Thinking...';
+    } else {
+      const playerName = state.currentPlayer === 1 ? 'Dark' : 'Light';
+      statusBar.textContent = `${playerName}'s turn`;
+    }
+  }
+
+  // Board
+  const boardWrap = document.createElement('div');
+  boardWrap.className = 'board-wrap';
+  boardWrap.appendChild(buildBoard());
+
+  // Game over overlay
+  if (state.status === 'won' || state.status === 'draw') {
+    const overlay = document.createElement('div');
+    overlay.className = 'game-over-overlay';
+    const panel = document.createElement('div');
+    panel.className = 'game-over-panel';
+
+    let resultText = '';
+    if (state.status === 'draw') {
+      resultText = 'Draw!';
+    } else {
+      const winner = state.winner === 1 ? 'Dark' : 'Light';
+      resultText = `${winner} wins!`;
+    }
+
+    panel.innerHTML = `
+      <p class="game-over-result">${resultText}</p>
+      <div class="game-over-actions">
+        <button class="btn btn-primary" id="play-again-btn" aria-label="Play again">Play Again</button>
+        <button class="btn btn-secondary" id="home-btn" aria-label="Go to home screen">Home</button>
+      </div>
+    `;
+
+    panel.querySelector('#play-again-btn').addEventListener('click', resetGame);
+    panel.querySelector('#home-btn').addEventListener('click', goHome);
+
+    overlay.appendChild(panel);
+    boardWrap.appendChild(overlay);
+  }
+
+  // Controls bar
+  const controls = document.createElement('div');
+  controls.className = 'controls-bar';
+  controls.innerHTML = `
+    <button class="btn btn-secondary" id="new-game-btn" aria-label="New game">New Game</button>
+    <button class="btn btn-icon" id="help-btn-play" aria-label="Help">?</button>
+    <button class="btn btn-icon" id="theme-btn-play" aria-label="Toggle theme"></button>
+    <a class="btn btn-secondary btn-sm" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">Donate</a>
+    <button class="btn btn-icon sound-btn" id="sound-btn-play" aria-label="Toggle sound"></button>
+  `;
+
+  controls.querySelector('#new-game-btn').addEventListener('click', onNewGame);
+  controls.querySelector('#help-btn-play').addEventListener('click', openHelp);
+  controls.querySelector('#theme-btn-play').addEventListener('click', toggleTheme);
+  controls.querySelector('#sound-btn-play').addEventListener('click', toggleSound);
+
+  updateThemeBtn(controls.querySelector('#theme-btn-play'));
+  updateSoundBtn(controls.querySelector('#sound-btn-play'));
+
+  screen.appendChild(statusBar);
+  screen.appendChild(boardWrap);
+  screen.appendChild(controls);
+  app.appendChild(screen);
+
+  // Animate overlay in
+  if (state.status === 'won' || state.status === 'draw') {
+    const overlay = screen.querySelector('.game-over-overlay');
+    if (overlay) requestAnimationFrame(() => overlay.classList.add('overlay-visible'));
+  }
+}
+
+function goHome() {
+  state = makeInitialState(state.mode);
+  localStorage.removeItem(STORAGE_KEY);
+  render();
+}
+
+function render() {
+  if (state.status === 'idle') {
+    renderHome();
+  } else {
+    renderPlay();
+  }
+}
+
+// ── Theme / Sound ─────────────────────────────────────────────────────────────
+
+function getTheme() {
+  return localStorage.getItem(THEME_KEY) || 'dark';
+}
+
+function applyTheme(theme) {
+  document.body.classList.toggle('light-palette', theme === 'light');
+  document.body.classList.toggle('dark-palette', theme === 'dark');
+}
+
+function toggleTheme() {
+  const current = getTheme();
+  const next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+  document.querySelectorAll('.theme-btn, [id^="theme-btn"]').forEach(btn => updateThemeBtn(btn));
+}
+
+function updateThemeBtn(btn) {
+  if (!btn) return;
+  const theme = getTheme();
+  btn.textContent = theme === 'dark' ? 'Sun' : 'Moon';
+  btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  document.querySelectorAll('.sound-btn').forEach(btn => updateSoundBtn(btn));
+}
+
+function updateSoundBtn(btn) {
+  if (!btn) return;
+  btn.textContent = soundEnabled ? 'On' : 'Off';
+  btn.setAttribute('aria-label', soundEnabled ? 'Disable sound' : 'Enable sound');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+applyTheme(getTheme());
+
+const saved = loadState();
+if (saved && saved.status === 'playing') {
+  state = saved;
+  render();
+} else {
+  render();
+}
