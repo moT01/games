@@ -347,8 +347,7 @@
 }
 
 .light-palette .play-card .btn-icon {
-  background: linear-gradient(135deg, var(--gray-15) 0%, var(--gray-10) 100%);
-  border-color: var(--gray-15);
+  background: linear-gradient(135deg, var(--gray-10) 0%, var(--gray-15) 100%);
 }
 
 /* ── Status Bar ─────────────────────────────────────────────────────────────── */
