@@ -138,7 +138,7 @@ body::before {
       rgba(255, 255, 255, 0.04) 80px,
       rgba(255, 255, 255, 0.04) 81px
     );
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 95%);
 }
 
 .light-palette::before {

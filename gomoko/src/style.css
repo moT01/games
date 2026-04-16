@@ -13,7 +13,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   width: 100%;
   padding: var(--space-5);
 }
@@ -487,10 +486,17 @@
 }
 
 .stone-win {
-  filter: drop-shadow(0 0 6px var(--yellow-gold)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
   transform-box: fill-box;
   transform-origin: center;
   animation: stone-appear 120ms ease forwards, stone-pulse 600ms ease 120ms both;
+}
+
+.stone-dark.stone-win {
+  filter: drop-shadow(0 0 6px #66b3ff) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.stone-light.stone-win {
+  filter: drop-shadow(0 0 6px var(--yellow-gold)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 @keyframes stone-pulse {
