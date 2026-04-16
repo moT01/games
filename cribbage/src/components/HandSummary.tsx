@@ -14,7 +14,7 @@ export default function HandSummary({ handHistory, humanScore, computerScore, on
 
       <div className="hand-summary__scores">
         <span>You: <strong>{humanScore}</strong></span>
-        <span>Computer: <strong>{computerScore}</strong></span>
+        <span>Opponent: <strong>{computerScore}</strong></span>
       </div>
 
       <ul className="hand-summary__history">

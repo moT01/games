@@ -12,7 +12,7 @@ export default function GameOverScreen({ winner, humanScore, computerScore, onPl
     <div className="game-over">
       <div className="game-over__box">
         <h1 className="game-over__heading">
-          {winner === 'human' ? 'You Win!' : 'Computer Wins'}
+          {winner === 'human' ? 'You Win!' : 'Opponent Wins'}
         </h1>
 
         <div className="game-over__scores">
@@ -21,7 +21,7 @@ export default function GameOverScreen({ winner, humanScore, computerScore, onPl
             <span className="game-over__score-value">{humanScore}</span>
           </div>
           <div className={`game-over__score ${winner === 'computer' ? 'game-over__score--winner' : ''}`}>
-            <span className="game-over__score-label">Computer</span>
+            <span className="game-over__score-label">Opponent</span>
             <span className="game-over__score-value">{computerScore}</span>
           </div>
         </div>

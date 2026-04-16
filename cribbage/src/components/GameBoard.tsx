@@ -30,7 +30,7 @@ interface Props {
 }
 
 export default function GameBoard({ state, dispatch, discardSelected, onDiscardCardClick, onConfirmDiscard, onShowHelp, onQuit, theme, onToggleTheme, donateUrl }: Props) {
-  const { phase, humanHand, computerHand, crib, starterCard, humanScore, computerScore, humanPegs, computerPegs, dealer, pegging, show, countingMode, lastScoringEvent, lastComputerCard, handHistory } = state
+  const { phase, humanHand, computerHand, crib, starterCard, humanScore, computerScore, humanPegs, computerPegs, dealer, pegging, show, lastScoringEvent, lastComputerCard, handHistory } = state
 
   // Drag-to-rearrange hand order
   const [handOrder, setHandOrder] = useState<string[]>(() => humanHand.map(c => c.id))
@@ -64,10 +64,10 @@ export default function GameBoard({ state, dispatch, discardSelected, onDiscardC
     dragSrcRef.current = null
   }
 
-  // Cards disabled during play
+  // Cards disabled during play when they'd bust 31
   const playDisabledIds = phase === 'play' && pegging.turn === 'human'
     ? humanHand.filter(c => cardValue(c) + pegging.currentCount > 31).map(c => c.id)
-    : humanHand.map(c => c.id)
+    : []
 
   function handleHandCardClick(card: Card) {
     if (phase === 'discard') {
@@ -87,14 +87,14 @@ export default function GameBoard({ state, dispatch, discardSelected, onDiscardC
 
   // Derive computer status message from game state
   function getComputerStatus(): string | null {
-    if (phase === 'discard' && humanHand.length === 4) return 'Computer is discarding...'
-    if (phase === 'cut' && dealer === 'human') return 'Computer is cutting the deck...'
-    if (phase === 'play' && pegging.turn === 'computer') return 'Computer is thinking...'
+    if (phase === 'discard' && humanHand.length === 4) return 'Opponent is discarding...'
+    if (phase === 'cut' && dealer === 'human') return 'Opponent is cutting the deck...'
+    if (phase === 'play' && pegging.turn === 'computer') return 'Opponent is thinking...'
     if (phase === 'play' && lastComputerCard) {
-      return `Computer played ${lastComputerCard.rank} of ${SUIT_NAMES[lastComputerCard.suit]}`
+      return `Opponent played ${lastComputerCard.rank} of ${SUIT_NAMES[lastComputerCard.suit]}`
     }
-    if (phase === 'show' && show.scorer === 'computer') return 'Computer is counting their hand...'
-    if (phase === 'show' && show.scorer === 'crib' && dealer === 'computer') return 'Computer is counting the crib...'
+    if (phase === 'show' && show.scorer === 'computer') return 'Opponent is counting their hand...'
+    if (phase === 'show' && show.scorer === 'crib' && dealer === 'computer') return 'Opponent is counting the crib...'
     return null
   }
 
@@ -120,7 +120,7 @@ export default function GameBoard({ state, dispatch, discardSelected, onDiscardC
       <div className="game-board__computer">
         <div className="game-board__computer-left">
           <div className="game-board__computer-header">
-            <span className="game-board__zone-label">Computer</span>
+            <span className="game-board__zone-label">Opponent</span>
             {computerStatus && (
               <span className="game-board__computer-status">{computerStatus}</span>
             )}
@@ -164,18 +164,18 @@ export default function GameBoard({ state, dispatch, discardSelected, onDiscardC
         {phase === 'discard' && (
           <div className="game-board__discard-ui">
             <div className="game-board__crib-label">
-              {dealer === 'human' ? 'Your Crib' : "Computer's Crib"}
+              {dealer === 'human' ? 'Your Crib' : "Opponent's Crib"}
             </div>
             {humanHand.length === 6
               ? <p className="game-board__status-text">Select 2 cards to discard</p>
-              : <p className="game-board__status-text game-board__status-text--waiting">Computer is discarding...</p>
+              : <p className="game-board__status-text game-board__status-text--waiting">Opponent is discarding...</p>
             }
           </div>
         )}
 
         {phase === 'cut' && !starterCard && (
           <p className="game-board__status-text">
-            {dealer === 'computer' ? 'Cut the deck to reveal the starter card' : 'Computer is cutting the deck...'}
+            {dealer === 'computer' ? 'Cut the deck to reveal the starter card' : 'Opponent is cutting the deck...'}
           </p>
         )}
 
@@ -190,7 +190,6 @@ export default function GameBoard({ state, dispatch, discardSelected, onDiscardC
             computerHand={computerHand}
             crib={crib}
             starterCard={starterCard}
-            countingMode={countingMode}
             dealer={dealer}
             onSelectCard={id => dispatch({ type: 'SHOW_SELECT_CARD', cardId: id })}
             onClaim={() => dispatch({ type: 'SHOW_CLAIM_COMBO' })}

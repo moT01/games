@@ -9,7 +9,6 @@ interface Props {
   computerHand: Card[]
   crib: Card[]
   starterCard: Card
-  countingMode: 'manual' | 'auto'
   dealer: 'human' | 'computer'
   onSelectCard: (cardId: string) => void
   onClaim: () => void
@@ -22,7 +21,6 @@ export default function ShowPanel({
   computerHand,
   crib,
   starterCard,
-  countingMode,
   dealer,
   onSelectCard,
   onClaim,
@@ -38,14 +36,12 @@ export default function ShowPanel({
     scorer === 'human'
       ? 'Your Hand'
       : scorer === 'computer'
-        ? "Computer's Hand"
+        ? "Opponent's Hand"
         : dealer === 'human'
           ? 'Your Crib'
-          : "Computer's Crib"
+          : "Opponent's Crib"
 
-  const isHumanManual =
-    countingMode === 'manual' &&
-    (scorer === 'human' || (scorer === 'crib' && dealer === 'human'))
+  const isHumanManual = scorer === 'human' || (scorer === 'crib' && dealer === 'human')
 
   const claimedTotal = claimedCombos.reduce((s, c) => s + c.points, 0)
   const allTotal = allCombos.reduce((s, c) => s + c.points, 0)
@@ -60,7 +56,7 @@ export default function ShowPanel({
     <div className="show-panel">
       <h3 className="show-panel__title">{scorerLabel}</h3>
 
-      {isHumanManual ? (
+      {isHumanManual && (
         <div className="show-panel__manual">
           <div className="show-panel__cards">
             {allCards.map(card => (
@@ -113,19 +109,6 @@ export default function ShowPanel({
               Done ({claimedTotal} pts)
             </button>
           </div>
-        </div>
-      ) : (
-        <div className="show-panel__auto">
-          <div className="show-panel__cards">
-            {allCards.map(card => (
-              <CardView
-                key={card.id}
-                card={card}
-                highlight={card.id === starterCard.id}
-              />
-            ))}
-          </div>
-          <p className="show-panel__auto-msg">Counting automatically...</p>
         </div>
       )}
     </div>

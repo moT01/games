@@ -18,7 +18,7 @@ export default function PlayArea({ pegging, lastScoringEvent, lastComputerCard }
 
   let statusMsg: string | null = null
   if (lastComputerCard) {
-    statusMsg = `Computer played ${lastComputerCard.rank} of ${SUIT_NAMES[lastComputerCard.suit]}`
+    statusMsg = `Opponent played ${lastComputerCard.rank} of ${SUIT_NAMES[lastComputerCard.suit]}`
     if (lastScoringEvent) statusMsg += ` — ${lastScoringEvent}`
   } else if (lastScoringEvent) {
     statusMsg = lastScoringEvent

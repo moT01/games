@@ -51,6 +51,8 @@ export function makeInitialState(): GameState {
     humanPegs: { front: 0, back: 0 },
     computerPegs: { front: 0, back: 0 },
     dealer: 'human',
+    humanShowHand: [],
+    computerShowHand: [],
     pegging: { ...DEFAULT_PEGGING },
     show: { ...DEFAULT_SHOW },
     cutForDeal: null,
@@ -125,11 +127,16 @@ function beginShow(state: GameState): GameState {
   const nonDealer = state.dealer === 'human' ? 'computer' : 'human'
   const scorer = nonDealer
   const starter = state.starterCard!
-  const hand =
-    scorer === 'human' ? state.humanHand : state.computerHand
+  // Restore hands from saved copies — humanHand/computerHand are emptied during pegging
+  const restored = {
+    ...state,
+    humanHand: state.humanShowHand,
+    computerHand: state.computerShowHand,
+  }
+  const hand = scorer === 'human' ? restored.humanHand : restored.computerHand
   const combos = scorer === 'human' ? allCombinations(hand, starter, false) : []
   return {
-    ...state,
+    ...restored,
     phase: 'show',
     show: {
       ...DEFAULT_SHOW,
@@ -298,6 +305,8 @@ export function reducer(state: GameState, action: Action): GameState {
       const nonDealer = next.dealer === 'human' ? 'computer' : 'human'
       return {
         ...next,
+        humanShowHand: next.humanHand,
+        computerShowHand: next.computerHand,
         phase: 'play',
         pegging: {
           ...DEFAULT_PEGGING,
@@ -495,7 +504,7 @@ export function reducer(state: GameState, action: Action): GameState {
       const label =
         scorer === 'crib'
           ? `Crib: ${breakdown.total} pts`
-          : `${scorer === 'human' ? 'You' : 'Computer'} show: ${breakdown.total} pts`
+          : `${scorer === 'human' ? 'You' : 'Opponent'} show: ${breakdown.total} pts`
 
       let next = awardPoints(state, player, breakdown.total, label)
       if (next.phase === 'gameover') return next
@@ -579,7 +588,7 @@ export function reducer(state: GameState, action: Action): GameState {
       const label =
         scorer === 'crib'
           ? `Crib: ${total} pts`
-          : `${scorer === 'human' ? 'You' : 'Computer'} show: ${total} pts`
+          : `${scorer === 'human' ? 'You' : 'Opponent'} show: ${total} pts`
 
       let next = awardPoints(state, player, total, label)
       if (next.phase === 'gameover') return next
@@ -611,6 +620,8 @@ export function reducer(state: GameState, action: Action): GameState {
         deck: remainingDeck,
         humanHand,
         computerHand,
+        humanShowHand: [],
+        computerShowHand: [],
         crib: [],
         starterCard: null,
         dealer: newDealer,
@@ -623,13 +634,7 @@ export function reducer(state: GameState, action: Action): GameState {
     }
 
     case 'PLAY_AGAIN': {
-      const saved = localStorage.getItem('countingMode')
-      const countingMode: 'manual' | 'auto' = saved === 'manual' ? 'manual' : 'auto'
-      return {
-        ...makeInitialState(),
-        countingMode,
-        phase: 'home',
-      }
+      return { ...makeInitialState(), phase: 'home' }
     }
 
     default:

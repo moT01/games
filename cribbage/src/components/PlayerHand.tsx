@@ -22,7 +22,7 @@ export default function PlayerHand({
   return (
     <div className="player-hand">
       <div className="player-hand__section player-hand__section--computer">
-        <span className="player-hand__label">Computer ({computerHandCount} cards)</span>
+        <span className="player-hand__label">Opponent ({computerHandCount} cards)</span>
         <div className="player-hand__cards">
           {Array.from({ length: computerHandCount }).map((_, i) => (
             <div key={i} className="card card--back" style={{ width: 60, height: 84, borderRadius: 4 }} />

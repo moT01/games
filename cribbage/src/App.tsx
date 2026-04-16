@@ -61,14 +61,12 @@ export default function App() {
     if (state.phase !== 'show') return
     const { scorer } = state.show
     if (!scorer) return
-    const isHumanManual =
-      state.countingMode === 'manual' &&
-      (scorer === 'human' || (scorer === 'crib' && state.dealer === 'human'))
+    const isHumanManual = scorer === 'human' || (scorer === 'crib' && state.dealer === 'human')
     if (!isHumanManual) {
       const t = setTimeout(() => dispatch({ type: 'AUTO_SCORE_SHOW' }), 600 + Math.random() * 400)
       return () => clearTimeout(t)
     }
-  }, [state.phase, state.show.scorer, state.countingMode, state.dealer])
+  }, [state.phase, state.show.scorer, state.dealer])
 
   function handleDiscardCardClick(card: Card) {
     setDiscardSelected(prev => {
@@ -106,11 +104,7 @@ export default function App() {
 
       {state.phase === 'home' && (
         <HomeScreen
-          countingMode={state.countingMode}
           onStart={() => dispatch({ type: 'START_CUT_FOR_DEAL' })}
-          onToggleMode={() =>
-            dispatch({ type: 'SET_COUNTING_MODE', mode: state.countingMode === 'auto' ? 'manual' : 'auto' })
-          }
         />
       )}
 

@@ -54,6 +54,8 @@ export interface GameState {
   humanPegs: Pegs
   computerPegs: Pegs
   dealer: 'human' | 'computer'
+  humanShowHand: Card[]
+  computerShowHand: Card[]
   pegging: PeggingState
   show: ShowState
   cutForDeal: CutForDealState | null

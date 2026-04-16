@@ -15,7 +15,7 @@ interface Props {
 
 const RESULT_LABELS: Record<string, string> = {
   'human-deals': 'You deal first',
-  'computer-deals': 'Computer deals first',
+  'computer-deals': 'Opponent deals first',
   tie: 'Tie — cut again',
 }
 
@@ -30,7 +30,7 @@ export default function CutForDeal({ deck, humanCut, computerCut, result, onHuma
   const canClick = !humanCut
 
   let hint = 'Click the deck to cut — low card deals first'
-  if (humanCut && !computerCut) hint = 'Computer is cutting...'
+  if (humanCut && !computerCut) hint = 'Opponent is cutting...'
   if (result !== 'pending') hint = RESULT_LABELS[result]
 
   return (
@@ -65,7 +65,7 @@ export default function CutForDeal({ deck, humanCut, computerCut, result, onHuma
                 )}
                 {isRevealed && (
                   <span className="cut-card__label">
-                    {isHuman ? 'You' : 'Computer'}
+                    {isHuman ? 'You' : 'Opponent'}
                   </span>
                 )}
               </div>

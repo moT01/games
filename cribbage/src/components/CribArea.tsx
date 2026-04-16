@@ -9,7 +9,7 @@ export default function CribArea({ cribCount, dealer }: Props) {
   return (
     <div className="crib-area">
       <span className="crib-area__label">
-        {dealer === 'human' ? 'Your Crib' : "Computer's Crib"}
+        {dealer === 'human' ? 'Your Crib' : "Opponent's Crib"}
       </span>
       <div className="crib-area__cards">
         {Array.from({ length: cribCount }).map((_, i) => (
