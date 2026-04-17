@@ -193,6 +193,7 @@ function loadState() {
       const saved = JSON.parse(raw);
       if (saved.status === 'playing') {
         Object.assign(state, saved);
+        state.status = 'idle';
         state.flippedCells = [];
         state.aiThinking = false;
         state.passMessage = null;
@@ -543,9 +544,11 @@ function renderBoard(isHvc, aiColor) {
       const isEmpty = val === 0;
 
       const discClass = val === 1 ? 'dark' : val === 2 ? 'light' : '';
+      let displayClass = discClass;
       let flipClass = '';
       if (isFlipped) {
-        flipClass = state.currentPlayer === 1 ? 'flip-to-dark' : 'flip-to-light';
+        displayClass = val === 1 ? 'light' : 'dark'; // start from old color
+        flipClass = val === 1 ? 'flip-to-dark' : 'flip-to-light';
       }
 
       const isDisabled = !isValid || state.aiThinking;
@@ -561,7 +564,7 @@ function renderBoard(isHvc, aiColor) {
       >`;
 
       if (val !== 0) {
-        html += `<div class="disc ${discClass}${flipClass ? ' ' + flipClass : ''}"></div>`;
+        html += `<div class="disc ${displayClass}${flipClass ? ' ' + flipClass : ''}"></div>`;
       } else if (isValid && showDots) {
         html += `<div class="valid-dot"></div>`;
       }
