@@ -7,19 +7,135 @@
   --cell-size: min(56px, calc(90vw / 8));
 }
 
+/* ── Layout ──────────────────────────────────────────────────────────────────── */
+
 .app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: var(--space-5);
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────────── */
+
+.game-card {
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  width: fit-content;
+  min-width: 320px;
+}
+
+.game-card__body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-5);
-  width: 100%;
-  max-width: 520px;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  gap: var(--space-4);
 }
 
-.app__title {
+.game-card__title-section {
+  text-align: center;
+  padding-top: var(--space-2);
+}
+
+.game-title {
   font-size: var(--text-2xl);
   font-weight: var(--weight-bold);
-  color: var(--color-accent);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
   line-height: var(--line-height-tight);
+}
+
+/* ── Modal ───────────────────────────────────────────────────────────────────── */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: var(--space-5);
+}
+
+.modal-card {
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.modal-content h3 {
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.modal-content h3:first-child {
+  margin-top: 0;
+}
+
+.modal-content p,
+.modal-content ul {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.modal-content ul {
+  padding-left: var(--space-4);
+}
+
+.modal-content li {
+  margin-bottom: var(--space-1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-5);
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-accent);
+  color: var(--gray-90);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.primary-btn:hover {
+  background: var(--color-accent-hover);
+}
+
+.primary-btn:active {
+  transform: scale(0.97);
 }
