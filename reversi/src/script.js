@@ -286,7 +286,7 @@ function advanceTurn(board, justPlayed) {
   if (opponentMoves.length === 0) {
     const colorName = opponent === 1 ? 'Dark' : 'Light';
     const otherName = justPlayed === 1 ? 'Dark' : 'Light';
-    state.passMessage = `${colorName} has no moves — ${otherName}'s turn`;
+    state.passMessage = `${colorName} has no moves - ${otherName}'s turn`;
     state.currentPlayer = justPlayed;
     state.validMoves = currentMoves.map(([r, c]) => `${r},${c}`);
     render();
@@ -324,7 +324,7 @@ function triggerAI() {
     if (move) {
       handleCellClick(move[0], move[1]);
     }
-  }, Math.max(0, 500 - elapsed));
+  }, Math.max(0, 900 - elapsed));
 }
 
 function endGame(board) {
@@ -618,7 +618,7 @@ function renderGameOver() {
     <div class="game-over-overlay">
       <div class="game-over-card">
         <div class="game-over-result ${isDraw ? 'draw' : state.winner === 1 ? 'dark-wins' : 'light-wins'}">${resultText}</div>
-        <div class="game-over-counts">Dark ${state.scores[1]} — Light ${state.scores[2]}</div>
+        <div class="game-over-counts">Dark ${state.scores[1]} - Light ${state.scores[2]}</div>
         <div class="game-over-actions">
           <button class="primary-btn" id="play-again-btn">Play Again</button>
           <button class="secondary-btn" id="home-btn">Home</button>
@@ -652,22 +652,22 @@ function renderHelpModal() {
           <h3>Strategy</h3>
           <ul>
             <li>Corners are permanent once captured; anchor your edge control around them.</li>
-            <li>Avoid X-squares (diagonally adjacent to corners) — giving them away hands your opponent the corner.</li>
+            <li>Avoid X-squares (diagonally adjacent to corners) - giving them away hands your opponent the corner.</li>
             <li>Avoid C-squares (edge squares adjacent to corners) for the same reason.</li>
             <li>Prioritize mobility (more valid moves than opponent) over raw disc count early in the game.</li>
-            <li>Fewer discs mid-game is often an advantage — it limits your opponent's flipping options.</li>
+            <li>Fewer discs mid-game is often an advantage - it limits your opponent's flipping options.</li>
           </ul>
 
           <h3>Common mistakes</h3>
           <ul>
-            <li>Taking X-squares to gain a few discs — your opponent captures the corner next turn.</li>
+            <li>Taking X-squares to gain a few discs - your opponent captures the corner next turn.</li>
             <li>Chasing disc count in the first 30 moves.</li>
-            <li>Ignoring opponent mobility — many opponent moves means they control the board.</li>
+            <li>Ignoring opponent mobility - many opponent moves means they control the board.</li>
           </ul>
 
           <h3>Tips</h3>
           <ul>
-            <li>Count your opponent's valid moves after each placement — fewer is better.</li>
+            <li>Count your opponent's valid moves after each placement - fewer is better.</li>
             <li>The first player to capture a corner almost always wins.</li>
             <li>Edges are strong once fully filled.</li>
           </ul>

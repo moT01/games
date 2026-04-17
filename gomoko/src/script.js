@@ -509,7 +509,7 @@ function buildHelpModal() {
     <button class="modal-close" aria-label="Close help">${ICON_X}</button>
     <div class="modal-body">
       <h3>Objective</h3>
-      <p>Be the first to place exactly 5 of your stones in an unbroken row — horizontally, vertically, or diagonally. Six or more in a row does not win.</p>
+      <p>Be the first to place exactly 5 of your stones in an unbroken row - horizontally, vertically, or diagonally. Six or more in a row does not win.</p>
       <h3>Rules</h3>
       <ul>
         <li>Dark always goes first</li>
@@ -520,23 +520,23 @@ function buildHelpModal() {
       </ul>
       <h3>Key Strategies</h3>
       <ul>
-        <li>Build toward open fours (_XXXX_) — your opponent must block immediately or lose</li>
+        <li>Build toward open fours (_XXXX_) - your opponent must block immediately or lose</li>
         <li>Create two simultaneous threats your opponent cannot both block</li>
         <li>Play in the center early; edge and corner stones have fewer winning directions</li>
         <li>Block your opponent's open threes immediately, not after they become open fours</li>
       </ul>
       <h3>Common Mistakes</h3>
       <ul>
-        <li>Ignoring an opponent's open three — it becomes an unstoppable open four next turn</li>
-        <li>Playing only in a straight line — it's predictable and easy to block</li>
-        <li>Building closed fours instead of open fours — closed fours give the opponent time to respond</li>
+        <li>Ignoring an opponent's open three - it becomes an unstoppable open four next turn</li>
+        <li>Playing only in a straight line - it's predictable and easy to block</li>
+        <li>Building closed fours instead of open fours - closed fours give the opponent time to respond</li>
       </ul>
       <h3>Tips for Beginners</h3>
       <ul>
         <li>Start at the center every game as dark</li>
         <li>Think of your stones as creating two threats at once</li>
         <li>A sequence of 3 is urgent, 4 is critical</li>
-        <li>A draw is rare — focus on attacking rather than defending</li>
+        <li>A draw is rare - focus on attacking rather than defending</li>
       </ul>
     </div>
   `;

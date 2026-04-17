@@ -85,7 +85,7 @@
 }
 
 .modal-panel li::before {
-  content: '— ';
+  content: '- ';
   color: var(--color-text-muted);
 }
 

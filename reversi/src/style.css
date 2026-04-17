@@ -714,6 +714,7 @@
 .game-over-actions .primary-btn,
 .game-over-actions .secondary-btn {
   flex: 1;
+  white-space: nowrap;
 }
 
 /* ── Modals ─────────────────────────────────────────────────────────────────── */

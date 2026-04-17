@@ -59,7 +59,7 @@ export default function ScoreRow({ categoryKey, score, potentialScore, rollCount
     >
       <span className="score-row-name">{CATEGORY_LABELS[categoryKey]}</span>
       <span className={`score-row-value ${!locked && rollCount > 0 ? 'score-row-value--potential' : ''} ${displayScore === null ? 'score-row-value--empty' : ''}`}>
-        {displayScore !== null ? displayScore : '—'}
+        {displayScore !== null ? displayScore : '-'}
       </span>
     </div>
   )

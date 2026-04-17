@@ -40,8 +40,8 @@ export function HelpModal({ onClose }: HelpModalProps) {
           <section className="help-modal__section">
             <h3>Goal</h3>
             <p>
-              Slide the numbered tiles into order — 1 through the last number, left-to-right
-              and top-to-bottom — with the empty space in the bottom-right corner.
+              Slide the numbered tiles into order - 1 through the last number, left-to-right
+              and top-to-bottom - with the empty space in the bottom-right corner.
             </p>
           </section>
 
@@ -56,19 +56,19 @@ export function HelpModal({ onClose }: HelpModalProps) {
           <section className="help-modal__section">
             <h3>Modes</h3>
             <ul>
-              <li><strong>3×3</strong> — 8 tiles, great for learning.</li>
-              <li><strong>4×4</strong> — 15 tiles, the classic puzzle.</li>
-              <li><strong>5×5</strong> — 24 tiles, a serious challenge.</li>
+              <li><strong>3×3</strong> - 8 tiles, great for learning.</li>
+              <li><strong>4×4</strong> - 15 tiles, the classic puzzle.</li>
+              <li><strong>5×5</strong> - 24 tiles, a serious challenge.</li>
             </ul>
           </section>
 
           <section className="help-modal__section">
             <h3>Strategy</h3>
             <ul>
-              <li><strong>Solve row by row</strong> — lock the top row, then the second, then handle the last two rows together.</li>
-              <li><strong>Insert technique</strong> — place the last two tiles of a row together using a temporary loop rather than placing them one at a time.</li>
-              <li><strong>Track the blank</strong> — every move is really a blank move. Plan where you need the blank to go before committing.</li>
-              <li><strong>Last 2×2 block</strong> — requires a rotation technique, not the row-by-row approach.</li>
+              <li><strong>Solve row by row</strong> - lock the top row, then the second, then handle the last two rows together.</li>
+              <li><strong>Insert technique</strong> - place the last two tiles of a row together using a temporary loop rather than placing them one at a time.</li>
+              <li><strong>Track the blank</strong> - every move is really a blank move. Plan where you need the blank to go before committing.</li>
+              <li><strong>Last 2×2 block</strong> - requires a rotation technique, not the row-by-row approach.</li>
             </ul>
           </section>
 
@@ -76,7 +76,7 @@ export function HelpModal({ onClose }: HelpModalProps) {
             <h3>Common Mistakes</h3>
             <ul>
               <li>Placing a tile in its correct spot too early, then having to disturb it later.</li>
-              <li>Trying to swap tiles at the end of one row with tiles at the start of the next — they are <em>not</em> adjacent.</li>
+              <li>Trying to swap tiles at the end of one row with tiles at the start of the next - they are <em>not</em> adjacent.</li>
               <li>Cycling the blank endlessly without a plan, running up your move count.</li>
             </ul>
           </section>
@@ -86,7 +86,7 @@ export function HelpModal({ onClose }: HelpModalProps) {
             <ul>
               <li>Start with 3×3 to learn the mechanics.</li>
               <li>Use arrow keys for faster, more precise play.</li>
-              <li>Your best score (moves + time) is saved per mode — try to beat it!</li>
+              <li>Your best score (moves + time) is saved per mode - try to beat it!</li>
             </ul>
           </section>
         </div>
