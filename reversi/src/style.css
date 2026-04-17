@@ -37,16 +37,16 @@
   pointer-events: none;
   z-index: 0;
   background-image:
-    radial-gradient(circle 28px at center, rgba(255,255,255,0.07) 100%, transparent 100%),
-    radial-gradient(circle 28px at center, rgba(255,255,255,0.04) 100%, transparent 100%);
+    radial-gradient(circle 28px at center, rgba(255,255,255,0.03) 100%, transparent 100%),
+    radial-gradient(circle 28px at center, rgba(255,255,255,0.01) 100%, transparent 100%);
   background-size: 90px 90px, 90px 90px;
   background-position: 0 0, 45px 45px;
 }
 
 .light-palette .home-bg-discs {
   background-image:
-    radial-gradient(circle 28px at center, rgba(0,0,0,0.06) 100%, transparent 100%),
-    radial-gradient(circle 28px at center, rgba(0,0,0,0.03) 100%, transparent 100%);
+    radial-gradient(circle 28px at center, rgba(0,0,0,0.04) 100%, transparent 100%),
+    radial-gradient(circle 28px at center, rgba(0,0,0,0.02) 100%, transparent 100%);
 }
 
 .home-card {
@@ -78,14 +78,21 @@
   gap: var(--space-2);
 }
 
-.header-left {
+.home-header {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  justify-content: flex-end;
+  padding: var(--space-3);
+  border-bottom: var(--border-default);
+  width: 100%;
+}
+
+.home-title-section {
+  text-align: center;
+  padding: var(--space-2) var(--space-5) var(--space-4);
 }
 
 .game-title {
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: var(--weight-bold);
   letter-spacing: -0.02em;
   color: var(--color-text-primary);
@@ -97,6 +104,7 @@
   color: var(--color-text-muted);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  margin-top: var(--space-1);
 }
 
 .header-buttons {
@@ -192,13 +200,6 @@
   width: calc(100% - var(--space-5) * 2);
 }
 
-.option-label {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  white-space: nowrap;
-  min-width: 60px;
-}
-
 .pill-toggle {
   display: flex;
   flex: 1;
@@ -247,8 +248,8 @@
 .wins-display {
   width: calc(100% - var(--space-5) * 2);
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .wins-label {
@@ -259,14 +260,76 @@
   letter-spacing: 0.06em;
 }
 
-.wins-counts {
-  font-size: var(--text-xs);
+.wins-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wins-row {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.wins-row-label {
   color: var(--color-text-secondary);
+  min-width: 52px;
 }
 
 .wins-num {
   font-weight: var(--weight-bold);
   color: var(--color-text-primary);
+  font-family: var(--font-mono);
+}
+
+/* ── Hard Mode Checkbox ─────────────────────────────────────────────────────── */
+
+.hard-mode-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hard-mode-check {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hard-mode-check:checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.hard-mode-check:checked::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: 2px solid var(--gray-90);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translate(2px, -1px);
+}
+
+.hard-mode-check:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--blue-mid);
+}
+
+.hard-mode-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
 }
 
 /* ── Home Actions ───────────────────────────────────────────────────────────── */
@@ -384,13 +447,6 @@
   gap: var(--space-2);
 }
 
-.header-rule {
-  width: 100%;
-  border: none;
-  border-top: var(--border-default);
-  margin: 0;
-}
-
 /* ── Score Bar ──────────────────────────────────────────────────────────────── */
 
 .score-bar {
@@ -463,15 +519,9 @@
   grid-template-rows: repeat(8, 1fr);
   width: 100%;
   height: 100%;
-  background: #1a5c38;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-lg);
+  background: var(--color-surface);
   overflow: hidden;
   cursor: default;
-}
-
-.light-palette .board {
-  background: #2d7a4f;
 }
 
 /* ── Cell ───────────────────────────────────────────────────────────────────── */
@@ -481,7 +531,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid var(--color-border);
   cursor: default;
   outline: none;
 }

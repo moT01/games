@@ -427,11 +427,7 @@ function renderHome() {
     <div class="home-screen">
       <div class="home-bg-discs" aria-hidden="true"></div>
       <div class="home-card">
-        <header class="header">
-          <div class="header-left">
-            <h1 class="game-title">Reversi</h1>
-            <p class="game-subtitle">MOST DISCS WINS</p>
-          </div>
+        <header class="home-header">
           <div class="header-buttons">
             <button class="icon-btn" id="help-btn" aria-label="Help">${ICON_QUESTION}</button>
             <button class="icon-btn" id="theme-btn" aria-label="Toggle theme">${themeIcon()}</button>
@@ -439,33 +435,34 @@ function renderHome() {
           </div>
         </header>
 
+        <div class="home-title-section">
+          <h1 class="game-title">Reversi</h1>
+          <p class="game-subtitle">MOST DISCS WINS</p>
+        </div>
+
         <div class="mode-tabs">
           <button class="tab-btn ${state.mode === 'hvc' ? 'active' : ''}" data-mode="hvc">vs Computer</button>
           <button class="tab-btn ${state.mode === 'hvh' ? 'active' : ''}" data-mode="hvh">2 Players</button>
         </div>
 
         ${isHvc ? `
+          <div class="wins-display">
+            <span class="wins-label">WINS</span>
+            <div class="wins-rows">
+              <div class="wins-row"><span class="wins-row-label">Normal</span><span class="wins-num">${state.wins.normal}</span></div>
+              <div class="wins-row"><span class="wins-row-label">Hard</span><span class="wins-num">${state.wins.hard}</span></div>
+            </div>
+          </div>
+
           <div class="option-row">
-            <span class="option-label">Color</span>
             <div class="pill-toggle">
-              <button class="pill-btn ${state.playerColor === 1 ? 'active' : ''}" data-color="1">
-                Dark <span class="goes-first">(goes first)</span>
-              </button>
+              <button class="pill-btn ${state.playerColor === 1 ? 'active' : ''}" data-color="1">Dark <span class="goes-first">(goes first)</span></button>
               <button class="pill-btn ${state.playerColor === 2 ? 'active' : ''}" data-color="2">Light</button>
             </div>
-          </div>
-
-          <div class="option-row">
-            <span class="option-label">Difficulty</span>
-            <div class="pill-toggle">
-              <button class="pill-btn ${state.difficulty === 'normal' ? 'active' : ''}" data-diff="normal">Normal</button>
-              <button class="pill-btn ${state.difficulty === 'hard' ? 'active' : ''}" data-diff="hard">Hard</button>
-            </div>
-          </div>
-
-          <div class="wins-display">
-            <span class="wins-label">Wins</span>
-            <span class="wins-counts">Normal: <span class="wins-num">${state.wins.normal}</span> &nbsp; Hard: <span class="wins-num">${state.wins.hard}</span></span>
+            <label class="hard-mode-label">
+              <input type="checkbox" class="hard-mode-check" id="hard-mode-check" ${state.difficulty === 'hard' ? 'checked' : ''} />
+              <span class="hard-mode-text">Hard mode</span>
+            </label>
           </div>
         ` : ''}
 
@@ -507,7 +504,6 @@ function renderPlay() {
             <a class="icon-btn" href="https://www.freecodecamp.org/donate" target="_blank" rel="noopener" aria-label="Donate">${ICON_HEART}</a>
           </div>
         </header>
-        <hr class="header-rule" />
         <div class="game-body">
           <div class="score-bar">
             <div class="score-item">
@@ -728,12 +724,9 @@ function attachEvents() {
     });
   });
 
-  document.querySelectorAll('.pill-btn[data-diff]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.difficulty = btn.dataset.diff;
-      localStorage.setItem('reversi_difficulty', state.difficulty);
-      render();
-    });
+  document.getElementById('hard-mode-check')?.addEventListener('change', e => {
+    state.difficulty = e.target.checked ? 'hard' : 'normal';
+    localStorage.setItem('reversi_difficulty', state.difficulty);
   });
 
   document.getElementById('new-game-btn')?.addEventListener('click', resetGame);
