@@ -572,12 +572,12 @@
 
 .disc.dark {
   background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .disc.light {
   background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
 /* ── Flip Animation ─────────────────────────────────────────────────────────── */
@@ -588,12 +588,12 @@
   50%  {
     transform: scaleX(0);
     background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
   }
   100% {
     transform: scaleX(1);
     background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
   }
 }
 
@@ -603,12 +603,12 @@
   50%  {
     transform: scaleX(0);
     background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
   }
   100% {
     transform: scaleX(1);
     background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
   }
 }
 
