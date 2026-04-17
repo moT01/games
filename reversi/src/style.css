@@ -472,13 +472,13 @@
 }
 
 .dark-disc {
-  background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+  background: radial-gradient(circle at 38% 35%, #66b3ff, #0055bb);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 
 .light-disc {
-  background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+  background: radial-gradient(circle at 38% 35%, #f8e1a0, #d4960f);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
 }
 
 .score-label {
@@ -571,13 +571,13 @@
 }
 
 .disc.dark {
-  background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+  background: radial-gradient(circle at 38% 35%, #66b3ff, #0055bb);
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 
 .disc.light {
-  background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+  background: radial-gradient(circle at 38% 35%, #f8e1a0, #d4960f);
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
 }
 
 /* ── Flip Animation ─────────────────────────────────────────────────────────── */
@@ -587,13 +587,13 @@
   49%  { transform: scaleX(0); }
   50%  {
     transform: scaleX(0);
-    background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+    background: radial-gradient(circle at 38% 35%, #66b3ff, #0055bb);
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
   }
   100% {
     transform: scaleX(1);
-    background: radial-gradient(circle at 38% 35%, #3a3a3a, #111);
-    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+    background: radial-gradient(circle at 38% 35%, #66b3ff, #0055bb);
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.2), 0 3px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
   }
 }
 
@@ -602,13 +602,13 @@
   49%  { transform: scaleX(0); }
   50%  {
     transform: scaleX(0);
-    background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+    background: radial-gradient(circle at 38% 35%, #f8e1a0, #d4960f);
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
   }
   100% {
     transform: scaleX(1);
-    background: radial-gradient(circle at 38% 35%, #ffffff, #cccccc);
-    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+    background: radial-gradient(circle at 38% 35%, #f8e1a0, #d4960f);
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
   }
 }
 
