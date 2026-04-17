@@ -1,10 +1,10 @@
 /* ── Light palette overrides ────────────────────────────────────────────────── */
 
 .light-palette {
-  --color-bg: var(--gray-00);
-  --color-surface: var(--gray-05);
-  --color-surface-raised: var(--gray-10);
-  --color-border: var(--gray-15);
+  --color-bg: var(--gray-05);
+  --color-surface: var(--gray-10);
+  --color-surface-raised: var(--gray-15);
+  --color-border: var(--gray-45);
   --color-text-primary: var(--gray-90);
   --color-text-secondary: var(--gray-75);
   --color-text-muted: var(--gray-45);
