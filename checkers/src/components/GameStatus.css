@@ -12,11 +12,11 @@
   color: var(--color-text-muted);
 }
 
-.game-status__turn--red {
-  color: var(--player-red);
+.game-status__turn--light {
+  color: var(--player-light);
 }
 
-.game-status__turn--black {
+.game-status__turn--dark {
   color: #8888cc;
 }
 

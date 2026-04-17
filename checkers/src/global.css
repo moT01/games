@@ -142,6 +142,14 @@ body {
 }
 
 .light-palette {
+  --color-bg: var(--gray-05);
+  --color-surface: var(--gray-00);
+  --color-surface-raised: var(--gray-10);
+  --color-border: var(--gray-15);
+  --color-text-primary: var(--gray-90);
+  --color-text-secondary: var(--gray-75);
+  --color-text-muted: var(--gray-45);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
   --primary-color-translucent: var(--gray-90-translucent);
   --primary-color: var(--gray-90);
   --secondary-color: var(--gray-85);

@@ -4,70 +4,90 @@ import './ModeSelector.css'
 
 interface Props {
   onStart: (mode: Mode, difficulty: Difficulty, playerSide: Player) => void
+  onResume: () => void
+  hasSavedGame: boolean
+  winsNormal: number
+  winsHard: number
 }
 
-export function ModeSelector({ onStart }: Props) {
-  const [mode, setMode] = useState<Mode>('vs-player')
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy')
-  const [playerSide, setPlayerSide] = useState<Player>('Red')
+export function ModeSelector({ onStart, onResume, hasSavedGame, winsNormal, winsHard }: Props) {
+  const [mode, setMode] = useState<Mode>('vs-computer')
+  const [hardMode, setHardMode] = useState(false)
+  const [playerSide, setPlayerSide] = useState<Player>('Light')
+
+  const difficulty: Difficulty = hardMode ? 'hard' : 'easy'
 
   return (
-    <div className="mode-selector">
-      <div className="mode-selector__group">
+    <div className="home-body">
+      <div className="mode-tabs">
         <button
-          className={`mode-selector__btn ${mode === 'vs-player' ? 'mode-selector__btn--active' : ''}`}
-          onClick={() => setMode('vs-player')}
-        >
-          vs Player
-        </button>
-        <button
-          className={`mode-selector__btn ${mode === 'vs-computer' ? 'mode-selector__btn--active' : ''}`}
+          className={`tab-btn${mode === 'vs-computer' ? ' tab-btn--active' : ''}`}
           onClick={() => setMode('vs-computer')}
         >
           vs Computer
         </button>
+        <button
+          className={`tab-btn${mode === 'vs-player' ? ' tab-btn--active' : ''}`}
+          onClick={() => setMode('vs-player')}
+        >
+          2 Players
+        </button>
       </div>
 
       {mode === 'vs-computer' && (
-        <>
-          <div className="mode-selector__group">
-            <button
-              className={`mode-selector__btn ${difficulty === 'easy' ? 'mode-selector__btn--active' : ''}`}
-              onClick={() => setDifficulty('easy')}
-            >
-              Easy
-            </button>
-            <button
-              className={`mode-selector__btn ${difficulty === 'hard' ? 'mode-selector__btn--active' : ''}`}
-              onClick={() => setDifficulty('hard')}
-            >
-              Hard
-            </button>
+        <div className="wins-display">
+          <span className="wins-label">WINS</span>
+          <div className="wins-rows">
+            <div className="wins-row">
+              <span className="wins-row-label">Normal</span>
+              <span className="wins-num">{winsNormal}</span>
+            </div>
+            <div className="wins-row">
+              <span className="wins-row-label">Hard</span>
+              <span className="wins-num">{winsHard}</span>
+            </div>
           </div>
-
-          <div className="mode-selector__group">
-            <button
-              className={`mode-selector__btn ${playerSide === 'Red' ? 'mode-selector__btn--active mode-selector__btn--active-red' : ''}`}
-              onClick={() => setPlayerSide('Red')}
-            >
-              Play as Red
-            </button>
-            <button
-              className={`mode-selector__btn ${playerSide === 'Black' ? 'mode-selector__btn--active mode-selector__btn--active-black' : ''}`}
-              onClick={() => setPlayerSide('Black')}
-            >
-              Play as Black
-            </button>
-          </div>
-        </>
+        </div>
       )}
 
-      <button
-        className="mode-selector__start"
-        onClick={() => onStart(mode, difficulty, playerSide)}
-      >
-        Start Game
-      </button>
+      {mode === 'vs-computer' && (
+        <div className="option-row">
+          <div className="pill-toggle">
+            <button
+              className={`pill-btn${playerSide === 'Light' ? ' pill-btn--active' : ''}`}
+              onClick={() => setPlayerSide('Light')}
+            >
+              Light <span className="goes-first">(goes first)</span>
+            </button>
+            <button
+              className={`pill-btn${playerSide === 'Dark' ? ' pill-btn--active' : ''}`}
+              onClick={() => setPlayerSide('Dark')}
+            >
+              Dark
+            </button>
+          </div>
+          <label className="hard-mode-label">
+            <input
+              type="checkbox"
+              className="hard-mode-check"
+              checked={hardMode}
+              onChange={e => setHardMode(e.target.checked)}
+            />
+            <span className="hard-mode-text">Hard mode</span>
+          </label>
+        </div>
+      )}
+
+      <div className="home-actions">
+        {hasSavedGame && (
+          <button className="secondary-btn" onClick={onResume}>
+            Resume Game
+          </button>
+        )}
+        <button className="primary-btn" onClick={() => onStart(mode, difficulty, playerSide)}>
+          New Game
+        </button>
+      </div>
     </div>
   )
 }

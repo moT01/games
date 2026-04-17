@@ -1,4 +1,4 @@
-export type Player = 'Red' | 'Black'
+export type Player = 'Light' | 'Dark'
 export type PieceType = 'man' | 'king'
 export type Piece = { player: Player; type: PieceType }
 export type Board = (Piece | null)[]
@@ -12,7 +12,7 @@ function inBounds(row: number, col: number): boolean {
 
 function getDirections(piece: Piece): [number, number][] {
   if (piece.type === 'king') return [[-1, -1], [-1, 1], [1, -1], [1, 1]]
-  if (piece.player === 'Red') return [[-1, -1], [-1, 1]]
+  if (piece.player === 'Light') return [[-1, -1], [-1, 1]]
   return [[1, -1], [1, 1]]
 }
 
@@ -21,14 +21,14 @@ export function createInitialBoard(): Board {
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 8; col++) {
       if ((row + col) % 2 === 1) {
-        board[row * 8 + col] = { player: 'Black', type: 'man' }
+        board[row * 8 + col] = { player: 'Dark', type: 'man' }
       }
     }
   }
   for (let row = 5; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
       if ((row + col) % 2 === 1) {
-        board[row * 8 + col] = { player: 'Red', type: 'man' }
+        board[row * 8 + col] = { player: 'Light', type: 'man' }
       }
     }
   }
@@ -76,8 +76,8 @@ function generateCaptures(
 
     const newCaptures = [...capturedSoFar, midIdx]
     const isPromotion =
-      (piece.player === 'Red' && landRow === 0) ||
-      (piece.player === 'Black' && landRow === 7)
+      (piece.player === 'Light' && landRow === 0) ||
+      (piece.player === 'Dark' && landRow === 7)
 
     if (isPromotion) {
       // Promotion ends the turn — no further jumps
@@ -134,15 +134,15 @@ export function applyMove(board: Board, move: Move): Board {
   for (const idx of move.captures) newBoard[idx] = null
   const toRow = Math.floor(move.to / 8)
   const promoted =
-    (piece.player === 'Red' && toRow === 0) ||
-    (piece.player === 'Black' && toRow === 7)
+    (piece.player === 'Light' && toRow === 0) ||
+    (piece.player === 'Dark' && toRow === 7)
   newBoard[move.to] = promoted ? { player: piece.player, type: 'king' } : piece
   return newBoard
 }
 
 export function checkWinner(board: Board, currentPlayer: Player): Player | null {
   if (getValidMoves(board, currentPlayer).length === 0) {
-    return currentPlayer === 'Red' ? 'Black' : 'Red'
+    return currentPlayer === 'Light' ? 'Dark' : 'Light'
   }
   return null
 }
@@ -165,7 +165,7 @@ function minimax(
   alpha: number,
   beta: number
 ): number {
-  const opponent: Player = aiPlayer === 'Red' ? 'Black' : 'Red'
+  const opponent: Player = aiPlayer === 'Light' ? 'Dark' : 'Light'
   const currentPlayer = isMaximizing ? aiPlayer : opponent
   const winner = checkWinner(board, currentPlayer)
   if (winner !== null) return winner === aiPlayer ? 1000 : -1000

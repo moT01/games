@@ -10,14 +10,14 @@
   z-index: 1;
 }
 
-.piece--red {
-  background: radial-gradient(circle at 35% 30%, #f07060, #e03c2e, #9e1c10);
+.piece--light {
+  background: radial-gradient(circle at 35% 30%, #ffffff, #e8dcc8, #c8b898);
   box-shadow:
-    inset 0 -3px 6px rgba(0, 0, 0, 0.35),
-    0 2px 5px rgba(0, 0, 0, 0.5);
+    inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+    0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-.piece--black {
+.piece--dark {
   background: radial-gradient(circle at 35% 30%, #5a5a8a, #2a2a5a, #0e0e28);
   box-shadow:
     inset 0 -3px 6px rgba(0, 0, 0, 0.45),
