@@ -558,8 +558,12 @@
   height: 80%;
   border-radius: 50%;
   position: absolute;
+  opacity: 1;
+}
+
+.disc.disc-new {
   opacity: 0;
-  animation: disc-appear 100ms ease forwards;
+  animation: disc-appear 120ms ease forwards;
 }
 
 @keyframes disc-appear {

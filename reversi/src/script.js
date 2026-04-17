@@ -166,6 +166,7 @@ const state = {
   mode: 'hvc',
   playerColor: 1,
   aiThinking: false,
+  animating: false,
   passMessage: null,
   difficulty: 'normal',
   wins: { normal: 0, hard: 0 },
@@ -177,6 +178,7 @@ function saveState() {
   const toSave = { ...state };
   delete toSave.flippedCells;
   delete toSave.aiThinking;
+  delete toSave.animating;
   delete toSave.passMessage;
   localStorage.setItem('reversi_state', JSON.stringify(toSave));
 }
@@ -217,29 +219,55 @@ function loadState() {
 
 // ─── Turn / Move Logic ───────────────────────────────────────────────────────
 
+const FLIP_DURATION = 350;
+
 function handleCellClick(row, col) {
   if (state.status !== 'playing') return;
-  if (state.aiThinking) return;
+  if (state.aiThinking || state.animating) return;
   if (!state.validMoves.includes(`${row},${col}`)) return;
 
   const { board: newBoard, flipped } = applyMove(state.board, row, col, state.currentPlayer);
-  state.board = newBoard;
+  const player = state.currentPlayer;
+  state.animating = true;
   state.lastMove = [row, col];
-  state.flippedCells = flipped;
-  state.scores = countDiscs(newBoard);
+
+  // Place new disc directly in the DOM
+  const placedCell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+  if (placedCell) {
+    placedCell.querySelector('.valid-dot')?.remove();
+    const disc = document.createElement('div');
+    disc.className = `disc ${player === 1 ? 'dark' : 'light'} disc-new`;
+    placedCell.appendChild(disc);
+    document.querySelectorAll('.last-move-ring').forEach(el => el.remove());
+    placedCell.appendChild(Object.assign(document.createElement('div'), { className: 'last-move-ring' }));
+  }
+
+  // Add flip animation class to each flipped disc's existing element
+  const flipClass = player === 1 ? 'flip-to-dark' : 'flip-to-light';
+  flipped.forEach(([r, c]) => {
+    const disc = document.querySelector(`[data-row="${r}"][data-col="${c}"] .disc`);
+    if (disc) disc.classList.add(flipClass);
+  });
+
+  // Lock all cells visually during animation
+  document.querySelectorAll('.valid-dot').forEach(el => el.remove());
+  document.querySelectorAll('.cell.valid').forEach(el => {
+    el.classList.remove('valid');
+    el.setAttribute('aria-disabled', 'true');
+  });
 
   playSound('place');
   if (flipped.length > 0) setTimeout(() => playSound('flip'), 80);
 
-  render();
-
+  // After animation completes, commit state and continue
   setTimeout(() => {
+    state.board = newBoard;
     state.flippedCells = [];
-    render();
-  }, 400);
-
-  advanceTurn(newBoard, state.currentPlayer);
-  saveState();
+    state.scores = countDiscs(newBoard);
+    state.animating = false;
+    advanceTurn(newBoard, player);
+    saveState();
+  }, FLIP_DURATION + 10);
 }
 
 function advanceTurn(board, justPlayed) {
@@ -282,6 +310,7 @@ function advanceTurn(board, justPlayed) {
 }
 
 function triggerAI() {
+  if (state.animating) { setTimeout(triggerAI, 50); return; }
   state.aiThinking = true;
   render();
   const aiColor = state.mode === 'hvc' ? (state.playerColor === 1 ? 2 : 1) : state.currentPlayer;
