@@ -4,7 +4,7 @@
   --board-light: #c4a46b;
   --board-dark: #4a6741;
   --board-selected: #7ab54a;
-  --cell-size: min(56px, calc(90vw / 8));
+  --cell-size: min(72px, calc((100vw - 72px) / 8));
 }
 
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
@@ -27,7 +27,7 @@
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
   overflow: hidden;
   width: fit-content;
-  min-width: 320px;
+  min-width: min(420px, 100%);
 }
 
 .game-card__body {
