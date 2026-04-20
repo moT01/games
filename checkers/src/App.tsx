@@ -266,8 +266,33 @@ function App() {
     return squares
   }))]
 
+  const bgPieces = [
+    { x: '10%', y: '7%',  king: false },
+    { x: '42%', y: '4%',  king: true  },
+    { x: '78%', y: '8%',  king: false },
+    { x: '5%',  y: '42%', king: true  },
+    { x: '88%', y: '35%', king: false },
+    { x: '20%', y: '72%', king: false },
+    { x: '62%', y: '68%', king: true  },
+    { x: '85%', y: '70%', king: false },
+    { x: '35%', y: '88%', king: true  },
+    { x: '70%', y: '90%', king: false },
+    { x: '15%', y: '26%', king: false },
+    { x: '74%', y: '46%', king: true  },
+    { x: '48%', y: '56%', king: false },
+    { x: '28%', y: '50%', king: false },
+    { x: '56%', y: '22%', king: false },
+  ]
+
   return (
     <div className="app">
+      <div className="bg-pieces" aria-hidden="true">
+        {bgPieces.map((p, i) => (
+          <div key={i} className="bg-piece" style={{ left: p.x, top: p.y }}>
+            {p.king && <span className="bg-piece__star">★</span>}
+          </div>
+        ))}
+      </div>
       <div className="game-card">
         <Header
           showBack={phase !== 'setup'}

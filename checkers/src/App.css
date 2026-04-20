@@ -23,6 +23,44 @@
   background: var(--gray-10);
 }
 
+/* ── Background pieces ───────────────────────────────────────────────────────── */
+
+.bg-pieces {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-piece {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-piece__star {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.07);
+  position: relative;
+  top: -1px;
+}
+
+.light-palette .bg-piece {
+  background: rgba(0, 0, 0, 0.025);
+  border: 2px solid rgba(0, 0, 0, 0.04);
+}
+
+.light-palette .bg-piece__star {
+  color: rgba(0, 0, 0, 0.055);
+}
+
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
 
 .app {
@@ -37,6 +75,8 @@
 /* ── Card ────────────────────────────────────────────────────────────────────── */
 
 .game-card {
+  position: relative;
+  z-index: 1;
   background: var(--color-surface);
   border: var(--border-default);
   border-radius: var(--radius-lg);
