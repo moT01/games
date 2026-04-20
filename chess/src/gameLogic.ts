@@ -1,4 +1,6 @@
 export type Color = 'white' | 'black';
+export type Mode = 'local' | 'vs-computer';
+export type Difficulty = 'easy' | 'hard';
 export type PieceType = 'king' | 'queen' | 'rook' | 'bishop' | 'knight' | 'pawn';
 export type Piece = { type: PieceType; color: Color };
 

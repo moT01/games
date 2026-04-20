@@ -1,17 +1,17 @@
 # Chess UI Update Checklist
 
 ## Main Menu
-- [ ] Add title section: "Chess" / "A CLASSIC BOARD GAME"
-- [ ] Replace two-button layout with tab toggle: "vs Computer" / "2 Players"
-- [ ] Add player color pill toggle: Light (goes first) / Dark — visible in vs Computer mode
-- [ ] Add Hard mode checkbox — visible in vs Computer mode
-- [ ] Add wins display: Normal / Hard rows — visible in vs Computer mode
-- [ ] New Game button — full width primary style
-- [ ] Resume Game button — full width secondary style, only shown when a saved game exists
-- [ ] Remove ColorPicker component (color selection moves into main menu)
+- [x] Add title section: "Chess" / "A CLASSIC BOARD GAME"
+- [x] Replace two-button layout with tab toggle: "vs Computer" / "2 Players"
+- [x] Add player color pill toggle: Light (goes first) / Dark — visible in vs Computer mode
+- [x] Add Hard mode checkbox — visible in vs Computer mode
+- [x] Add wins display: Normal / Hard rows — visible in vs Computer mode
+- [x] New Game button — full width primary style
+- [x] Resume Game button — full width secondary style, only shown when a saved game exists
+- [x] Remove ColorPicker component (color selection moves into main menu)
 
 ## Header
-- [ ] Copy Header component from checkers (Header.tsx + Header.css) — same icons and layout (component already copied - lets see if we still need the status bar component or if we can delete it now).
+- [x] Copy Header component from checkers (Header.tsx + Header.css) — same icons and layout
 - [ ] Back button while in-game shows a quit confirm modal
 - [ ] Center status shows whose turn it is, plus check/checkmate/draw state
 - [ ] Theme toggle persists preference to localStorage as `chess_theme`

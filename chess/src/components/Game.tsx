@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Game.css';
-import type { GameState, PieceType } from '../gameLogic';
+import type { GameState, PieceType, Mode, Difficulty } from '../gameLogic';
 import {
   initGameState,
   getLegalMoves,
@@ -14,8 +14,9 @@ import { CapturedPieces } from './CapturedPieces';
 import { PromotionModal } from './PromotionModal';
 
 export type GameConfig = {
-  mode: 'local' | 'vs-computer';
+  mode: Mode;
   playerColor: 'white' | 'black';
+  difficulty: Difficulty;
 };
 
 interface Props {
