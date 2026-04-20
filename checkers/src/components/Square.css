@@ -83,10 +83,10 @@
 
 .light-palette .board--turn-light .square__highlight,
 .light-palette .board--turn-light .square__capture-ring {
-  background-color: rgba(212, 150, 15, 0.6);
+  background-color: rgba(180, 110, 5, 0.85);
 }
 
 .light-palette .board--turn-dark .square__highlight,
 .light-palette .board--turn-dark .square__capture-ring {
-  background-color: rgba(10, 10, 35, 0.3);
+  background-color: rgba(10, 10, 35, 0.6);
 }

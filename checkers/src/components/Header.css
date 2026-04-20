@@ -6,6 +6,10 @@
   border-bottom: var(--border-default);
 }
 
+.light-palette .game-header {
+  background: var(--gray-10);
+}
+
 .game-header__left,
 .game-header__right {
   display: flex;
