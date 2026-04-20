@@ -42,7 +42,7 @@ export function Piece({ piece }: Props) {
       overflow="visible"
       className={`piece piece-${piece.color}`}
     >
-      <path d={d} fill="var(--piece-fill)" stroke="var(--piece-stroke)" strokeWidth="28" />
+      <path d={d} fill="var(--piece-fill)" />
     </svg>
   );
 }
