@@ -1,4 +1,3 @@
-import { useId } from 'react';
 import type { Piece as PieceType } from '../gameLogic';
 
 interface Props {
@@ -33,9 +32,6 @@ const PIECES: Record<string, { viewBox: string; d: string }> = {
 };
 
 export function Piece({ piece }: Props) {
-  const rawId = useId();
-  const id = rawId.replace(/[^a-zA-Z0-9]/g, '');
-  const gradId = `${id}g`;
   const { viewBox, d } = PIECES[piece.type];
 
   return (
@@ -43,15 +39,10 @@ export function Piece({ piece }: Props) {
       viewBox={viewBox}
       width="100%"
       height="100%"
+      overflow="visible"
       className={`piece piece-${piece.color}`}
     >
-      <defs>
-        <radialGradient id={gradId} cx="38%" cy="30%" r="70%" fx="38%" fy="30%">
-          <stop offset="0%" stopColor="var(--g-start)" />
-          <stop offset="100%" stopColor="var(--g-end)" />
-        </radialGradient>
-      </defs>
-      <path d={d} fill={`url(#${gradId})`} />
+      <path d={d} fill="var(--piece-fill)" stroke="var(--piece-stroke)" strokeWidth="28" />
     </svg>
   );
 }

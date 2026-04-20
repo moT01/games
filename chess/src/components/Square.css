@@ -57,27 +57,27 @@
 
 /* Dark theme */
 .piece-white {
-  --g-start: #f8e1a0;
-  --g-end: #d4960f;
+  --piece-fill: #d4960f;
+  --piece-stroke: rgba(255, 255, 255, 0.5);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
 }
 
 .piece-black {
-  --g-start: #66b3ff;
-  --g-end: #0055bb;
+  --piece-fill: #4499ee;
+  --piece-stroke: rgba(255, 255, 255, 0.5);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
 }
 
 /* Light theme */
 .light-palette .piece-white {
-  --g-start: #d4960f;
-  --g-end: #7a4800;
+  --piece-fill: #a06000;
+  --piece-stroke: rgba(0, 0, 0, 0.4);
   filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.3));
 }
 
 .light-palette .piece-black {
-  --g-start: #3b3b6e;
-  --g-end: #0a0a23;
+  --piece-fill: #1a44aa;
+  --piece-stroke: rgba(0, 0, 0, 0.4);
   filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.15));
 }
 
