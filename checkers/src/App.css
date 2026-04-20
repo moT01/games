@@ -37,6 +37,7 @@
   align-items: center;
   padding: var(--space-4) var(--space-4) var(--space-5);
   gap: var(--space-4);
+  background: var(--color-surface);
 }
 
 .game-card__title-section {
