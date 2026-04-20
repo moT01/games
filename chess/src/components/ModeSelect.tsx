@@ -19,11 +19,6 @@ export function ModeSelect({ onStart, onResume, hasSavedGame, winsNormal, winsHa
 
   return (
     <div className="home-body">
-      <div className="game-card__title-section">
-        <h1 className="game-title">Chess</h1>
-        <p className="game-subtitle">A CLASSIC BOARD GAME</p>
-      </div>
-
       <div className="mode-tabs">
         <button
           className={`tab-btn${mode === 'vs-computer' ? ' tab-btn--active' : ''}`}

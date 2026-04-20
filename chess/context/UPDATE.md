@@ -41,8 +41,8 @@
 - [x] Help modal: basic chess rules summary
 
 ## Layout
-- [ ] Wrap app in a `.game-card` with header + body (matching checkers layout)
-- [ ] Responsive board: `--cell-size: min(72px, calc((100vw - 72px) / 8))`
-- [ ] Background decorative chess pieces: scattered, static, subtle neutral color
-- [ ] Move turn/status display from StatusBar into Header center slot
-- [ ] CapturedPieces and PromotionModal stay in the game body
+- [x] Wrap app in a `.game-card` with header + body (matching checkers layout)
+- [x] Responsive board: `--cell-size: min(72px, calc((100vw - 72px) / 8))`
+- [x] Background decorative chess pieces: scattered, static, subtle neutral color
+- [x] Move turn/status display from StatusBar into Header center slot
+- [x] CapturedPieces and PromotionModal stay in the game body

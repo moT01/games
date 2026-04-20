@@ -1,11 +1,62 @@
-#root {
+/* -- Background pieces ───────────────────────────────────────────────────────── */
+
+.bg-pieces {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-piece {
+  position: absolute;
+  font-size: 64px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  user-select: none;
+}
+
+.light-palette .bg-piece {
+  color: rgba(0, 0, 0, 0.04);
+}
+
+/* -- Layout ──────────────────────────────────────────────────────────────────── */
+
+.app {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  padding: var(--space-4);
+  padding: var(--space-2);
+}
+
+/* -- Card ────────────────────────────────────────────────────────────────────── */
+
+.game-card {
+  position: relative;
+  z-index: 1;
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  width: fit-content;
+  min-width: min(420px, 100%);
+}
+
+.game-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  gap: var(--space-4);
+  background: var(--color-surface);
+}
+
+.light-palette .game-card__body {
+  background: var(--gray-10);
 }
 
 /* -- Title ───────────────────────────────────────────────────────────────────── */
@@ -77,22 +128,6 @@
 .secondary-btn:hover {
   background: var(--color-surface-raised);
   color: var(--color-text-primary);
-}
-
-/* -- Menu container ──────────────────────────────────────────────────────────── */
-
-.menu-wrap {
-  width: 100%;
-  max-width: 420px;
-  border: var(--border-default);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-lg);
-}
-
-.menu-body {
-  padding: var(--space-4) var(--space-4) var(--space-5);
 }
 
 /* -- Modals ──────────────────────────────────────────────────────────────────── */

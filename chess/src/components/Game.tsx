@@ -11,7 +11,6 @@ import {
 import { Board } from './Board';
 import { CapturedPieces } from './CapturedPieces';
 import { PromotionModal } from './PromotionModal';
-import { Header } from './Header';
 
 export type GameConfig = {
   mode: Mode;
@@ -23,29 +22,11 @@ const SAVE_KEY = 'chess_state'
 
 interface Props {
   config: GameConfig;
-  theme: 'dark' | 'light';
-  onThemeToggle: () => void;
   onBackToMenu: () => void;
   onWin?: (difficulty: Difficulty) => void;
   initialState?: GameState;
   onSaveChange?: (hasSave: boolean) => void;
-}
-
-function QuitModal({ onCancel, onQuit }: { onCancel: () => void; onQuit: () => void }) {
-  return (
-    <div className="modal-backdrop" onClick={onCancel}>
-      <div className="modal-card" onClick={e => e.stopPropagation()}>
-        <h2 className="modal-title">Quit Game</h2>
-        <div className="modal-content">
-          <p>Return to the main menu? You can resume your game from there.</p>
-        </div>
-        <div className="modal-actions">
-          <button className="secondary-btn" onClick={onCancel}>Cancel</button>
-          <button className="primary-btn" onClick={onQuit}>Quit</button>
-        </div>
-      </div>
-    </div>
-  )
+  onStatusChange?: (status: { text: string; cls: string }) => void;
 }
 
 function GameOverModal({ status, winner, onPlayAgain, onBackToMenu }: {
@@ -80,15 +61,12 @@ function GameOverModal({ status, winner, onPlayAgain, onBackToMenu }: {
 
 function getStatusInfo(gameState: GameState, isThinking: boolean): { text: string; cls: string } {
   const { status, turn, winner } = gameState;
-  const lightLabel = 'Light';
-  const darkLabel = 'Dark';
-  const turnLabel = turn === 'white' ? lightLabel : darkLabel;
+  const turnLabel = turn === 'white' ? 'Light' : 'Dark';
   const turnCls = `game-header__status--${turn === 'white' ? 'light' : 'dark'}`;
 
   if (status === 'checkmate') {
-    const winLabel = winner === 'white' ? lightLabel : darkLabel;
-    const winCls = `game-header__status--${winner === 'white' ? 'light' : 'dark'}`;
-    return { text: `${winLabel} wins by checkmate`, cls: winCls };
+    const winLabel = winner === 'white' ? 'Light' : 'Dark';
+    return { text: `${winLabel} wins by checkmate`, cls: `game-header__status--${winner === 'white' ? 'light' : 'dark'}` };
   }
   if (status === 'stalemate') return { text: 'Stalemate — Draw', cls: '' };
   if (status === 'draw') return { text: 'Draw', cls: '' };
@@ -97,11 +75,9 @@ function getStatusInfo(gameState: GameState, isThinking: boolean): { text: strin
   return { text: `${turnLabel}'s turn`, cls: turnCls };
 }
 
-export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initialState, onSaveChange }: Props) {
+export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, onStatusChange }: Props) {
   const [gameState, setGameState] = useState<GameState>(() => initialState ?? initGameState());
   const [isThinking, setIsThinking] = useState(false);
-  const [showQuitConfirm, setShowQuitConfirm] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
 
   const isVsComputer = config.mode === 'vs-computer';
   const { playerColor, difficulty } = config;
@@ -149,6 +125,10 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initia
     onSaveChange?.(true);
   }, [gameState]);
 
+  useEffect(() => {
+    onStatusChange?.(getStatusInfo(gameState, isThinking));
+  }, [gameState, isThinking]);
+
   function handleSquareClick(index: number) {
     if (isThinking) return;
     if (isVsComputer && gameState.turn !== playerColor) return;
@@ -182,7 +162,6 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initia
   }
 
   const { board, selectedSquare, legalMovesForSelected, status, lastMove, turn, winner } = gameState;
-  const statusInfo = getStatusInfo(gameState, isThinking);
 
   const legalHighlights = new Set(legalMovesForSelected.filter(i => board[i] === null));
   const captureHighlights = new Set(legalMovesForSelected.filter(i => board[i] !== null));
@@ -199,32 +178,21 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initia
   const isGameOver = status === 'checkmate' || status === 'stalemate' || status === 'draw';
 
   return (
-    <div className="game">
-      <Header
-        showBack={true}
-        onBack={() => setShowQuitConfirm(true)}
-        theme={theme}
-        onThemeToggle={onThemeToggle}
-        onHelp={() => setShowHelp(true)}
-        statusText={statusInfo.text}
-        statusClass={statusInfo.cls}
+    <div className="game-body">
+      <Board
+        board={board}
+        selectedSquare={selectedSquare}
+        legalHighlights={legalHighlights}
+        captureHighlights={captureHighlights}
+        checkKingIdx={checkKingIdx}
+        lastMoveSet={lastMoveSet}
+        onSquareClick={handleSquareClick}
+        flipped={isVsComputer && playerColor === 'black'}
       />
-      <div className="game-body">
-        <Board
-          board={board}
-          selectedSquare={selectedSquare}
-          legalHighlights={legalHighlights}
-          captureHighlights={captureHighlights}
-          checkKingIdx={checkKingIdx}
-          lastMoveSet={lastMoveSet}
-          onSquareClick={handleSquareClick}
-          flipped={isVsComputer && playerColor === 'black'}
-        />
-        <CapturedPieces board={board} />
-        {gameState.pendingPromotion && (
-          <PromotionModal color={gameState.turn} onChoose={handlePromotion} />
-        )}
-      </div>
+      <CapturedPieces board={board} />
+      {gameState.pendingPromotion && (
+        <PromotionModal color={gameState.turn} onChoose={handlePromotion} />
+      )}
       {isGameOver && (
         <GameOverModal
           status={status as 'checkmate' | 'stalemate' | 'draw'}
@@ -232,41 +200,6 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initia
           onPlayAgain={handlePlayAgain}
           onBackToMenu={onBackToMenu}
         />
-      )}
-      {showQuitConfirm && (
-        <QuitModal
-          onCancel={() => setShowQuitConfirm(false)}
-          onQuit={() => { setShowQuitConfirm(false); onBackToMenu(); }}
-        />
-      )}
-      {showHelp && (
-        <div className="modal-backdrop" onClick={() => setShowHelp(false)}>
-          <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <h2 className="modal-title">How to Play</h2>
-            <div className="modal-content">
-              <h3>Objective</h3>
-              <p>Checkmate your opponent's king — put it under attack with no escape.</p>
-              <h3>Pieces</h3>
-              <ul>
-                <li>King moves one square in any direction.</li>
-                <li>Queen moves any number of squares in any direction.</li>
-                <li>Rook moves any number of squares horizontally or vertically.</li>
-                <li>Bishop moves any number of squares diagonally.</li>
-                <li>Knight moves in an L-shape and can jump over pieces.</li>
-                <li>Pawn moves forward one square, captures diagonally. Reach the back rank to promote.</li>
-              </ul>
-              <h3>Special Rules</h3>
-              <ul>
-                <li>Castling: king and rook swap if neither has moved and the path is clear.</li>
-                <li>En passant: a pawn may capture an adjacent pawn that just moved two squares.</li>
-                <li>Draw by stalemate, 3-fold repetition, or 50 moves without capture or pawn move.</li>
-              </ul>
-            </div>
-            <div className="modal-actions">
-              <button className="primary-btn" onClick={() => setShowHelp(false)}>Got it</button>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );

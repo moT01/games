@@ -107,7 +107,7 @@
   --board-in-check: rgba(200, 0, 0, 0.6);
   --board-last-move-light: rgba(255, 191, 0, 0.22);
   --board-last-move-dark: rgba(255, 191, 0, 0.12);
-  --square-size: min(68px, 11vw);
+  --square-size: min(72px, calc((100vw - 72px) / 8));
 }
 
 :focus-visible {
@@ -146,6 +146,5 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-5);
   -webkit-font-smoothing: antialiased;
 }
