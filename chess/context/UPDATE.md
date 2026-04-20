@@ -36,9 +36,9 @@
 - [x] Resume button visibility driven by whether a saved game exists
 
 ## Modals
-- [ ] Quit confirm modal: cancel or quit, with note that the game can be resumed
-- [ ] Game over modal: result text + Play Again button (replaces current inline overlay)
-- [ ] Help modal: basic chess rules summary
+- [x] Quit confirm modal: cancel or quit, with note that the game can be resumed
+- [x] Game over modal: result text + Play Again button (replaces current inline overlay)
+- [x] Help modal: basic chess rules summary
 
 ## Layout
 - [ ] Wrap app in a `.game-card` with header + body (matching checkers layout)

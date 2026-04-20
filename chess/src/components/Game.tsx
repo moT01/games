@@ -37,11 +37,41 @@ function QuitModal({ onCancel, onQuit }: { onCancel: () => void; onQuit: () => v
       <div className="modal-card" onClick={e => e.stopPropagation()}>
         <h2 className="modal-title">Quit Game</h2>
         <div className="modal-content">
-          <p>Return to the main menu?</p>
+          <p>Return to the main menu? You can resume your game from there.</p>
         </div>
         <div className="modal-actions">
           <button className="secondary-btn" onClick={onCancel}>Cancel</button>
           <button className="primary-btn" onClick={onQuit}>Quit</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function GameOverModal({ status, winner, onPlayAgain, onBackToMenu }: {
+  status: 'checkmate' | 'stalemate' | 'draw';
+  winner: 'white' | 'black' | null;
+  onPlayAgain: () => void;
+  onBackToMenu: () => void;
+}) {
+  let message = ''
+  let cls = ''
+  if (status === 'checkmate' && winner) {
+    const label = winner === 'white' ? 'Light' : 'Dark'
+    cls = `game-header__status--${winner === 'white' ? 'light' : 'dark'}`
+    message = `${label} wins by checkmate!`
+  } else if (status === 'stalemate') {
+    message = 'Stalemate — Draw!'
+  } else {
+    message = 'Draw!'
+  }
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-card" style={{ textAlign: 'center' }}>
+        <h2 className={`modal-title ${cls}`}>{message}</h2>
+        <div className="modal-actions" style={{ justifyContent: 'center' }}>
+          <button className="secondary-btn" onClick={onBackToMenu}>Menu</button>
+          <button className="primary-btn" onClick={onPlayAgain}>Play Again</button>
         </div>
       </div>
     </div>
@@ -194,20 +224,15 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initia
         {gameState.pendingPromotion && (
           <PromotionModal color={gameState.turn} onChoose={handlePromotion} />
         )}
-        {isGameOver && (
-          <div className="game-over-overlay">
-            <div className="game-over-content">
-              {status === 'checkmate' && (
-                <p>{winner === 'white' ? 'Light' : 'Dark'} wins by checkmate!</p>
-              )}
-              {status === 'stalemate' && <p>Stalemate — Draw!</p>}
-              {status === 'draw' && <p>Draw!</p>}
-              <button onClick={handlePlayAgain}>Play Again</button>
-              <button onClick={onBackToMenu}>Back to Menu</button>
-            </div>
-          </div>
-        )}
       </div>
+      {isGameOver && (
+        <GameOverModal
+          status={status as 'checkmate' | 'stalemate' | 'draw'}
+          winner={winner}
+          onPlayAgain={handlePlayAgain}
+          onBackToMenu={onBackToMenu}
+        />
+      )}
       {showQuitConfirm && (
         <QuitModal
           onCancel={() => setShowQuitConfirm(false)}
