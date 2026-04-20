@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   createInitialBoard,
   checkWinner,
   applyMove,
+  getValidMoves,
   getValidMovesForPiece,
   getComputerMove,
   type Board,
@@ -29,6 +30,11 @@ type SavedState = {
   difficulty: Difficulty
   playerSide: Player
 }
+
+type GameOverReason =
+  | { type: 'all-pieces-captured'; player: Player }
+  | { type: 'no-valid-moves'; player: Player }
+  | null
 
 function loadSavedGame(): SavedState | null {
   try {
@@ -65,11 +71,17 @@ function HelpModal({ onClose }: { onClose: () => void }) {
   )
 }
 
-function GameOverModal({ winner, onPlayAgain }: { winner: Player; onPlayAgain: () => void }) {
+function GameOverModal({ winner, reason, onPlayAgain }: { winner: Player; reason: GameOverReason; onPlayAgain: () => void }) {
   return (
     <div className="modal-backdrop">
       <div className="modal-card" style={{ textAlign: 'center' }}>
         <h2 className={`modal-title game-status__message--${winner.toLowerCase()}`}>{winner} wins!</h2>
+        {reason?.type === 'all-pieces-captured' && (
+          <p>All {reason.player} pieces captured</p>
+        )}
+        {reason?.type === 'no-valid-moves' && (
+          <p>No valid moves for {reason.player}</p>
+        )}
         <div className="modal-actions" style={{ justifyContent: 'center' }}>
           <button className="primary-btn" onClick={onPlayAgain}>Play Again</button>
         </div>
@@ -103,6 +115,7 @@ function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy')
   const [playerSide, setPlayerSide] = useState<Player>('Light')
   const [winner, setWinner] = useState<Player | null>(null)
+  const [gameOverReason, setGameOverReason] = useState<GameOverReason>(null)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [validMovesForSelected, setValidMovesForSelected] = useState<Move[]>([])
   const [theme, setTheme] = useState<Theme>(
@@ -128,16 +141,16 @@ function App() {
     setTheme(t => (t === 'dark' ? 'light' : 'dark'))
   }
 
-  function saveGame(b: Board, turn: Player, m: Mode, diff: Difficulty, side: Player) {
+  const saveGame = useCallback((b: Board, turn: Player, m: Mode, diff: Difficulty, side: Player) => {
     const state: SavedState = { board: b, currentTurn: turn, mode: m, difficulty: diff, playerSide: side }
     localStorage.setItem(SAVE_KEY, JSON.stringify(state))
     setHasSavedGame(true)
-  }
+  }, [])
 
-  function clearSavedGame() {
+  const clearSavedGame = useCallback(() => {
     localStorage.removeItem(SAVE_KEY)
     setHasSavedGame(false)
-  }
+  }, [])
 
   function startGame(selectedMode: Mode, selectedDifficulty: Difficulty, selectedSide: Player) {
     clearSavedGame()
@@ -147,6 +160,7 @@ function App() {
     setBoard(createInitialBoard())
     setCurrentTurn('Light')
     setWinner(null)
+    setGameOverReason(null)
     setSelectedIndex(null)
     setValidMovesForSelected([])
     setPhase('playing')
@@ -161,6 +175,7 @@ function App() {
     setDifficulty(saved.difficulty)
     setPlayerSide(saved.playerSide)
     setWinner(null)
+    setGameOverReason(null)
     setSelectedIndex(null)
     setValidMovesForSelected([])
     setPhase('playing')
@@ -179,15 +194,24 @@ function App() {
     setPhase('setup')
   }
 
-  function executeMove(b: Board, move: Move, player: Player) {
+  const executeMove = useCallback((b: Board, move: Move, player: Player) => {
     const newBoard = applyMove(b, move)
     const nextPlayer: Player = player === 'Light' ? 'Dark' : 'Light'
     const win = checkWinner(newBoard, nextPlayer)
+    const nextPlayerHasPieces = newBoard.some(piece => piece?.player === nextPlayer)
+    const nextPlayerMoves = getValidMoves(newBoard, nextPlayer)
     setBoard(newBoard)
     setSelectedIndex(null)
     setValidMovesForSelected([])
     if (win) {
       setWinner(win)
+      if (!nextPlayerHasPieces) {
+        setGameOverReason({ type: 'all-pieces-captured', player: nextPlayer })
+      } else if (nextPlayerMoves.length === 0) {
+        setGameOverReason({ type: 'no-valid-moves', player: nextPlayer })
+      } else {
+        setGameOverReason(null)
+      }
       setPhase('over')
       clearSavedGame()
       if (mode === 'vs-computer' && win === playerSide) {
@@ -202,10 +226,11 @@ function App() {
         }
       }
     } else {
+      setGameOverReason(null)
       setCurrentTurn(nextPlayer)
       saveGame(newBoard, nextPlayer, mode, difficulty, playerSide)
     }
-  }
+  }, [clearSavedGame, difficulty, mode, playerSide, saveGame, winsHard, winsNormal])
 
   function handleSquareClick(index: number) {
     if (phase !== 'playing') return
@@ -248,7 +273,7 @@ function App() {
     }, 400)
 
     return () => clearTimeout(timer)
-  }, [currentTurn, phase])
+  }, [board, currentTurn, difficulty, executeMove, mode, phase, playerSide])
 
   const isDisabled =
     phase !== 'playing' || (mode === 'vs-computer' && currentTurn !== playerSide)
@@ -344,7 +369,7 @@ function App() {
       </div>
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       {showQuitConfirm && <QuitModal onCancel={() => setShowQuitConfirm(false)} onQuit={handleQuit} />}
-      {phase === 'over' && winner && <GameOverModal winner={winner} onPlayAgain={handleBack} />}
+      {phase === 'over' && winner && <GameOverModal winner={winner} reason={gameOverReason} onPlayAgain={handleBack} />}
     </div>
   )
 }

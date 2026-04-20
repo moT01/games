@@ -6,7 +6,12 @@ import App from './App'
 
 vi.mock('./gameLogic', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./gameLogic')>()
-  return { ...actual, checkWinner: vi.fn(actual.checkWinner) }
+  return {
+    ...actual,
+    applyMove: vi.fn(actual.applyMove),
+    checkWinner: vi.fn(actual.checkWinner),
+    getValidMoves: vi.fn(actual.getValidMoves),
+  }
 })
 
 const storageData = new Map<string, string>()
@@ -109,6 +114,38 @@ describe('App', () => {
     await user.click(squares[33])
 
     expect(screen.getByText('Light wins!')).toBeTruthy()
+  })
+
+  it('shows a no-valid-moves note when the loser has no legal moves left', async () => {
+    vi.mocked(gameLogic.checkWinner).mockReturnValueOnce('Light')
+    vi.mocked(gameLogic.getValidMoves).mockReturnValueOnce([])
+
+    const { user, container } = await startVsPlayerGame()
+    const squares = container.querySelectorAll('.square')
+
+    await user.click(squares[40])
+    await user.click(squares[33])
+
+    expect(screen.getByText('Light wins!')).toBeTruthy()
+    expect(screen.getByText('No valid moves for Dark')).toBeTruthy()
+  })
+
+  it('shows an all-pieces-captured note when the loser has no pieces left', async () => {
+    vi.mocked(gameLogic.checkWinner).mockReturnValueOnce('Light')
+    vi.mocked(gameLogic.applyMove).mockImplementationOnce(() => {
+      const board = Array(64).fill(null)
+      board[33] = { player: 'Light', type: 'man' }
+      return board
+    })
+
+    const { user, container } = await startVsPlayerGame()
+    const squares = container.querySelectorAll('.square')
+
+    await user.click(squares[40])
+    await user.click(squares[33])
+
+    expect(screen.getByText('Light wins!')).toBeTruthy()
+    expect(screen.getByText('All Dark pieces captured')).toBeTruthy()
   })
 
   it('clicking Play Again returns to the setup screen', async () => {
