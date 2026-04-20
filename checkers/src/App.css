@@ -19,6 +19,10 @@
   --board-selected: rgba(255, 191, 0, 0.22);
 }
 
+.light-palette .game-card__body {
+  background: var(--gray-10);
+}
+
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
 
 .app {
