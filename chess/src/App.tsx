@@ -34,7 +34,7 @@ function HelpModal({ onClose }: { onClose: () => void }) {
             <li>Queen moves any number of squares in any direction.</li>
             <li>Rook moves any number of squares horizontally or vertically.</li>
             <li>Bishop moves any number of squares diagonally.</li>
-            <li>Knight moves in an L-shape and can jump over pieces.</li>
+            <li>Knight moves in an L-shape, two squares in one direction and one square perpendicular, and can jump over pieces.</li>
             <li>Pawn moves forward one square, captures diagonally. Reach the back rank to promote.</li>
           </ul>
           <h3>Special Rules</h3>
