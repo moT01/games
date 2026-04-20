@@ -1,0 +1,48 @@
+# Chess UI Update Checklist
+
+## Main Menu
+- [ ] Add title section: "Chess" / "A CLASSIC BOARD GAME"
+- [ ] Replace two-button layout with tab toggle: "vs Computer" / "2 Players"
+- [ ] Add player color pill toggle: Light (goes first) / Dark — visible in vs Computer mode
+- [ ] Add Hard mode checkbox — visible in vs Computer mode
+- [ ] Add wins display: Normal / Hard rows — visible in vs Computer mode
+- [ ] New Game button — full width primary style
+- [ ] Resume Game button — full width secondary style, only shown when a saved game exists
+- [ ] Remove ColorPicker component (color selection moves into main menu)
+
+## Header
+- [ ] Copy Header component from checkers (Header.tsx + Header.css) — same icons and layout (component already copied - lets see if we still need the status bar component or if we can delete it now).
+- [ ] Back button while in-game shows a quit confirm modal
+- [ ] Center status shows whose turn it is, plus check/checkmate/draw state
+- [ ] Theme toggle persists preference to localStorage as `chess_theme`
+
+## Theme (dark / light)
+- [ ] Toggle applies `.dark-palette` / `.light-palette` class on body
+- [ ] Board light and dark squares update colors per theme
+- [ ] Game card and body background update per theme
+- [ ] Header background matches theme
+- [ ] Piece colors update per theme (light pieces / dark pieces)
+
+## AI Difficulty
+- [ ] Normal: minimax depth 2 (current behavior)
+- [ ] Hard: minimax depth 4
+- [ ] Pass difficulty through GameConfig to the game engine
+- [ ] Track wins separately in localStorage: `chess_wins_normal` / `chess_wins_hard`
+
+## localStorage Persistence
+- [ ] Save full game state to localStorage on each move (key: `chess_state`)
+- [ ] Load saved state when Resume is clicked
+- [ ] Clear saved state when a new game starts or the game ends
+- [ ] Resume button visibility driven by whether a saved game exists
+
+## Modals
+- [ ] Quit confirm modal: cancel or quit, with note that the game can be resumed
+- [ ] Game over modal: result text + Play Again button (replaces current inline overlay)
+- [ ] Help modal: basic chess rules summary
+
+## Layout
+- [ ] Wrap app in a `.game-card` with header + body (matching checkers layout)
+- [ ] Responsive board: `--cell-size: min(72px, calc((100vw - 72px) / 8))`
+- [ ] Background decorative chess pieces: scattered, static, subtle neutral color
+- [ ] Move turn/status display from StatusBar into Header center slot
+- [ ] CapturedPieces and PromotionModal stay in the game body
