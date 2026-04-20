@@ -98,20 +98,40 @@
   --transition-default: 200ms ease;
   --transition-slow: 350ms ease;
 
-  /* Chess board */
-  --board-light: #f0d9b5;
-  --board-dark: #b58863;
-  --board-selected: rgba(255, 191, 0, 0.55);
-  --board-legal-move: rgba(153, 201, 255, 0.35);
+  /* Chess board — dark theme (fCC navy) */
+  --board-light: #3b3966;
+  --board-dark: #1b1b32;
+  --board-selected: rgba(255, 191, 0, 0.45);
+  --board-legal-move: rgba(248, 225, 160, 0.35);
   --board-capture: rgba(255, 80, 80, 0.5);
   --board-in-check: rgba(200, 0, 0, 0.6);
-  --board-last-move: rgba(255, 191, 0, 0.25);
+  --board-last-move-light: rgba(255, 191, 0, 0.22);
+  --board-last-move-dark: rgba(255, 191, 0, 0.12);
   --square-size: min(68px, 11vw);
 }
 
 :focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(153, 201, 255, 0.5);
+}
+
+.light-palette {
+  --color-bg: var(--gray-00);
+  --color-surface: var(--gray-05);
+  --color-surface-raised: var(--gray-10);
+  --color-border: var(--gray-10);
+  --color-text-primary: var(--gray-90);
+  --color-text-secondary: var(--gray-75);
+  --color-text-muted: var(--gray-45);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* Chess board — light theme (classic) */
+  --board-light: #f0d9b5;
+  --board-dark: #b58863;
+  --board-selected: rgba(180, 110, 5, 0.45);
+  --board-legal-move: rgba(0, 0, 0, 0.18);
+  --board-last-move-light: #f6ef82;
+  --board-last-move-dark: #baca2b;
 }
 
 body {

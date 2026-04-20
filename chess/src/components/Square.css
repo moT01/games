@@ -15,8 +15,8 @@
 .square.dark  { background-color: var(--board-dark); }
 
 /* Highlights */
-.square.last-move.light { background-color: #f6ef82; }
-.square.last-move.dark  { background-color: #baca2b; }
+.square.last-move.light { background-color: var(--board-last-move-light); }
+.square.last-move.dark  { background-color: var(--board-last-move-dark); }
 
 .square.selected {
   background-color: var(--board-selected) !important;
@@ -59,14 +59,26 @@
   pointer-events: none;
 }
 
+/* Dark theme: gold (light) and blue (dark) — matching fCC piece palette */
 .piece-white {
-  color: #faf0dc;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 1px rgba(0, 0, 0, 0.8);
+  color: #f8e1a0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .piece-black {
-  color: #1a1008;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.25);
+  color: #99c9ff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Light theme: darker gold and dark navy for contrast on classic board */
+.light-palette .piece-white {
+  color: #7a4800;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.light-palette .piece-black {
+  color: #1b1b32;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 /* Coordinate labels */

@@ -17,11 +17,11 @@
 - [x] Theme toggle persists preference to localStorage as `chess_theme`
 
 ## Theme (dark / light)
-- [ ] Toggle applies `.dark-palette` / `.light-palette` class on body
-- [ ] Board light and dark squares update colors per theme
-- [ ] Game card and body background update per theme
-- [ ] Header background matches theme
-- [ ] Piece colors update per theme (light pieces / dark pieces)
+- [x] Toggle applies `.dark-palette` / `.light-palette` class on body
+- [x] Board light and dark squares update colors per theme
+- [x] Game card and body background update per theme
+- [x] Header background matches theme
+- [x] Piece colors update per theme (light pieces / dark pieces)
 
 ## AI Difficulty
 - [ ] Normal: minimax depth 2 (current behavior)
