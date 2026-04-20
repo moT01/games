@@ -112,3 +112,13 @@
 .dark .file-label {
   color: var(--board-light);
 }
+
+.light-palette .light .rank-label,
+.light-palette .light .file-label {
+  color: var(--gray-45);
+}
+
+.light-palette .dark .rank-label,
+.light-palette .dark .file-label {
+  color: var(--gray-45);
+}

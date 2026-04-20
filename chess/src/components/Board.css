@@ -4,5 +4,4 @@
   grid-template-rows: repeat(8, var(--square-size));
   border-radius: var(--radius-sm);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
 }

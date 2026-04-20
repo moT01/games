@@ -4,6 +4,7 @@ import { Piece as PieceDisplay } from './Piece';
 
 interface Props {
   board: (Piece | null)[];
+  side: 'light' | 'dark';
 }
 
 const PIECE_ORDER: PieceType[] = ['queen', 'rook', 'bishop', 'knight', 'pawn'];
@@ -29,26 +30,19 @@ function getCaptured(board: (Piece | null)[], opponentColor: Color): { piece: Pi
   });
 }
 
-export function CapturedPieces({ board }: Props) {
-  const capturedByWhite = getCaptured(board, 'black'); // white captured black pieces
-  const capturedByBlack = getCaptured(board, 'white'); // black captured white pieces
+export function CapturedPieces({ board, side }: Props) {
+  // light side shows white pieces captured by dark (above board, near dark's area)
+  // dark side shows black pieces captured by white (below board, near light's area)
+  const opponentColor = side === 'light' ? 'white' : 'black';
+  const pieces = getCaptured(board, opponentColor);
 
   return (
-    <div className="captured-pieces">
-      <div className="captured-row">
-        {capturedByWhite.flatMap(({ piece, count }) =>
-          Array.from({ length: count }, (_, i) => (
-            <PieceDisplay key={`${piece.type}-${i}`} piece={piece} />
-          ))
-        )}
-      </div>
-      <div className="captured-row">
-        {capturedByBlack.flatMap(({ piece, count }) =>
-          Array.from({ length: count }, (_, i) => (
-            <PieceDisplay key={`${piece.type}-${i}`} piece={piece} />
-          ))
-        )}
-      </div>
+    <div className="captured-row">
+      {pieces.flatMap(({ piece, count }) =>
+        Array.from({ length: count }, (_, i) => (
+          <PieceDisplay key={`${piece.type}-${i}`} piece={piece} />
+        ))
+      )}
     </div>
   );
 }

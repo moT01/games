@@ -179,6 +179,7 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
 
   return (
     <div className="game-body">
+      <CapturedPieces board={board} side="light" />
       <Board
         board={board}
         selectedSquare={selectedSquare}
@@ -189,7 +190,7 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
         onSquareClick={handleSquareClick}
         flipped={isVsComputer && playerColor === 'black'}
       />
-      <CapturedPieces board={board} />
+      <CapturedPieces board={board} side="dark" />
       {gameState.pendingPromotion && (
         <PromotionModal color={gameState.turn} onChoose={handlePromotion} />
       )}

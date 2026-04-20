@@ -125,13 +125,13 @@
   --color-text-muted: var(--gray-45);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
-  /* Chess board — light theme (classic) */
-  --board-light: #f0d9b5;
-  --board-dark: #b58863;
-  --board-selected: rgba(180, 110, 5, 0.45);
-  --board-legal-move: rgba(0, 0, 0, 0.18);
-  --board-last-move-light: #f6ef82;
-  --board-last-move-dark: #baca2b;
+  /* Chess board — light theme (fCC grays) */
+  --board-light: var(--gray-05);
+  --board-dark: var(--gray-15);
+  --board-selected: rgba(180, 110, 5, 0.35);
+  --board-legal-move: rgba(0, 0, 0, 0.15);
+  --board-last-move-light: rgba(180, 110, 5, 0.2);
+  --board-last-move-dark: rgba(180, 110, 5, 0.12);
 }
 
 body {

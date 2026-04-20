@@ -1,12 +1,12 @@
 import type { Piece as PieceType } from '../gameLogic';
 
 const SYMBOLS: Record<string, string> = {
-  'white-king':   '♔',
-  'white-queen':  '♕',
-  'white-rook':   '♖',
-  'white-bishop': '♗',
-  'white-knight': '♘',
-  'white-pawn':   '♙',
+  'white-king':   '♚',
+  'white-queen':  '♛',
+  'white-rook':   '♜',
+  'white-bishop': '♝',
+  'white-knight': '♞',
+  'white-pawn':   '♟',
   'black-king':   '♚',
   'black-queen':  '♛',
   'black-rook':   '♜',
