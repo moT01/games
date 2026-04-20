@@ -1,13 +1,41 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, describe, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import * as gameLogic from './gameLogic'
 import App from './App'
 
-// Wrap checkWinner in vi.fn so individual tests can override its return value
 vi.mock('./gameLogic', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./gameLogic')>()
   return { ...actual, checkWinner: vi.fn(actual.checkWinner) }
+})
+
+const storageData = new Map<string, string>()
+
+const localStorageMock = {
+  getItem(key: string) {
+    return storageData.has(key) ? storageData.get(key)! : null
+  },
+  setItem(key: string, value: string) {
+    storageData.set(key, String(value))
+  },
+  removeItem(key: string) {
+    storageData.delete(key)
+  },
+  clear() {
+    storageData.clear()
+  },
+}
+
+beforeEach(() => {
+  storageData.clear()
+  Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock,
+    configurable: true,
+  })
+  Object.defineProperty(globalThis, 'localStorage', {
+    value: localStorageMock,
+    configurable: true,
+  })
 })
 
 afterEach(() => {
@@ -17,38 +45,43 @@ afterEach(() => {
 async function startVsPlayerGame() {
   const user = userEvent.setup()
   const { container } = render(<App />)
-  await user.click(screen.getByText('Start Game'))
+  await user.click(screen.getByText('2 Players'))
+  await user.click(screen.getByText('New Game'))
   return { user, container }
 }
 
 describe('App', () => {
-  it('renders the mode selector on initial load', () => {
+  it('renders the current setup screen on initial load', () => {
     render(<App />)
-    expect(screen.getByText('vs Player')).toBeTruthy()
+
     expect(screen.getByText('vs Computer')).toBeTruthy()
-    expect(screen.getByText('Start Game')).toBeTruthy()
+    expect(screen.getByText('2 Players')).toBeTruthy()
+    expect(screen.getByText('Light')).toBeTruthy()
+    expect(screen.getByText('Dark')).toBeTruthy()
+    expect(screen.getByText('Hard mode')).toBeTruthy()
+    expect(screen.getByText('New Game')).toBeTruthy()
   })
 
-  it('selecting "vs Computer" reveals difficulty and color pickers', async () => {
+  it('switching to 2 Players hides the computer-only options', async () => {
     const user = userEvent.setup()
     render(<App />)
 
-    expect(screen.queryByText('Easy')).toBeNull()
-    expect(screen.queryByText('Play as Red')).toBeNull()
+    expect(screen.getByText('Hard mode')).toBeTruthy()
+    expect(screen.getByText('Light')).toBeTruthy()
+    expect(screen.getByText('Dark')).toBeTruthy()
 
-    await user.click(screen.getByText('vs Computer'))
+    await user.click(screen.getByText('2 Players'))
 
-    expect(screen.getByText('Easy')).toBeTruthy()
-    expect(screen.getByText('Hard')).toBeTruthy()
-    expect(screen.getByText('Play as Red')).toBeTruthy()
-    expect(screen.getByText('Play as Black')).toBeTruthy()
+    expect(screen.queryByText('Hard mode')).toBeNull()
+    expect(screen.queryByText('Light')).toBeNull()
+    expect(screen.queryByText('Dark')).toBeNull()
+    expect(screen.getByText('New Game')).toBeTruthy()
   })
 
   it('clicking a piece selects it and highlights its valid moves', async () => {
     const { user, container } = await startVsPlayerGame()
     const squares = container.querySelectorAll('.square')
 
-    // Red piece at index 40 (row 5, col 0) — can only move to index 33 (row 4, col 1)
     await user.click(squares[40])
 
     expect(squares[40].classList.contains('square--selected')).toBe(true)
@@ -59,39 +92,37 @@ describe('App', () => {
     const { user, container } = await startVsPlayerGame()
     const squares = container.querySelectorAll('.square')
 
-    await user.click(squares[40]) // select Red at row 5, col 0
-    await user.click(squares[33]) // move to row 4, col 1
+    await user.click(squares[40])
+    await user.click(squares[33])
 
     expect(squares[33].querySelector('.piece')).toBeTruthy()
     expect(squares[40].querySelector('.piece')).toBeNull()
   })
 
   it('a winning condition shows the result message', async () => {
-    vi.mocked(gameLogic.checkWinner).mockReturnValueOnce('Red')
+    vi.mocked(gameLogic.checkWinner).mockReturnValueOnce('Light')
 
     const { user, container } = await startVsPlayerGame()
     const squares = container.querySelectorAll('.square')
 
-    // Make any valid move — the mocked checkWinner returns 'Red' immediately
     await user.click(squares[40])
     await user.click(squares[33])
 
-    expect(screen.getByText('Red wins!')).toBeTruthy()
+    expect(screen.getByText('Light wins!')).toBeTruthy()
   })
 
-  it('clicking "Play Again" returns to the mode selector', async () => {
-    vi.mocked(gameLogic.checkWinner).mockReturnValueOnce('Red')
+  it('clicking Play Again returns to the setup screen', async () => {
+    vi.mocked(gameLogic.checkWinner).mockReturnValueOnce('Light')
 
     const { user, container } = await startVsPlayerGame()
     const squares = container.querySelectorAll('.square')
 
     await user.click(squares[40])
     await user.click(squares[33])
-
     await user.click(screen.getByText('Play Again'))
 
-    expect(screen.getByText('vs Player')).toBeTruthy()
     expect(screen.getByText('vs Computer')).toBeTruthy()
-    expect(screen.getByText('Start Game')).toBeTruthy()
+    expect(screen.getByText('2 Players')).toBeTruthy()
+    expect(screen.getByText('New Game')).toBeTruthy()
   })
 })
