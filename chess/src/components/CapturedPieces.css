@@ -15,9 +15,7 @@
 }
 
 .captured-row .piece {
-  width: auto;
-  height: auto;
-  display: inline-flex;
-  font-size: 1.3rem;
-  line-height: 1;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-block;
 }
