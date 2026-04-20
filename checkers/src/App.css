@@ -28,7 +28,7 @@
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
   overflow: hidden;
   width: fit-content;
-  min-width: min(420px, 100%);
+  min-width: 420px;
 }
 
 .game-card__body {

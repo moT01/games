@@ -28,7 +28,7 @@
   transition: background var(--transition-fast), color var(--transition-fast);
 }
 
-.tab-btn:hover {
+.tab-btn:hover:not(.tab-btn--active) {
   background: var(--color-surface-raised);
   color: var(--color-text-primary);
 }
@@ -109,7 +109,7 @@
   white-space: nowrap;
 }
 
-.pill-btn:hover {
+.pill-btn:hover:not(.pill-btn--active) {
   background: var(--color-surface-raised);
   color: var(--color-text-primary);
 }

@@ -79,14 +79,14 @@ export function ModeSelector({ onStart, onResume, hasSavedGame, winsNormal, wins
       )}
 
       <div className="home-actions">
+        <button className="primary-btn" onClick={() => onStart(mode, difficulty, playerSide)}>
+          New Game
+        </button>
         {hasSavedGame && (
           <button className="secondary-btn" onClick={onResume}>
             Resume Game
           </button>
         )}
-        <button className="primary-btn" onClick={() => onStart(mode, difficulty, playerSide)}>
-          New Game
-        </button>
       </div>
     </div>
   )
