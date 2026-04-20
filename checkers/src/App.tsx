@@ -292,6 +292,7 @@ function App() {
                 selectedIndex={selectedIndex}
                 validMoveDestinations={validMoveDestinations}
                 jumpDestinations={intermediateSquares}
+                currentTurn={currentTurn}
                 onSquareClick={handleSquareClick}
                 disabled={isDisabled}
               />
