@@ -12,9 +12,9 @@
 
 ## Header
 - [x] Copy Header component from checkers (Header.tsx + Header.css) — same icons and layout
-- [ ] Back button while in-game shows a quit confirm modal
-- [ ] Center status shows whose turn it is, plus check/checkmate/draw state
-- [ ] Theme toggle persists preference to localStorage as `chess_theme`
+- [x] Back button while in-game shows a quit confirm modal
+- [x] Center status shows whose turn it is, plus check/checkmate/draw state
+- [x] Theme toggle persists preference to localStorage as `chess_theme`
 
 ## Theme (dark / light)
 - [ ] Toggle applies `.dark-palette` / `.light-palette` class on body

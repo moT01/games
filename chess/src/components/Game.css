@@ -1,9 +1,16 @@
 .game {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.game-body {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  position: relative;
+  padding: var(--space-4);
 }
 
 .game-over-overlay {

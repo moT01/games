@@ -20,6 +20,22 @@
   font-weight: var(--weight-bold);
 }
 
+.game-header__status--light {
+  color: var(--yellow-gold);
+}
+
+.game-header__status--dark {
+  color: var(--blue-light);
+}
+
+.light-palette .game-header__status--light {
+  color: #b36a00;
+}
+
+.light-palette .game-header__status--dark {
+  color: #1b1b32;
+}
+
 .game-header__left,
 .game-header__right {
   display: flex;
