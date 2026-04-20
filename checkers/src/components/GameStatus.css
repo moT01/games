@@ -17,7 +17,7 @@
 }
 
 .game-status__turn--dark {
-  color: #8888cc;
+  color: var(--player-dark);
 }
 
 .game-status__message {

@@ -14,7 +14,7 @@ export function Piece({ piece }: Props) {
 
   return (
     <div className={classes}>
-      {piece.type === 'king' && <span className="piece__crown">♛</span>}
+      {piece.type === 'king' && <span className="piece__crown">★</span>}
     </div>
   )
 }
