@@ -267,21 +267,28 @@ function App() {
   }))]
 
   const bgPieces = [
-    { x: '10%', y: '7%',  king: false },
-    { x: '42%', y: '4%',  king: true  },
-    { x: '78%', y: '8%',  king: false },
-    { x: '5%',  y: '42%', king: true  },
-    { x: '88%', y: '35%', king: false },
-    { x: '20%', y: '72%', king: false },
-    { x: '62%', y: '68%', king: true  },
-    { x: '85%', y: '70%', king: false },
-    { x: '35%', y: '88%', king: true  },
-    { x: '70%', y: '90%', king: false },
-    { x: '15%', y: '26%', king: false },
-    { x: '74%', y: '46%', king: true  },
-    { x: '48%', y: '56%', king: false },
-    { x: '28%', y: '50%', king: false },
-    { x: '56%', y: '22%', king: false },
+    // scattered
+    { x: '10%', y: '6%',  king: false },
+    { x: '44%', y: '3%',  king: true  },
+    { x: '76%', y: '7%',  king: false },
+    { x: '18%', y: '24%', king: false },
+    { x: '56%', y: '20%', king: true  },
+    { x: '22%', y: '84%', king: false },
+    { x: '50%', y: '91%', king: false },
+    // pair — left mid
+    { x: '4%',  y: '52%', king: false },
+    { x: '9%',  y: '61%', king: true  },
+    // pair — bottom right
+    { x: '80%', y: '74%', king: false },
+    { x: '85%', y: '83%', king: false },
+    // trio — right side diagonal
+    { x: '84%', y: '38%', king: false },
+    { x: '89%', y: '47%', king: true  },
+    { x: '84%', y: '56%', king: false },
+    // trio — lower left diagonal
+    { x: '8%',  y: '74%', king: false },
+    { x: '13%', y: '83%', king: false },
+    { x: '18%', y: '74%', king: true  },
   ]
 
   return (
