@@ -41,6 +41,7 @@ export function Square({
       {rankLabel && <span className="rank-label">{rankLabel}</span>}
       {isLegalMove && <div className="move-dot" />}
       {piece && <Piece piece={piece} />}
+      {isCaptureTarget && <div className="move-dot" />}
       {fileLabel && <span className="file-label">{fileLabel}</span>}
     </div>
   );

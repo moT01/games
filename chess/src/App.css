@@ -12,13 +12,13 @@
   position: absolute;
   font-size: 64px;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.12);
   pointer-events: none;
   user-select: none;
 }
 
 .light-palette .bg-piece {
-  color: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.1);
 }
 
 /* -- Layout ──────────────────────────────────────────────────────────────────── */
