@@ -241,6 +241,17 @@ function App() {
     phase !== 'playing' || (mode === 'vs-computer' && currentTurn !== playerSide)
 
   const validMoveDestinations = validMovesForSelected.map(m => m.to)
+  const intermediateSquares = [...new Set(validMovesForSelected.flatMap(m => {
+    if (m.captures.length <= 1) return []
+    const squares: number[] = []
+    let pos = m.from
+    for (let i = 0; i < m.captures.length - 1; i++) {
+      const land = 2 * m.captures[i] - pos
+      squares.push(land)
+      pos = land
+    }
+    return squares
+  }))]
 
   return (
     <div className="app">
@@ -280,6 +291,7 @@ function App() {
                 board={board}
                 selectedIndex={selectedIndex}
                 validMoveDestinations={validMoveDestinations}
+                jumpDestinations={intermediateSquares}
                 onSquareClick={handleSquareClick}
                 disabled={isDisabled}
               />

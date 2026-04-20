@@ -7,11 +7,12 @@ interface Props {
   isDark: boolean
   isSelected: boolean
   isValidDestination: boolean
+  isJumpDestination: boolean
   onClick: () => void
   disabled: boolean
 }
 
-export function Square({ piece, isDark, isSelected, isValidDestination, onClick, disabled }: Props) {
+export function Square({ piece, isDark, isSelected, isValidDestination, isJumpDestination, onClick, disabled }: Props) {
   const isInteractable = isDark && !disabled
 
   const classes = [
@@ -28,6 +29,7 @@ export function Square({ piece, isDark, isSelected, isValidDestination, onClick,
     >
       {piece && <Piece piece={piece} />}
       {isValidDestination && <div className="square__highlight" />}
+      {isJumpDestination && <div className="square__capture-ring" />}
     </div>
   )
 }
