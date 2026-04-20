@@ -1,11 +1,14 @@
 .board {
   display: grid;
   grid-template-columns: repeat(8, var(--cell-size));
-  background-color: #05051a;
+  background-color: var(--board-frame);
   border-radius: var(--radius-md);
   padding: var(--space-2);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
-  border: 3px solid #020212;
+}
+
+.light-palette .board {
+  background-color: #d0d0d5;
 }
 
 .board--disabled .square--dark {

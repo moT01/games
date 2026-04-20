@@ -4,8 +4,19 @@
   --board-light: #252440;
   --board-dark: #0d0c22;
   --board-hover: #1a193a;
+  --board-frame: #05051a;
+  --board-border: #020212;
   --board-selected: rgba(255, 191, 0, 0.18);
   --cell-size: min(72px, calc((100vw - 72px) / 8));
+}
+
+.light-palette {
+  --board-light: var(--gray-00);
+  --board-dark: var(--gray-15);
+  --board-hover: var(--gray-10);
+  --board-frame: var(--gray-15);
+  --board-border: var(--gray-45);
+  --board-selected: rgba(255, 191, 0, 0.22);
 }
 
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
