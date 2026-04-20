@@ -5,3 +5,43 @@
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
+
+.turn-white {
+  --board-hover: #d4960f;
+  --board-selected: rgba(255, 191, 0, 0.45);
+  --board-legal-move: rgba(248, 225, 160, 0.35);
+  --board-last-move-light: rgba(255, 191, 0, 0.22);
+  --board-last-move-dark: rgba(255, 191, 0, 0.12);
+  --color-accent: var(--yellow-gold);
+  --shadow-accent: 0 0 12px rgba(255, 191, 0, 0.3);
+}
+
+.turn-black {
+  --board-hover: #4499ee;
+  --board-selected: rgba(68, 153, 238, 0.45);
+  --board-legal-move: rgba(68, 153, 238, 0.3);
+  --board-last-move-light: rgba(68, 153, 238, 0.22);
+  --board-last-move-dark: rgba(68, 153, 238, 0.12);
+  --color-accent: #4499ee;
+  --shadow-accent: 0 0 12px rgba(68, 153, 238, 0.3);
+}
+
+.light-palette .turn-white {
+  --board-hover: #a06000;
+  --board-selected: rgba(180, 110, 5, 0.35);
+  --board-legal-move: rgba(0, 0, 0, 0.15);
+  --board-last-move-light: rgba(180, 110, 5, 0.2);
+  --board-last-move-dark: rgba(180, 110, 5, 0.12);
+  --color-accent: #a06000;
+  --shadow-accent: 0 0 12px rgba(160, 96, 0, 0.25);
+}
+
+.light-palette .turn-black {
+  --board-hover: #1a44aa;
+  --board-selected: rgba(26, 68, 170, 0.35);
+  --board-legal-move: rgba(26, 68, 170, 0.15);
+  --board-last-move-light: rgba(26, 68, 170, 0.2);
+  --board-last-move-dark: rgba(26, 68, 170, 0.12);
+  --color-accent: #1a44aa;
+  --shadow-accent: 0 0 12px rgba(26, 68, 170, 0.2);
+}

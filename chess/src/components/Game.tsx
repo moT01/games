@@ -189,6 +189,7 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
         lastMoveSet={lastMoveSet}
         onSquareClick={handleSquareClick}
         flipped={isVsComputer && playerColor === 'black'}
+        turn={turn}
       />
       <CapturedPieces board={board} side="dark" />
       {gameState.pendingPromotion && (

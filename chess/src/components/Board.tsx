@@ -11,6 +11,7 @@ interface Props {
   lastMoveSet: Set<number>;
   onSquareClick: (index: number) => void;
   flipped: boolean;
+  turn: 'white' | 'black';
 }
 
 export function Board({
@@ -22,12 +23,13 @@ export function Board({
   lastMoveSet,
   onSquareClick,
   flipped,
+  turn,
 }: Props) {
   const indices = Array.from({ length: 64 }, (_, i) => i);
   const displayOrder = flipped ? [...indices].reverse() : indices;
 
   return (
-    <div className="board">
+    <div className={`board turn-${turn}`}>
       {displayOrder.map((boardIdx, displayIdx) => {
         const row = Math.floor(boardIdx / 8);
         const col = boardIdx % 8;
