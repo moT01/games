@@ -9,7 +9,7 @@
 .turn-white {
   --board-hover: #d4960f;
   --board-selected: rgba(255, 191, 0, 0.45);
-  --board-legal-move: #d4960f;
+  --board-legal-move: rgba(212, 150, 15, 0.75);
   --board-last-move-light: rgba(68, 153, 238, 0.22);
   --board-last-move-dark: rgba(68, 153, 238, 0.12);
   --color-accent: var(--yellow-gold);
@@ -19,7 +19,7 @@
 .turn-black {
   --board-hover: #4499ee;
   --board-selected: rgba(68, 153, 238, 0.45);
-  --board-legal-move: #4499ee;
+  --board-legal-move: rgba(68, 153, 238, 0.75);
   --board-last-move-light: rgba(255, 191, 0, 0.22);
   --board-last-move-dark: rgba(255, 191, 0, 0.12);
   --color-accent: #4499ee;
@@ -29,7 +29,7 @@
 .light-palette .turn-white {
   --board-hover: #a06000;
   --board-selected: rgba(180, 110, 5, 0.35);
-  --board-legal-move: #a06000;
+  --board-legal-move: rgba(160, 96, 0, 0.75);
   --board-last-move-light: rgba(26, 68, 170, 0.2);
   --board-last-move-dark: rgba(26, 68, 170, 0.12);
   --color-accent: #a06000;
@@ -39,7 +39,7 @@
 .light-palette .turn-black {
   --board-hover: #1a44aa;
   --board-selected: rgba(26, 68, 170, 0.35);
-  --board-legal-move: #1a44aa;
+  --board-legal-move: rgba(26, 68, 170, 0.75);
   --board-last-move-light: rgba(180, 110, 5, 0.2);
   --board-last-move-dark: rgba(180, 110, 5, 0.12);
   --color-accent: #1a44aa;

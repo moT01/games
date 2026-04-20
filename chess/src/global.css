@@ -148,3 +148,7 @@ body {
   justify-content: center;
   -webkit-font-smoothing: antialiased;
 }
+
+button, a, [role="button"], label {
+  cursor: pointer;
+}
