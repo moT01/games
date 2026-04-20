@@ -584,7 +584,7 @@ function minimax(
   }
 }
 
-export function getBestMove(gameState: GameState): { from: number; to: number } | null {
+export function getBestMove(gameState: GameState, depth = 2): { from: number; to: number } | null {
   const moves = getAllLegalMoves(gameState.board, gameState.turn, gameState);
   if (moves.length === 0) return null;
 
@@ -594,7 +594,7 @@ export function getBestMove(gameState: GameState): { from: number; to: number } 
   for (const move of moves) {
     let next = applyMove(gameState, move.from, move.to);
     if (next.pendingPromotion) next = applyPromotion(next, 'queen');
-    const score = minimax(next, 2, -Infinity, Infinity, gameState.turn);
+    const score = minimax(next, depth, -Infinity, Infinity, gameState.turn);
     if (score > bestScore) {
       bestScore = score;
       bestMove = move;

@@ -3,7 +3,21 @@ import './App.css'
 import { ModeSelect } from './components/ModeSelect'
 import { Game, type GameConfig } from './components/Game'
 import { Header } from './components/Header'
-import type { Mode, Difficulty } from './gameLogic'
+import type { Mode, Difficulty, GameState } from './gameLogic'
+
+const SAVE_KEY = 'chess_state'
+
+type SavedGame = { gameState: GameState; config: GameConfig }
+
+function loadSavedGame(): SavedGame | null {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY)
+    if (!raw) return null
+    return JSON.parse(raw) as SavedGame
+  } catch {
+    return null
+  }
+}
 
 type Theme = 'dark' | 'light'
 
@@ -45,6 +59,26 @@ function App() {
     () => (localStorage.getItem('chess_theme') as Theme) || 'dark'
   )
   const [showHelp, setShowHelp] = useState(false)
+  const [hasSavedGame, setHasSavedGame] = useState(() => loadSavedGame() !== null)
+  const [resumeState, setResumeState] = useState<GameState | null>(null)
+  const [winsNormal, setWinsNormal] = useState(
+    () => parseInt(localStorage.getItem('chess_wins_normal') || '0')
+  )
+  const [winsHard, setWinsHard] = useState(
+    () => parseInt(localStorage.getItem('chess_wins_hard') || '0')
+  )
+
+  function handleWin(difficulty: Difficulty) {
+    if (difficulty === 'hard') {
+      const next = winsHard + 1
+      setWinsHard(next)
+      localStorage.setItem('chess_wins_hard', String(next))
+    } else {
+      const next = winsNormal + 1
+      setWinsNormal(next)
+      localStorage.setItem('chess_wins_normal', String(next))
+    }
+  }
 
   useEffect(() => {
     document.body.classList.remove('dark-palette', 'light-palette')
@@ -57,7 +91,17 @@ function App() {
   }
 
   function handleStart(mode: Mode, difficulty: Difficulty, playerColor: 'white' | 'black') {
+    localStorage.removeItem(SAVE_KEY)
+    setHasSavedGame(false)
+    setResumeState(null)
     setConfig({ mode, difficulty, playerColor })
+  }
+
+  function handleResume() {
+    const saved = loadSavedGame()
+    if (!saved) return
+    setResumeState(saved.gameState)
+    setConfig(saved.config)
   }
 
   if (!config) {
@@ -73,10 +117,10 @@ function App() {
         <div className="menu-body">
           <ModeSelect
             onStart={handleStart}
-            onResume={() => {}}
-            hasSavedGame={false}
-            winsNormal={0}
-            winsHard={0}
+            onResume={handleResume}
+            hasSavedGame={hasSavedGame}
+            winsNormal={winsNormal}
+            winsHard={winsHard}
           />
         </div>
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
@@ -90,6 +134,9 @@ function App() {
       theme={theme}
       onThemeToggle={toggleTheme}
       onBackToMenu={() => setConfig(null)}
+      onWin={handleWin}
+      initialState={resumeState ?? undefined}
+      onSaveChange={setHasSavedGame}
     />
   )
 }

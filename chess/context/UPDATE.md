@@ -24,16 +24,16 @@
 - [x] Piece colors update per theme (light pieces / dark pieces)
 
 ## AI Difficulty
-- [ ] Normal: minimax depth 2 (current behavior)
-- [ ] Hard: minimax depth 4
-- [ ] Pass difficulty through GameConfig to the game engine
-- [ ] Track wins separately in localStorage: `chess_wins_normal` / `chess_wins_hard`
+- [x] Normal: minimax depth 2 (current behavior)
+- [x] Hard: minimax depth 4
+- [x] Pass difficulty through GameConfig to the game engine
+- [x] Track wins separately in localStorage: `chess_wins_normal` / `chess_wins_hard`
 
 ## localStorage Persistence
-- [ ] Save full game state to localStorage on each move (key: `chess_state`)
-- [ ] Load saved state when Resume is clicked
-- [ ] Clear saved state when a new game starts or the game ends
-- [ ] Resume button visibility driven by whether a saved game exists
+- [x] Save full game state to localStorage on each move (key: `chess_state`)
+- [x] Load saved state when Resume is clicked
+- [x] Clear saved state when a new game starts or the game ends
+- [x] Resume button visibility driven by whether a saved game exists
 
 ## Modals
 - [ ] Quit confirm modal: cancel or quit, with note that the game can be resumed

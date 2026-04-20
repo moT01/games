@@ -19,11 +19,16 @@ export type GameConfig = {
   difficulty: Difficulty;
 };
 
+const SAVE_KEY = 'chess_state'
+
 interface Props {
   config: GameConfig;
   theme: 'dark' | 'light';
   onThemeToggle: () => void;
   onBackToMenu: () => void;
+  onWin?: (difficulty: Difficulty) => void;
+  initialState?: GameState;
+  onSaveChange?: (hasSave: boolean) => void;
 }
 
 function QuitModal({ onCancel, onQuit }: { onCancel: () => void; onQuit: () => void }) {
@@ -62,14 +67,15 @@ function getStatusInfo(gameState: GameState, isThinking: boolean): { text: strin
   return { text: `${turnLabel}'s turn`, cls: turnCls };
 }
 
-export function Game({ config, theme, onThemeToggle, onBackToMenu }: Props) {
-  const [gameState, setGameState] = useState<GameState>(() => initGameState());
+export function Game({ config, theme, onThemeToggle, onBackToMenu, onWin, initialState, onSaveChange }: Props) {
+  const [gameState, setGameState] = useState<GameState>(() => initialState ?? initGameState());
   const [isThinking, setIsThinking] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
   const isVsComputer = config.mode === 'vs-computer';
-  const { playerColor } = config;
+  const { playerColor, difficulty } = config;
+  const aiDepth = difficulty === 'hard' ? 4 : 2;
 
   useEffect(() => {
     if (!isVsComputer) return;
@@ -80,7 +86,7 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu }: Props) {
 
     setIsThinking(true);
     const id = setTimeout(() => {
-      const move = getBestMove(gameState);
+      const move = getBestMove(gameState, aiDepth);
       if (move) {
         setGameState(prev => {
           let next = applyMove(prev, move.from, move.to);
@@ -93,6 +99,25 @@ export function Game({ config, theme, onThemeToggle, onBackToMenu }: Props) {
 
     return () => clearTimeout(id);
   }, [gameState, isVsComputer, playerColor]);
+
+  useEffect(() => {
+    if (gameState.status !== 'checkmate') return;
+    if (!isVsComputer) return;
+    if (gameState.winner === playerColor) onWin?.(difficulty);
+  }, [gameState.status]);
+
+  useEffect(() => {
+    if (!gameState.lastMove) return;
+    const { status } = gameState;
+    if (status !== 'playing' && status !== 'check') {
+      localStorage.removeItem(SAVE_KEY);
+      onSaveChange?.(false);
+      return;
+    }
+    const toSave = { gameState: { ...gameState, selectedSquare: null, legalMovesForSelected: [] }, config };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(toSave));
+    onSaveChange?.(true);
+  }, [gameState]);
 
   function handleSquareClick(index: number) {
     if (isThinking) return;
