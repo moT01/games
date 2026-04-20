@@ -80,3 +80,13 @@
 .board--turn-dark .square__capture-ring {
   background-color: rgba(102, 179, 255, 0.75);
 }
+
+.light-palette .board--turn-light .square__highlight,
+.light-palette .board--turn-light .square__capture-ring {
+  background-color: rgba(212, 150, 15, 0.6);
+}
+
+.light-palette .board--turn-dark .square__highlight,
+.light-palette .board--turn-dark .square__capture-ring {
+  background-color: rgba(10, 10, 35, 0.3);
+}

@@ -20,6 +20,14 @@
   color: var(--player-dark);
 }
 
+.light-palette .game-status__turn--light {
+  color: #d4960f;
+}
+
+.light-palette .game-status__turn--dark {
+  color: #3b3b6e;
+}
+
 .game-status__message {
   font-size: var(--text-xl);
   font-weight: var(--weight-bold);

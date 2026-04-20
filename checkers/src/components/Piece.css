@@ -40,6 +40,36 @@
   left: 0.5px;
 }
 
+/* ── Light theme overrides ───────────────────────────────────────────────────── */
+
+.light-palette .piece--dark {
+  background: radial-gradient(circle at 38% 35%, #3b3b6e, #0a0a23);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.light-palette .piece--dark .piece__crown {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.light-palette .piece--light {
+  background: radial-gradient(circle at 38% 35%, #d4960f, #7a4800);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.light-palette .piece--light.piece--king {
+  outline: 2.5px solid rgba(212, 150, 15, 0.7);
+  outline-offset: 2px;
+}
+
+.light-palette .piece--light .piece__crown {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.light-palette .piece--dark.piece--king {
+  outline: 2.5px solid rgba(59, 59, 110, 0.8);
+  outline-offset: 2px;
+}
+
 @keyframes piece-in {
   from {
     transform: scale(0.4);
