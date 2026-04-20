@@ -193,13 +193,11 @@ function minimax(
 
 export function getComputerMove(board: Board, difficulty: Difficulty, aiPlayer: Player): Move {
   const moves = getValidMoves(board, aiPlayer)
-  if (difficulty === 'easy') {
-    return moves[Math.floor(Math.random() * moves.length)]
-  }
+  const depth = difficulty === 'easy' ? 1 : 5
   let bestScore = -Infinity
   let bestMove = moves[0]
   for (const move of moves) {
-    const score = minimax(applyMove(board, move), 5, false, aiPlayer, -Infinity, Infinity)
+    const score = minimax(applyMove(board, move), depth, false, aiPlayer, -Infinity, Infinity)
     if (score > bestScore) {
       bestScore = score
       bestMove = move

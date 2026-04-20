@@ -1,9 +1,10 @@
 :root {
   --player-light: #d4b87a;
   --player-dark: #1a1a3e;
-  --board-light: #c4a46b;
-  --board-dark: #4a6741;
-  --board-selected: #7ab54a;
+  --board-light: #252440;
+  --board-dark: #0d0c22;
+  --board-hover: #1a193a;
+  --board-selected: rgba(255, 191, 0, 0.18);
   --cell-size: min(72px, calc((100vw - 72px) / 8));
 }
 
@@ -123,6 +124,11 @@
   justify-content: flex-end;
   gap: var(--space-2);
   margin-top: var(--space-5);
+}
+
+.modal-actions .primary-btn,
+.modal-actions .secondary-btn {
+  width: auto;
 }
 
 .primary-btn {

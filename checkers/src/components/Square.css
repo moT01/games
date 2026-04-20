@@ -14,14 +14,17 @@
 .square--dark {
   background-color: var(--board-dark);
   cursor: pointer;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .square--dark:hover:not(.square--selected):not(.square--valid-destination) {
-  background-color: #5a7a50;
+  background-color: var(--board-hover);
+  box-shadow: inset 0 0 0 2px rgba(255, 191, 0, 0.2);
 }
 
 .square--selected {
   background-color: var(--board-selected);
+  box-shadow: inset 0 0 0 2px rgba(255, 191, 0, 0.55);
 }
 
 .square--valid-destination {
