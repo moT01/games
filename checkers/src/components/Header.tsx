@@ -6,9 +6,11 @@ interface Props {
   theme: 'dark' | 'light'
   onThemeToggle: () => void
   onHelp: () => void
+  statusText?: string
+  statusClass?: string
 }
 
-export function Header({ showBack, onBack, theme, onThemeToggle, onHelp }: Props) {
+export function Header({ showBack, onBack, theme, onThemeToggle, onHelp, statusText, statusClass }: Props) {
   return (
     <header className="game-header">
       <div className="game-header__left">
@@ -19,6 +21,9 @@ export function Header({ showBack, onBack, theme, onThemeToggle, onHelp }: Props
             </svg>
           </button>
         )}
+      </div>
+      <div className="game-header__center">
+        {statusText && <span className={`game-header__status ${statusClass ?? ''}`}>{statusText}</span>}
       </div>
       <div className="game-header__right">
         <button className="icon-btn" onClick={onHelp} aria-label="How to play">

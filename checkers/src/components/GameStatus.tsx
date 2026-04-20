@@ -12,7 +12,7 @@ export function GameStatus({ phase, currentTurn, winner, onPlayAgain }: Props) {
   if (phase === 'over') {
     return (
       <div className="game-status">
-        <p className="game-status__message">{winner} wins!</p>
+        <p className={`game-status__message game-status__message--${winner?.toLowerCase()}`}>{winner} wins!</p>
         <button className="game-status__play-again" onClick={onPlayAgain}>
           Play Again
         </button>

@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
-  min-height: 4rem;
+  min-height: 1rem;
 }
 
 .game-status__turn {
@@ -31,7 +31,22 @@
 .game-status__message {
   font-size: var(--text-xl);
   font-weight: var(--weight-bold);
-  color: var(--color-accent);
+}
+
+.game-status__message--light {
+  color: var(--player-light);
+}
+
+.game-status__message--dark {
+  color: var(--player-dark);
+}
+
+.light-palette .game-status__message--light {
+  color: #d4960f;
+}
+
+.light-palette .game-status__message--dark {
+  color: #3b3b6e;
 }
 
 .game-status__play-again {

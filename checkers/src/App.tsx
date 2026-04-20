@@ -12,10 +12,10 @@ import {
   type Player,
 } from './gameLogic'
 import { Board as GameBoard } from './components/Board'
-import { GameStatus } from './components/GameStatus'
 import { ModeSelector } from './components/ModeSelector'
 import { Header } from './components/Header'
 import './App.css'
+import './components/GameStatus.css'
 
 type Phase = 'setup' | 'playing' | 'over'
 type Theme = 'dark' | 'light'
@@ -59,6 +59,19 @@ function HelpModal({ onClose }: { onClose: () => void }) {
         </div>
         <div className="modal-actions">
           <button className="primary-btn" onClick={onClose}>Got it</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function GameOverModal({ winner, onPlayAgain }: { winner: Player; onPlayAgain: () => void }) {
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-card" style={{ textAlign: 'center' }}>
+        <h2 className={`modal-title game-status__message--${winner.toLowerCase()}`}>{winner} wins!</h2>
+        <div className="modal-actions" style={{ justifyContent: 'center' }}>
+          <button className="primary-btn" onClick={onPlayAgain}>Play Again</button>
         </div>
       </div>
     </div>
@@ -262,6 +275,8 @@ function App() {
           theme={theme}
           onThemeToggle={toggleTheme}
           onHelp={() => setShowHelp(true)}
+          statusText={phase === 'playing' ? `${currentTurn}'s turn` : undefined}
+          statusClass={phase === 'playing' ? `game-status__turn--${currentTurn.toLowerCase()}` : undefined}
         />
         <div className="game-card__body">
           {phase === 'setup' && (
@@ -281,12 +296,6 @@ function App() {
           )}
           {phase !== 'setup' && (
             <>
-              <GameStatus
-                phase={phase}
-                currentTurn={currentTurn}
-                winner={winner}
-                onPlayAgain={handleBack}
-              />
               <GameBoard
                 board={board}
                 selectedIndex={selectedIndex}
@@ -298,10 +307,12 @@ function App() {
               />
             </>
           )}
+
         </div>
       </div>
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       {showQuitConfirm && <QuitModal onCancel={() => setShowQuitConfirm(false)} onQuit={handleQuit} />}
+      {phase === 'over' && winner && <GameOverModal winner={winner} onPlayAgain={handleBack} />}
     </div>
   )
 }

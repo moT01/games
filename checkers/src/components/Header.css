@@ -10,6 +10,16 @@
   background: var(--gray-10);
 }
 
+.game-header__center {
+  flex: 1;
+  text-align: center;
+}
+
+.game-header__status {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
 .game-header__left,
 .game-header__right {
   display: flex;
