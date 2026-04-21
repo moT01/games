@@ -542,6 +542,17 @@ export function evaluateBoard(board: (Piece | null)[], color: Color): number {
   return score;
 }
 
+function orderMoves(
+  moves: { from: number; to: number }[],
+  board: (Piece | null)[]
+): { from: number; to: number }[] {
+  return [...moves].sort((a, b) => {
+    const aScore = board[a.to] ? PIECE_VALUES[board[a.to]!.type] : 0;
+    const bScore = board[b.to] ? PIECE_VALUES[board[b.to]!.type] : 0;
+    return bScore - aScore;
+  });
+}
+
 function minimax(
   gameState: GameState,
   depth: number,
@@ -554,8 +565,9 @@ function minimax(
   if (status === 'stalemate' || status === 'draw') return 0;
   if (depth === 0) return evaluateBoard(gameState.board, aiColor);
 
-  const moves = getAllLegalMoves(gameState.board, gameState.turn, gameState);
-  if (moves.length === 0) return 0;
+  const rawMoves = getAllLegalMoves(gameState.board, gameState.turn, gameState);
+  if (rawMoves.length === 0) return 0;
+  const moves = orderMoves(rawMoves, gameState.board);
 
   const maximizing = gameState.turn === aiColor;
 
@@ -584,13 +596,13 @@ function minimax(
   }
 }
 
-export function getBestMove(gameState: GameState, depth = 2): { from: number; to: number } | null {
-  const moves = getAllLegalMoves(gameState.board, gameState.turn, gameState);
-  if (moves.length === 0) return null;
-
+function searchAtDepth(
+  gameState: GameState,
+  moves: { from: number; to: number }[],
+  depth: number
+): { from: number; to: number } {
   let bestMove = moves[0];
   let bestScore = -Infinity;
-
   for (const move of moves) {
     let next = applyMove(gameState, move.from, move.to);
     if (next.pendingPromotion) next = applyPromotion(next, 'queen');
@@ -600,6 +612,29 @@ export function getBestMove(gameState: GameState, depth = 2): { from: number; to
       bestMove = move;
     }
   }
+  return bestMove;
+}
 
+export function getBestMove(
+  gameState: GameState,
+  depth = 3,
+  timeLimitMs = 0
+): { from: number; to: number } | null {
+  const rawMoves = getAllLegalMoves(gameState.board, gameState.turn, gameState);
+  if (rawMoves.length === 0) return null;
+
+  const moves = orderMoves(rawMoves, gameState.board);
+
+  if (timeLimitMs <= 0) {
+    return searchAtDepth(gameState, moves, depth);
+  }
+
+  // Iterative deepening: search depth 1, 2, 3... up to depth, stopping if time runs out
+  const deadline = Date.now() + timeLimitMs;
+  let bestMove = moves[0];
+  for (let d = 1; d <= depth; d++) {
+    if (Date.now() >= deadline) break;
+    bestMove = searchAtDepth(gameState, moves, d);
+  }
   return bestMove;
 }

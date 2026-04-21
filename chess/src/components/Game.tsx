@@ -6,7 +6,6 @@ import {
   getLegalMoves,
   applyMove,
   applyPromotion,
-  getBestMove,
 } from '../gameLogic';
 import { Board } from './Board';
 import { CapturedPieces } from './CapturedPieces';
@@ -81,7 +80,6 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
 
   const isVsComputer = config.mode === 'vs-computer';
   const { playerColor, difficulty } = config;
-  const aiDepth = difficulty === 'hard' ? 4 : 2;
 
   useEffect(() => {
     if (!isVsComputer) return;
@@ -91,8 +89,17 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
     if (gameState.pendingPromotion) return;
 
     setIsThinking(true);
-    const id = setTimeout(() => {
-      const move = getBestMove(gameState, aiDepth);
+    const isHard = difficulty === 'hard';
+    const worker = new Worker(new URL('../aiWorker.ts', import.meta.url), { type: 'module' });
+
+    worker.postMessage({
+      gameState,
+      depth: isHard ? 6 : 3,
+      timeLimitMs: isHard ? 3000 : 0,
+    });
+
+    worker.onmessage = (e: MessageEvent) => {
+      const move = e.data;
       if (move) {
         setGameState(prev => {
           let next = applyMove(prev, move.from, move.to);
@@ -101,9 +108,13 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
         });
       }
       setIsThinking(false);
-    }, 0);
+      worker.terminate();
+    };
 
-    return () => clearTimeout(id);
+    return () => {
+      worker.terminate();
+      setIsThinking(false);
+    };
   }, [gameState, isVsComputer, playerColor]);
 
   useEffect(() => {
