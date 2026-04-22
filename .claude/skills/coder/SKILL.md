@@ -21,7 +21,7 @@ as `/coder <game-name>` or `/coder <game-name> (<known-game>)` when a plan alrea
 - `<game-name>` — passed in via Task call
 - `<known-game>` — passed in via Task call (may be same as game name)
 
-Plan files are in: `artifacts/<game-name>/`
+Plan files are in: `<game-name>/context/`
 Game code is in: `<game-name>/`
 
 ## Important
@@ -42,7 +42,7 @@ Read `<game-name>/context/PLAN.md` fully before writing any code.
 
 Identify the first section with unchecked items and implement all of them. Before writing any CSS or UI, read `.claude/UI.md` first.
 
-Only implement the next section - do not implatement more than one section at a time. Only implement what is in the plan. Do not add abstractions, files, or dependencies not listed. Follow all conventions in `CLAUDE.md`.
+Only implement the next section - do not implement more than one section at a time. Only implement what is in the plan. Do not add abstractions, files, or dependencies not listed. Follow all conventions in `CLAUDE.md`.
 
 ---
 
@@ -56,7 +56,7 @@ Mark every implemented item as done in `<game-name>/context/PLAN.md`.
 
 If all items in the plan are completed and checked off, stop and inform the user with the text:
 
-> "The <game> game has been completed and checked off."
+> "The <game-name> game has been completed and checked off."
 
 If more sections remain incomplete and unchecked, inform the user with the text:
 
