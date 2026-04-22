@@ -64,21 +64,19 @@ Wait for the user's response before doing anything else.
 
 ## Step 3 — Bootstrap the project
 
-Step 3a - Decide the boilerplate
+Choose the boilerplate:
 
-Use simple (HTML/CSS/JS) when:
+Use **simple** (HTML/CSS/JS) when:
+- Canvas-based games (shooters, platformers, arcade)
+- Simple single-screen games (minesweeper, 2048)
+- Anything where the DOM structure is minimal
 
-Canvas-based games (shooters, platformers, arcade)
-Simple single-screen games (minesweeper, 2048)
-Anything where the DOM structure is minimal
+Use **React/Vite** when:
+- Complex state across many components
+- Games with lots of UI screens and interactions
+- Anything where TypeScript and component structure genuinely helps
 
-Use React/Vite when:
-
-Complex state across many components
-Games with lots of UI screens and interactions
-Anything where TypeScript and component structure genuinely helps
-
-Always choose the simplest option that fits the game. Prefer the simple boilerplate if possible. Don't overcomplicate. For simple games (HTML/CSS/JS), go to step 3a, for complex games (React/Vite), go to step 3b.
+Always choose the simplest option that fits the game. Prefer simple if possible.
 
 ### Step 3a — Copy simple boilerplate
 
@@ -99,8 +97,8 @@ Always choose the simplest option that fits the game. Prefer the simple boilerpl
 
 1. Create a `context` directory in <game-name> - so you have `<game-name>/context/`.
 2. If using the simple boilerplate, copy `.claude/templates/PLAN_TEMPLATE_SIMPLE.md` to `<game-name>/context/PLAN.md`. If using the react boilerplate, copy `.claude/templates/PLAN_TEMPLATE_REACT.md` to `<game-name>/context/PLAN.md`. In the new file...
-3. Replace all `<game-name>` placeholders with the actual game name
-4. Replace all `<known-game>` placeholders with the known game name
+3. Replace all `{game-name}` placeholders with the actual game name
+4. Replace all `{known-game}` placeholders with the known game name
 
 ## Step 4b — Fill out the plan
 
@@ -173,9 +171,9 @@ While writing, be explicit about each thing, while being as concise as you can. 
 
 Every screen should be accounted for with specific components and responsibilities. For example, instead of "create a header component", specify "create a Header component that renders the theme toggle, donate button, and help button, and accepts props for status text and close button visibility".
 
-For well-known games, use canonical rules and systems — don't invent your own. Name them explicitly. Include tests that verify correct behavior against known examples.
+For well-known games, use canonical rules and systems — don't invent your own. Name them explicitly. For React games, include tests that verify correct behavior against known examples.
 
-Every non-obvious mechanic must appear somewhere in the plan — Special Rules, Edge Cases, Data Model, or Game Logic. If a mechanic has no test case, add one.
+Every non-obvious mechanic must appear somewhere in the plan — Special Rules, Edge Cases, Data Model, or Game Logic. For React games, if a mechanic has no test case, add one.
 
 Fill out every section completely — no placeholders, no `...`, no generic content. Only include the AI / Computer Player section if the game has a computer opponent.
 
@@ -213,7 +211,7 @@ Read the completed plan and check:
 - Testing has a start but obvious cases for this game are missing
 - Edge cases feel thin given the complexity of the game
 - Help & Strategy Guide content feels generic rather than game-specific
-- Styling items don't call out specific variables, states, or transitions from `UI.md`
+- Styling items don't call out specific variables, states, or transitions
 
 Fix any gaps using the rules from step 4, then write the final plan to `<game-name>/context/PLAN.md`.
 
@@ -258,4 +256,4 @@ Known game: <known-game>"
 Tell the user:
 > "<game-name> complete."
 
-If the coding loop hit the iteration cap, note which checklist items remain unchecked.
+If any checklist items remain unchecked, note them for the user.
