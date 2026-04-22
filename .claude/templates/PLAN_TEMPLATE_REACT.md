@@ -89,19 +89,17 @@ _(Include only if the game has a computer player)_
 - [ ] All colors use semantic variables — no hardcoded values
 - [ ] All spacing uses `--space-*` variables
 - [ ] Numbers, scores, and timers use `--font-mono`
-- [ ] No surface is flat — subtle gradient on all panels and containers
 - [ ] Main container: `--shadow-lg`, inset box-shadow border, min-width 420px, centered
 - [ ] All interactive elements have hover, active, and disabled states with transitions — nothing snaps
 - [ ] Status text: win=`--color-success`, loss=`--color-danger`, neutral=`--color-accent`
 - [ ] Game over overlay animates in with fade + scale
 - [ ] Responsive at 375px
-- [ ] Light theme verified — surfaces have visible depth and contrast
 - [ ] ...
 
 ---
 
 ## Polish
-_(animations on key events, piece/card movement, sound if applicable, empty state handling)_
+_(animations on key events (if applicable), piece/card movement, sound if applicable, empty state handling)_
 - [ ] ...
 
 ---

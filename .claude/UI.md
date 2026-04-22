@@ -31,7 +31,6 @@ Every game should look polished and intentional — not like a default browser U
 ## Buttons
 
 - Use the icons in `./claude/icons` when applicable.
-- Primary buttons use a subtle gradient on `--color-accent`, not flat color
 - Secondary buttons use surface colors with a border
 - Every button must have hover (lift `-1px`, stronger shadow), active (scale down, push shadow inward), and disabled (`opacity: 0.4`) states
 - All state changes use transitions — nothing snaps
@@ -41,7 +40,6 @@ Every game should look polished and intentional — not like a default browser U
 ## Surfaces
 
 - Game boards and panels sit on `--color-surface`, not directly on `--color-bg`
-- No surface should be a completely flat solid color — use a subtle gradient
 - Add a faint inner border via `box-shadow` to give surfaces a glass-like edge
 - Use `--shadow-md` or `--shadow-lg` on the main game container so it lifts off the page
 
@@ -90,14 +88,15 @@ Every interactive element needs all four states:
 
 ## Checklist Before Submitting Any UI
 
+- [ ] All modals should have a full screen overlay behind them
+- [ ] All modals should have a `min-width: 420px;`
 - [ ] All colors use semantic variables
 - [ ] All spacing uses scale variables
 - [ ] All interactive elements have hover, active, and disabled states with transitions
 - [ ] Numbers/scores use `--font-mono`
 - [ ] Game container has `max-width` and is centered
 - [ ] Tested at mobile width (375px)
-- [ ] Buttons have depth, gradient, and lift on hover
-- [ ] No surface is completely flat
+- [ ] Buttons lift on hover
 - [ ] Headings use tight letter-spacing, uppercase labels use wide letter-spacing
 - [ ] Focus states are custom, not browser default
 - [ ] Hoverable game squares have inset border feedback
