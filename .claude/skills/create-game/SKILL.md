@@ -103,7 +103,59 @@ Always choose the simplest option that fits the game. Prefer the simple boilerpl
 
 Read the `<game-name>/context/PLAN.md` to understand the template. The template is a minimum structure, not a ceiling. Add sections, fields, or checklist items whenever the game warrants it.
 
-Read `.claude/misc/STANDARD_FEATURES.md` to understand required features for all games. Everything in this file should be included in the plan.
+Every plan must include all of the following:
+
+### Home Screen
+- Full viewport (100vw × 100vh)
+- Game-themed background — elegant and minimal, not overwhelming
+- Centered content container: visible border, rounded corners, subtle shadow, min-width 420px
+- Top of container: 3 icon buttons (help, theme, donate) — use SVGs from `.claude/icons/`
+- Content: game title, then the following where applicable:
+  - Mode selector
+  - Difficulty selector (Normal / Hard) — if computer opponent with meaningful difficulty
+  - Color / side selector — if the player chooses a color or side (e.g. chess, checkers)
+- Records display — show saved records relevant to the game (see Local Storage below)
+- Buttons: "New Game" always shown; "Resume" shown only if a saved game exists
+- Last selected mode, difficulty, and color/side persisted to local storage
+
+### Play Screen
+- Centered game container on a game-themed background — same visual language as the home screen; min-width 420px; max-width sized appropriately for the game; responsive
+- Container header: 4 icon buttons (close, help, theme, donate) — use SVGs from `.claude/icons/`
+- Horizontal rule below the header
+- Game area below the rule, centered
+- Score/status/timer visible during play (where applicable)
+- Exception: canvas or arcade games may use full viewport where maximizing play area matters
+
+### Game Over
+- Overlay on the play screen — not a separate screen
+- Shows result, best score, and play again / return to menu buttons
+
+### Modals
+- Help/Rules modal — accessible from all screens via the help button, content specific to the game; min-width 420px
+- Confirmation modal for destructive actions (new game, quit to menu); min-width 420px
+
+### Computer Opponent
+_(Include only if the game has a computer player)_
+- Offer Normal and Hard difficulty when it makes sense for the game
+- Normal = reasonable but beatable; Hard = strongest available strategy
+- Selected difficulty persisted to local storage
+
+### Local Storage
+- Theme preference
+- Last selected mode, difficulty, and color/side
+- Game state — enables Resume on reload
+- Records — track what makes sense for the game type:
+  - Competitive (vs computer): win count per difficulty level
+  - Timed / puzzle: best time and best move count
+  - Both if applicable
+
+### Accessibility
+- Keyboard navigation
+- ARIA labels on all interactive elements
+
+### Theming
+- Light/dark toggle — use `.light-palette` / `.dark-palette` classes from `global.css`
+- Never hardcode colors — use semantic CSS variables from `global.css`
 
 Be sure to include all of the user's decisions from step 2 in the plan as well.
 
