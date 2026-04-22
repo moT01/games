@@ -103,6 +103,8 @@ Always choose the simplest option that fits the game. Prefer the simple boilerpl
 
 Read the `<game-name>/context/PLAN.md` to understand the template. The template is a minimum structure, not a ceiling. Add sections, fields, or checklist items whenever the game warrants it.
 
+Read `.claude/UI.md` to understand the visual and CSS standards. The plan's Styling section must include specific checklist items derived from it — not placeholders.
+
 Every plan must include all of the following:
 
 ### Home Screen

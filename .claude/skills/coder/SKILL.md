@@ -23,7 +23,6 @@ as `/coder <game-name>` or `/coder <game-name> (<known-game>)` when a plan alrea
 
 Plan files are in: `artifacts/<game-name>/`
 Game code is in: `<game-name>/`
-Other misc advice files are in: `.claude/misc/`
 
 ## Important
 
@@ -41,7 +40,7 @@ Read `<game-name>/context/PLAN.md` fully before writing any code.
 
 ## Step 2 — Implement the next incomplete section
 
-Identify the first section with unchecked items and implement all of them. Before writing any CSS or UI, read `.claude/misc/UI.md` first.
+Identify the first section with unchecked items and implement all of them. Before writing any CSS or UI, read `.claude/UI.md` first.
 
 Only implement the next section - do not implatement more than one section at a time. Only implement what is in the plan. Do not add abstractions, files, or dependencies not listed. Follow all conventions in `CLAUDE.md`.
 
