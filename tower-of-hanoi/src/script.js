@@ -170,10 +170,14 @@ function checkWin() {
   if (state.pegs[2].length === state.diskCount) {
     state.gameStatus = 'won';
     stopTimer();
+    const records = JSON.parse(localStorage.getItem('toh_records') || '{}');
+    const existing = records[state.diskCount];
+    state.isNewBest = !existing || state.moveCount < existing.moves ||
+      (state.moveCount === existing.moves && state.elapsedSeconds < existing.time);
     saveRecord(state.diskCount, state.moveCount, state.elapsedSeconds);
     clearSavedGame();
     animateWinGlow();
-    setTimeout(showGameOver, 600);
+    showGameOver();
   }
 }
 
@@ -290,6 +294,7 @@ function render() {
 
 function showHome() {
   state._inGame = false;
+  state.gameStatus = 'idle';
   render();
 }
 
@@ -468,31 +473,19 @@ function renderPegs() {
 // ── Game Over ──────────────────────────────────────────────────────────────
 
 function renderGameOverHTML() {
-  const records = JSON.parse(localStorage.getItem('toh_records') || '{}');
-  const rec = records[state.diskCount];
-  const bestMoves = rec ? rec.moves : '--';
-  const bestTime = rec ? formatTime(rec.time) : '--';
-
   return `
     <div class="game-over-overlay" id="game-over-overlay">
       <div class="game-over-card">
         <div class="game-over-result">Puzzle Solved!</div>
+        ${state.isNewBest ? `<div class="game-over-new-best">New Best</div>` : ''}
         <div class="game-over-stats">
           <div class="stat-row">
-            <span class="stat-label">Moves taken</span>
+            <span class="stat-label">Moves</span>
             <span class="stat-val">${state.moveCount}</span>
           </div>
           <div class="stat-row">
-            <span class="stat-label">Time taken</span>
+            <span class="stat-label">Time</span>
             <span class="stat-val">${formatTime(state.elapsedSeconds)}</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Best moves</span>
-            <span class="stat-val">${bestMoves}</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Best time</span>
-            <span class="stat-val">${bestTime}</span>
           </div>
         </div>
         <div class="game-over-actions">
@@ -647,8 +640,8 @@ function showConfirmModal(onConfirm) {
   document.body.insertAdjacentHTML('beforeend', `
     <div class="modal-backdrop" id="confirm-backdrop">
       <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
-        <h2 class="modal-title" id="confirm-title">Quit this game?</h2>
-        <p class="modal-body-text">Your progress will be lost.</p>
+        <h2 class="modal-title" id="confirm-title">Return to menu?</h2>
+        <p class="modal-body-text">Your game will be saved. You can resume it from the menu.</p>
         <div class="modal-actions">
           <button class="secondary-btn" id="confirm-cancel">Cancel</button>
           <button class="primary-btn" id="confirm-ok">Quit</button>
@@ -731,7 +724,6 @@ function attachEvents() {
     if (state.gameStatus === 'playing') {
       showConfirmModal(() => {
         if (state.timerInterval) stopTimer();
-        clearSavedGame();
         state.gameStatus = 'idle';
         state._inGame = false;
         render();

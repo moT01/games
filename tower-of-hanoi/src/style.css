@@ -329,7 +329,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 540px;
+  max-width: 700px;
   min-width: 420px;
   background: var(--color-surface);
   border: var(--border-default);
@@ -356,13 +356,13 @@
 
 .hud-item {
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
   color: var(--color-text-secondary);
 }
 
 .hud-sep {
   color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
 }
 
 .hud-optimal {
@@ -371,7 +371,7 @@
 
 .hud-timer {
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
   color: var(--color-text-secondary);
 }
 
@@ -400,44 +400,26 @@
 
 .peg-col {
   position: relative;
-  flex: 1;
+  flex: 0 0 210px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   min-height: 220px;
   padding: var(--space-2) var(--space-2) 0;
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
-  background: var(--color-surface);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   cursor: pointer;
-  transition:
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
   outline: none;
-}
-
-.peg-col:hover {
-  border-color: var(--color-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .peg-col:focus-visible {
   box-shadow: 0 0 0 2px var(--blue-mid);
-}
-
-.peg-col.selected {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 12px var(--color-accent);
+  border-radius: var(--radius-md);
 }
 
 .peg-col.error-flash {
-  border-color: var(--color-danger);
   box-shadow: 0 0 12px var(--color-danger);
-  transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease;
+  border-radius: var(--radius-md);
+  transition: box-shadow 120ms ease;
 }
 
 /* ── Peg Rod ──────────────────────────────────────────────────────────────── */
@@ -561,6 +543,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   padding: var(--space-6) var(--space-7);
+  min-width: 420px;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -584,7 +567,15 @@
   font-size: var(--text-2xl);
   font-weight: var(--weight-bold);
   letter-spacing: -0.02em;
-  color: var(--color-success);
+  color: var(--color-accent);
+}
+
+.game-over-new-best {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .game-over-stats {
