@@ -14,6 +14,7 @@
   --yellow-gold: #ffbf00;
 
   /* Neutrals */
+  --gray-00-translucent: rgba(255, 255, 255, 0.85);
   --gray-00: #ffffff; /* primary */
   --gray-05: #f5f6f7; /* secondary */
   --gray-10: #dfdfe2; /* tertiary */
@@ -29,6 +30,8 @@
   --blue-light: rgb(153, 201, 255);
   --blue-light-translucent: rgba(153, 201, 255, 0.15);
   --blue-mid: #198eee;
+  --blue-dark: #002ead;
+  --blue-dark-translucent: rgba(0, 46, 173, 0.3);
 
   /* Yellow */
   --yellow-light: #ffc300;
@@ -36,9 +39,21 @@
 
   /* Green */
   --green-light: #acd157;
+  --green-dark: #00471b;
 
   /* Red */
   --red-light: #ffadad;
+  --red-dark: #850000;
+
+  /* Purple */
+  --purple-light: #dbb8ff;
+  --purple-mid: #9400d3;
+  --purple-dark: #5a01a7;
+
+  /* Pieces */
+  --piece-blue: var(--blue-mid);
+  --piece-gold: var(--yellow-gold);
+  --piece-highlight: rgba(255, 255, 255, 0.55);
 
   /* Semantic */
   --color-bg: var(--gray-90);
@@ -138,11 +153,26 @@ body {
   --yellow-color: var(--yellow-light);
   --purple-background: var(--purple-dark);
   --purple-color: var(--purple-light);
-  --love-color: var(--love-light);
-  --editor-background: var(--editor-background-dark);
 }
 
 .light-palette {
+  /* Piece overrides */
+  --piece-highlight: rgba(255, 255, 255, 0.8);
+
+  /* Semantic overrides */
+  --color-bg: var(--gray-00);
+  --color-surface: var(--gray-05);
+  --color-surface-raised: var(--gray-10);
+  --color-border: var(--gray-15);
+  --color-text-primary: var(--gray-90);
+  --color-text-secondary: var(--gray-75);
+  --color-text-muted: var(--gray-45);
+  --color-success: var(--green-dark);
+  --color-danger: var(--red-dark);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
   --primary-color-translucent: var(--gray-90-translucent);
   --primary-color: var(--gray-90);
   --secondary-color: var(--gray-85);
@@ -164,6 +194,4 @@ body {
   --yellow-color: var(--yellow-dark);
   --purple-background: var(--purple-light);
   --purple-color: var(--purple-dark);
-  --love-color: var(--love-dark);
-  --editor-background: var(--editor-background-light);
 }
