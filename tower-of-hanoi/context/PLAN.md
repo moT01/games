@@ -106,69 +106,69 @@
 ---
 
 ## Accessibility
-- [ ] Keyboard navigation: Tab moves between peg columns; Enter/Space triggers `selectPeg()` on focused peg
-- [ ] ARIA label on each peg column: `"Peg [A/B/C]: [N] disks"` (or `"empty"`)
-- [ ] ARIA label on each disk element: `"Disk [size]"` (e.g. `"Disk 3"`)
-- [ ] Selected peg column: `aria-pressed="true"` on the button/column
-- [ ] ARIA role on modal: `role="dialog"`, `aria-modal="true"`, focus trapped while open
-- [ ] HUD move counter and timer: `aria-live="polite"` so screen readers announce updates
+- [x] Keyboard navigation: Tab moves between peg columns; Enter/Space triggers `selectPeg()` on focused peg
+- [x] ARIA label on each peg column: `"Peg [A/B/C]: [N] disks"` (or `"empty"`)
+- [x] ARIA label on each disk element: `"Disk [size]"` (e.g. `"Disk 3"`)
+- [x] Selected peg column: `aria-pressed="true"` on the button/column
+- [x] ARIA role on modal: `role="dialog"`, `aria-modal="true"`, focus trapped while open
+- [x] HUD move counter and timer: `aria-live="polite"` so screen readers announce updates
 
 ---
 
 ## Game Logic
-- [ ] `initGame(diskCount)` — sets `pegs` to `[[diskCount, ..., 1], [], []]`, resets `moveCount`, `elapsedSeconds`, `selectedPeg`, `gameStatus` to `'idle'`; saves state to localStorage
-- [ ] `selectPeg(pegIndex)` — if `selectedPeg === null`: set `selectedPeg = pegIndex` if peg is non-empty, else do nothing; if `selectedPeg === pegIndex`: clear `selectedPeg` (deselect); if `selectedPeg !== pegIndex`: call `attemptMove(selectedPeg, pegIndex)`
-- [ ] `attemptMove(fromIndex, toIndex)` — call `isValidMove()`; if valid call `executeMove()`; if invalid call `flashError(toIndex)` (keep selection)
-- [ ] `isValidMove(fromIndex, toIndex)` — returns bool per move validation rules above
-- [ ] `executeMove(fromIndex, toIndex)` — pop top of `pegs[fromIndex]`, push to `pegs[toIndex]`, increment `moveCount`, clear `selectedPeg`; if `gameStatus === 'idle'` set to `'playing'` and call `startTimer()`; call `checkWin()`; save state; re-render
-- [ ] `checkWin()` — if `pegs[2].length === diskCount`: set `gameStatus = 'won'`, call `stopTimer()`, call `saveRecord()`, call `showGameOver()`
-- [ ] `startTimer()` — sets `timerInterval = setInterval(() => { elapsedSeconds++; renderHud(); }, 1000)`
-- [ ] `stopTimer()` — clears `timerInterval`, sets to null
-- [ ] `formatTime(seconds)` — returns `MM:SS` string
-- [ ] `saveRecord(diskCount, moves, time)` — reads existing record from localStorage for this diskCount; updates only if `moves` is lower (or no record exists); if same moves, update time only if lower
-- [ ] `saveGameState()` — serializes `{ pegs, diskCount, moveCount, elapsedSeconds, gameStatus }` to localStorage key `toh_saved_game`
-- [ ] `loadGameState()` — parses localStorage `toh_saved_game`; returns null if not present or corrupt
-- [ ] `hasSavedGame()` — returns true if `toh_saved_game` exists in localStorage
-- [ ] `clearSavedGame()` — removes `toh_saved_game` from localStorage
-- [ ] `flashError(pegIndex)` — adds `.error-flash` CSS class to peg column element; removes after 400ms
-- [ ] `getOptimalMoves(diskCount)` — returns `Math.pow(2, diskCount) - 1`
-- [ ] `getDiskColor(diskNum)` — returns the CSS variable string for the disk's color based on theme. Disk-to-color mapping (1 = smallest): 1=red, 2=orange, 3=yellow, 4=green, 5=blue, 6=purple, 7=teal. Dark theme uses light variants (`--red-light`, `--orange-light`, `--yellow-light`, `--green-light`, `--blue-light`, `--purple-light`, `--teal-light`); light theme uses dark variants (`--red-dark`, `--orange-dark`, `--yellow-dark`, `--green-dark`, `--blue-dark`, `--purple-dark`, `--teal-dark`). Color is consistent per disk number regardless of total disk count.
+- [x] `initGame(diskCount)` — sets `pegs` to `[[diskCount, ..., 1], [], []]`, resets `moveCount`, `elapsedSeconds`, `selectedPeg`, `gameStatus` to `'idle'`; saves state to localStorage
+- [x] `selectPeg(pegIndex)` — if `selectedPeg === null`: set `selectedPeg = pegIndex` if peg is non-empty, else do nothing; if `selectedPeg === pegIndex`: clear `selectedPeg` (deselect); if `selectedPeg !== pegIndex`: call `attemptMove(selectedPeg, pegIndex)`
+- [x] `attemptMove(fromIndex, toIndex)` — call `isValidMove()`; if valid call `executeMove()`; if invalid call `flashError(toIndex)` (keep selection)
+- [x] `isValidMove(fromIndex, toIndex)` — returns bool per move validation rules above
+- [x] `executeMove(fromIndex, toIndex)` — pop top of `pegs[fromIndex]`, push to `pegs[toIndex]`, increment `moveCount`, clear `selectedPeg`; if `gameStatus === 'idle'` set to `'playing'` and call `startTimer()`; call `checkWin()`; save state; re-render
+- [x] `checkWin()` — if `pegs[2].length === diskCount`: set `gameStatus = 'won'`, call `stopTimer()`, call `saveRecord()`, call `showGameOver()`
+- [x] `startTimer()` — sets `timerInterval = setInterval(() => { elapsedSeconds++; renderHud(); }, 1000)`
+- [x] `stopTimer()` — clears `timerInterval`, sets to null
+- [x] `formatTime(seconds)` — returns `MM:SS` string
+- [x] `saveRecord(diskCount, moves, time)` — reads existing record from localStorage for this diskCount; updates only if `moves` is lower (or no record exists); if same moves, update time only if lower
+- [x] `saveGameState()` — serializes `{ pegs, diskCount, moveCount, elapsedSeconds, gameStatus }` to localStorage key `toh_saved_game`
+- [x] `loadGameState()` — parses localStorage `toh_saved_game`; returns null if not present or corrupt
+- [x] `hasSavedGame()` — returns true if `toh_saved_game` exists in localStorage
+- [x] `clearSavedGame()` — removes `toh_saved_game` from localStorage
+- [x] `flashError(pegIndex)` — adds `.error-flash` CSS class to peg column element; removes after 400ms
+- [x] `getOptimalMoves(diskCount)` — returns `Math.pow(2, diskCount) - 1`
+- [x] `getDiskColor(diskNum)` — returns the CSS variable string for the disk's color based on theme. Disk-to-color mapping (1 = smallest): 1=red, 2=orange, 3=yellow, 4=green, 5=blue, 6=purple, 7=teal. Dark theme uses light variants (`--red-light`, `--orange-light`, `--yellow-light`, `--green-light`, `--blue-light`, `--purple-light`, `--teal-light`); light theme uses dark variants (`--red-dark`, `--orange-dark`, `--yellow-dark`, `--green-dark`, `--blue-dark`, `--purple-dark`, `--teal-dark`). Color is consistent per disk number regardless of total disk count.
 
 ---
 
 ## UI & Rendering
 
-- [ ] Home screen — title "Tower of Hanoi"; 3-button header (help, theme, donate); disk count selector with 3 toggle buttons ("3 Disks" / "5 Disks" / "7 Disks"), active button highlighted with `--color-accent`; records table with columns: Disks | Best Moves | Best Time — show `--` if no record; "New Game" button always shown; "Resume" button shown only if `hasSavedGame()` returns true
-- [ ] Play screen — 4-button header (close, help, theme, donate); horizontal rule; HUD row: "Moves: N" + "Optimal: N" on left, timer on right; peg area below HUD — 3 equal-width columns, each containing a peg rod and base, with disks rendered on them; peg column click area covers full column height
-- [ ] Peg rendering — each peg column: thin vertical rod (centered), wide flat base at bottom; disks drawn as rounded rectangles stacked bottom-up on the rod, centered; disk width = `40px + (diskNum / diskCount) * 160px`; disk height = 28px; 7 fixed disk colors (see getDiskColor); selected peg column has `--color-accent` glow border; top disk of selected peg has a white highlight ring
-- [ ] Game Over overlay — fades in over play screen; shows result "Puzzle Solved!", moves taken, time taken, best moves record, best time record; "Play Again" button restarts with same diskCount; "Menu" button goes to home (no confirm needed — game is won)
-- [ ] HelpModal — accessible from home and play screens via help icon; shows Objective, Rules, Key Strategies, Tips sections from Help & Strategy Guide above; min-width 420px
-- [ ] ConfirmModal — triggered by close button on play screen if `gameStatus === 'playing'`; message: "Quit this game? Your progress will be lost."; "Quit" confirms and navigates home; "Cancel" dismisses; if `gameStatus === 'idle'` or `'won'`, close navigates home without confirm
+- [x] Home screen — title "Tower of Hanoi"; 3-button header (help, theme, donate); disk count selector with 3 toggle buttons ("3 Disks" / "5 Disks" / "7 Disks"), active button highlighted with `--color-accent`; records table with columns: Disks | Best Moves | Best Time — show `--` if no record; "New Game" button always shown; "Resume" button shown only if `hasSavedGame()` returns true
+- [x] Play screen — 4-button header (close, help, theme, donate); horizontal rule; HUD row: "Moves: N" + "Optimal: N" on left, timer on right; peg area below HUD — 3 equal-width columns, each containing a peg rod and base, with disks rendered on them; peg column click area covers full column height
+- [x] Peg rendering — each peg column: thin vertical rod (centered), wide flat base at bottom; disks drawn as rounded rectangles stacked bottom-up on the rod, centered; disk width = `40px + (diskNum / diskCount) * 160px`; disk height = 28px; 7 fixed disk colors (see getDiskColor); selected peg column has `--color-accent` glow border; top disk of selected peg has a white highlight ring
+- [x] Game Over overlay — fades in over play screen; shows result "Puzzle Solved!", moves taken, time taken, best moves record, best time record; "Play Again" button restarts with same diskCount; "Menu" button goes to home (no confirm needed — game is won)
+- [x] HelpModal — accessible from home and play screens via help icon; shows Objective, Rules, Key Strategies, Tips sections from Help & Strategy Guide above; min-width 420px
+- [x] ConfirmModal — triggered by close button on play screen if `gameStatus === 'playing'`; message: "Quit this game? Your progress will be lost."; "Quit" confirms and navigates home; "Cancel" dismisses; if `gameStatus === 'idle'` or `'won'`, close navigates home without confirm
 
 ---
 
 ## Styling
-- [ ] All colors use semantic variables — no hardcoded values; disk colors use `--red-light/dark`, `--orange-light/dark`, `--yellow-light/dark`, `--green-light/dark`, `--blue-light/dark`, `--purple-light/dark`, `--teal-light/dark` from `global.css`
-- [ ] All spacing uses `--space-*` variables
-- [ ] Move counter, timer, and optimal count use `--font-mono`
-- [ ] No surface is flat — subtle gradient on all panels and containers
-- [ ] Main container: `--shadow-lg`, inset box-shadow border, min-width 420px, centered
-- [ ] All interactive elements have hover, active, and disabled states with transitions — nothing snaps
-- [ ] Status text on game over: win = `--color-success`
-- [ ] Game over overlay animates in with fade + scale
-- [ ] Responsive at 375px — peg area scales so all disks fit; disk widths use relative units or clamp at narrow widths
-- [ ] Light theme verified — surfaces have visible depth and contrast
-- [ ] Peg columns have a subtle inset background to distinguish them from the container background
-- [ ] Selected peg column: `box-shadow: 0 0 12px var(--color-accent)`, border `1px solid var(--color-accent)`
-- [ ] `.error-flash` class: `box-shadow: 0 0 12px var(--color-danger)`, border `1px solid var(--color-danger)`, transition in/out 120ms
-- [ ] Disk selector buttons on home screen: inactive uses `--color-surface-raised`; active uses `--color-accent` background with `--gray-90` text
-- [ ] Records table: subtle borders, muted header text, mono font for values
+- [x] All colors use semantic variables — no hardcoded values; disk colors use `--red-light/dark`, `--orange-light/dark`, `--yellow-light/dark`, `--green-light/dark`, `--blue-light/dark`, `--purple-light/dark`, `--teal-light/dark` from `global.css`
+- [x] All spacing uses `--space-*` variables
+- [x] Move counter, timer, and optimal count use `--font-mono`
+- [x] No surface is flat — subtle gradient on all panels and containers
+- [x] Main container: `--shadow-lg`, inset box-shadow border, min-width 420px, centered
+- [x] All interactive elements have hover, active, and disabled states with transitions — nothing snaps
+- [x] Status text on game over: win = `--color-success`
+- [x] Game over overlay animates in with fade + scale
+- [x] Responsive at 375px — peg area scales so all disks fit; disk widths use relative units or clamp at narrow widths
+- [x] Light theme verified — surfaces have visible depth and contrast
+- [x] Peg columns have a subtle inset background to distinguish them from the container background
+- [x] Selected peg column: `box-shadow: 0 0 12px var(--color-accent)`, border `1px solid var(--color-accent)`
+- [x] `.error-flash` class: `box-shadow: 0 0 12px var(--color-danger)`, border `1px solid var(--color-danger)`, transition in/out 120ms
+- [x] Disk selector buttons on home screen: inactive uses `--color-surface-raised`; active uses `--color-accent` background with `--gray-90` text
+- [x] Records table: subtle borders, muted header text, mono font for values
 
 ---
 
 ## Polish
-- [ ] Disk move animation: when a disk moves, briefly scale it up (1.05) on pickup, scale back to 1 on placement — 150ms ease
-- [ ] Win state: all disks on right peg glow with `--color-success` shadow for 600ms after game over triggers
-- [ ] Move counter pulses (brief scale 1.1 → 1.0) on each valid move
-- [ ] Timer ticks smoothly — no layout shift from digit width changes (mono font handles this)
-- [ ] Empty peg base has a subtle dashed border to indicate it is a valid drop target
+- [x] Disk move animation: when a disk moves, briefly scale it up (1.05) on pickup, scale back to 1 on placement — 150ms ease
+- [x] Win state: all disks on right peg glow with `--color-success` shadow for 600ms after game over triggers
+- [x] Move counter pulses (brief scale 1.1 → 1.0) on each valid move
+- [x] Timer ticks smoothly — no layout shift from digit width changes (mono font handles this)
+- [x] Empty peg base has a subtle dashed border to indicate it is a valid drop target
