@@ -91,7 +91,9 @@ function getCandidates(board) {
       }
     }
   }
-  return hasStone ? candidates : [[7, 7]];
+  if (!hasStone) return [[7, 7]];
+  candidates.sort((a, b) => orderScore(board, b[0], b[1], 1) - orderScore(board, a[0], a[1], 1));
+  return candidates.slice(0, 20);
 }
 
 function orderScore(board, r, c, player) {
@@ -332,7 +334,7 @@ function triggerAI() {
 function runAI() {
   const start = Date.now();
   const aiPlayer = state.humanPlayer === 1 ? 2 : 1;
-  const depth = state.difficulty === 'easy' ? 2 : 4;
+  const depth = state.difficulty === 'easy' ? 2 : 6;
   const move = getBestMove(state.board, aiPlayer, depth);
   const elapsed = Date.now() - start;
   const delay = Math.max(0, MIN_AI_MS - elapsed);

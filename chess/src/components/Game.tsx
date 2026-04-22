@@ -94,8 +94,8 @@ export function Game({ config, onBackToMenu, onWin, initialState, onSaveChange, 
 
     worker.postMessage({
       gameState,
-      depth: isHard ? 6 : 3,
-      timeLimitMs: isHard ? 3000 : 0,
+      depth: isHard ? 3 : 2,
+      timeLimitMs: isHard ? 1500 : 0,
     });
 
     worker.onmessage = (e: MessageEvent) => {
