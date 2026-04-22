@@ -189,7 +189,7 @@ Write the completed plan to `<game-name>/context/PLAN.md`.
 Read the completed plan and check:
 - Is it specific enough to code from without any questions?
 - Are all user decisions from step 2 included?
-- Are all items from `STANDARD_FEATURES.md` included?
+- Are all standard features included (home screen, play screen, game over, modals, local storage, accessibility, theming)?
 - All checklist items specific enough to code from — no vague items like `- [ ] handle moves`?
 - Non-obvious mechanics covered with corresponding test cases (if applicable)?
 - Any canonical systems named explicitly?
@@ -197,13 +197,14 @@ Read the completed plan and check:
 **Critical Fixes:**
 - Any `...` placeholders remain
 - Any section is blank without a justified N/A
-- Are Win / draw conditions are vague or incomplete
+- Win / draw conditions are vague or incomplete
 - Data model is missing state shape, piece types, or turn structure
 - Move validation approach is not specified
 - Game Logic items are generic rather than specific function names
 - Components are listed without specific responsibilities
 - Testing has no specific test cases (if applicable)
 - Edge cases section is empty
+- Styling section is missing standard checklist items or still has `- [ ] ...` placeholders
 
 **Meaningful improvement:**
 - Special rules exist but state flags are missing from the data model
@@ -211,6 +212,7 @@ Read the completed plan and check:
 - Testing has a start but obvious cases for this game are missing
 - Edge cases feel thin given the complexity of the game
 - Help & Strategy Guide content feels generic rather than game-specific
+- Styling items don't call out specific variables, states, or transitions from `UI.md`
 
 Fix any gaps using the rules from step 4, then write the final plan to `<game-name>/context/PLAN.md`.
 
