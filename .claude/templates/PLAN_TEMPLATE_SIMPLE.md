@@ -14,7 +14,7 @@
 **Special rules / one-off mechanics:**
 - ...
 
-**UI flow:**
+**UI flow:** _(screen-to-screen path; note sub-states for complex play screens)_
 1. ...
 
 **Edge cases:**
@@ -105,4 +105,5 @@ _(Include only if the game has a computer opponent)_
 ---
 
 ## Polish
+_(animations on key events, piece/card movement, sound if applicable, empty state handling)_
 - [ ] ...
