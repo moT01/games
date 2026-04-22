@@ -232,7 +232,7 @@ Only proceed if the user replies with "plan approved". Any other response is tre
 
 Skip this step unless the user requested mockups in step 2.
 
-Generate `<game-name>/context/mockup.html` — a single static HTML file showing each screen (home, play, game over, etc) as a rough visual layout. Use inline CSS. Show the right panels, elements, and proportions. No interactivity or game logic needed — layout only.
+Read `.claude/examples/` for visual reference — the mockup should match the established layout and style. Generate `<game-name>/context/mockup.html` — a single static HTML file showing each screen (home, play, game over, etc) as a rough visual layout. Use inline CSS. Show the right panels, elements, and proportions. No interactivity or game logic needed — layout only.
 
 Tell the user:
 > "Mockup saved to `<game-name>/context/mockup.html`. Open it in a browser and let me know if the layout looks right, or provide feedback. Respond with 'mockup approved' to start coding."

@@ -2,6 +2,8 @@
 
 All games share the same visual language. Read this file before writing any CSS.
 
+See `.claude/examples/` for screenshots of existing games — use these as a visual reference for layout, style, and overall feel.
+
 CSS variables (colors, spacing, typography, shadows, transitions, radius) are defined in `global.css` — use them, never hardcode values.
 
 Every game should look polished and intentional — not like a default browser UI. If something looks flat, add depth. If something snaps and would be better with a transition, add a transition. If something feels generic, it probably is.
