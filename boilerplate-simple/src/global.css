@@ -50,6 +50,11 @@
   --purple-mid: #9400d3;
   --purple-dark: #5a01a7;
 
+  /* Pieces */
+  --piece-blue: var(--blue-mid);
+  --piece-gold: var(--yellow-gold);
+  --piece-highlight: rgba(255, 255, 255, 0.55);
+
   /* Semantic */
   --color-bg: var(--gray-90);
   --color-surface: var(--gray-85);
@@ -151,6 +156,23 @@ body {
 }
 
 .light-palette {
+  /* Piece overrides */
+  --piece-highlight: rgba(255, 255, 255, 0.8);
+
+  /* Semantic overrides */
+  --color-bg: var(--gray-00);
+  --color-surface: var(--gray-05);
+  --color-surface-raised: var(--gray-10);
+  --color-border: var(--gray-15);
+  --color-text-primary: var(--gray-90);
+  --color-text-secondary: var(--gray-75);
+  --color-text-muted: var(--gray-45);
+  --color-success: var(--green-dark);
+  --color-danger: var(--red-dark);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
   --primary-color-translucent: var(--gray-90-translucent);
   --primary-color: var(--gray-90);
   --secondary-color: var(--gray-85);
