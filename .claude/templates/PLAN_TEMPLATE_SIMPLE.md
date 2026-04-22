@@ -79,15 +79,16 @@ _(Include only if the game has a computer opponent)_
 ---
 
 ## UI & Rendering
-- [ ] Home screen
-- [ ] Play screen
-- [ ] HelpModal — "?" button accessible from all screens, content specific to this game
+- [ ] Home screen — [title, options, records display, New Game / Resume buttons]; header: help icon, theme icon, donate icon
+- [ ] Play screen — [board/game area, score/status]; header: close icon, help icon, theme icon, donate icon
+- [ ] Game over overlay — [result, best score, play again / return to menu]
+- [ ] HelpModal — help icon accessible from all screens; content specific to this game
+- [ ] ConfirmModal — for destructive actions (new game, quit to menu)
 - [ ] ...
 
 ---
 
 ## Styling
-- [ ] `style.css`
 - [ ] All colors use semantic variables — no hardcoded values
 - [ ] All spacing uses `--space-*` variables
 - [ ] Numbers, scores, and timers use `--font-mono`

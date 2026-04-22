@@ -80,7 +80,11 @@ _(Include only if the game has a computer player)_
 
 ## Components
 - [ ] `App` — top-level layout and state
-- [ ] `HelpModal` — "?" button accessible from all screens, content specific to this game
+- [ ] `HomeScreen` — [title, options, records display, New Game / Resume buttons]; header: help icon, theme icon, donate icon
+- [ ] `PlayScreen` — [board/game area, score/status]; header: close icon, help icon, theme icon, donate icon
+- [ ] `GameOver` — overlay with result, best score, play again / return to menu
+- [ ] `HelpModal` — help icon accessible from all screens; content specific to this game
+- [ ] `ConfirmModal` — for destructive actions (new game, quit to menu)
 - [ ] ...
 
 ---
