@@ -103,7 +103,7 @@ Always choose the simplest option that fits the game. Prefer the simple boilerpl
 
 Read the `<game-name>/context/PLAN.md` to understand the template. The template is a minimum structure, not a ceiling. Add sections, fields, or checklist items whenever the game warrants it.
 
-Read `.claude/misc/STANDARD_FEATURES.md` to understand required features for all games. Everything in this file should be included in the plan.s
+Read `.claude/misc/STANDARD_FEATURES.md` to understand required features for all games. Everything in this file should be included in the plan.
 
 Be sure to include all of the user's decisions from step 2 in the plan as well.
 
@@ -115,6 +115,8 @@ Before writing, think through the non-obvious mechanics of this specific game:
 - Are there cascading effects or resets that don't preserve order?
 
 While writing, be explicit about each thing, while being as concise as you can. Avoid vague statements like "handle moves" or "implement game logic". Instead, break those down into specific function names, state flags, or checklist items that are unique to this game.
+
+Every screen should be accounted for with specific components and responsibilities. For example, instead of "create a header component", specify "create a Header component that renders the theme toggle, donate button, and help button, and accepts props for status text and close button visibility".
 
 For well-known games, use canonical rules and systems — don't invent your own. Name them explicitly. Include tests that verify correct behavior against known examples.
 

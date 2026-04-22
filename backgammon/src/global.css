@@ -107,6 +107,40 @@
   --transition-fast: 120ms ease;
   --transition-default: 200ms ease;
   --transition-slow: 350ms ease;
+
+  /* Board */
+  --board-bg: var(--gray-80);
+  --board-border-color: var(--gray-75);
+  --board-field-start: var(--gray-85);
+  --board-field-end: var(--gray-90);
+  --board-bar-bg: var(--gray-90);
+  --board-point-neutral-start: var(--gray-75);
+  --board-point-neutral-end: var(--gray-80);
+  --board-point-accent-start: var(--blue-dark);
+  --board-point-accent-end: var(--blue-mid);
+  --board-point-accent-opacity: 0.5;
+}
+
+.light-palette {
+  --color-bg: var(--gray-00);
+  --color-surface: var(--gray-05);
+  --color-surface-raised: var(--gray-10);
+  --color-border: var(--gray-10);
+  --color-text-primary: var(--gray-90);
+  --color-text-secondary: var(--gray-75);
+  --color-text-muted: var(--gray-45);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  --board-bg: var(--gray-10);
+  --board-border-color: var(--gray-15);
+  --board-field-start: var(--gray-05);
+  --board-field-end: var(--gray-10);
+  --board-bar-bg: var(--gray-05);
+  --board-point-neutral-start: var(--gray-15);
+  --board-point-neutral-end: var(--gray-10);
+  --board-point-accent-start: var(--blue-dark);
+  --board-point-accent-end: var(--blue-mid);
+  --board-point-accent-opacity: 0.4;
 }
 
 body {
@@ -136,6 +170,10 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+button, a, [role="button"], label {
+  cursor: pointer;
 }
 
 :focus-visible {

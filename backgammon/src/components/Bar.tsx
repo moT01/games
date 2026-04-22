@@ -3,7 +3,7 @@ import { Checker } from './Checker'
 import type { Color } from '../gameLogic'
 
 interface BarProps {
-  bar: { white: number; black: number }
+  bar: { light: number; dark: number }
   currentPlayer: Color
   isBarSelected: boolean
   onBarClick: () => void
@@ -39,8 +39,8 @@ export function Bar({ bar, currentPlayer, isBarSelected, onBarClick }: BarProps)
       ].filter(Boolean).join(' ')}
       onClick={isClickable ? onBarClick : undefined}
     >
-      <BarSection color="black" count={bar.black} />
-      <BarSection color="white" count={bar.white} />
+      <BarSection color="dark" count={bar.dark} />
+      <BarSection color="light" count={bar.light} />
     </div>
   )
 }

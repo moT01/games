@@ -30,13 +30,13 @@
 /* Triangle colors */
 .board__half:nth-child(odd) .board-point:nth-child(odd)::before,
 .board__half:nth-child(even) .board-point:nth-child(even)::before {
-  background: linear-gradient(to bottom, var(--gray-75), var(--gray-80));
+  background: linear-gradient(to bottom, var(--board-point-neutral-start), var(--board-point-neutral-end));
 }
 
 .board__half:nth-child(odd) .board-point:nth-child(even)::before,
 .board__half:nth-child(even) .board-point:nth-child(odd)::before {
-  background: linear-gradient(to bottom, var(--blue-dark), var(--blue-mid));
-  opacity: 0.5;
+  background: linear-gradient(to bottom, var(--board-point-accent-start), var(--board-point-accent-end));
+  opacity: var(--board-point-accent-opacity);
 }
 
 /* Home board tint */

@@ -1,0 +1,86 @@
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  border-bottom: var(--border-default);
+  width: 100%;
+}
+
+.light-palette .game-header {
+  background: var(--gray-10);
+}
+
+.game-header__center {
+  flex: 1;
+  text-align: center;
+}
+
+.game-header__status {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+.game-header__status--light {
+  color: var(--yellow-gold);
+}
+
+.game-header__status--dark {
+  color: var(--blue-light);
+}
+
+.light-palette .game-header__status--light {
+  color: #b36a00;
+}
+
+.light-palette .game-header__status--dark {
+  color: #1b1b32;
+}
+
+.game-header__left,
+.game-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.game-header__left {
+  min-width: 32px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  pointer-events: none;
+}
+
+.icon-btn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-surface-raised);
+  border-color: var(--color-text-muted);
+}
+
+.icon-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--blue-mid);
+}

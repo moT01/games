@@ -34,11 +34,11 @@
   gap: 2px;
 }
 
-.bar__section--black {
+.bar__section--dark {
   padding-top: var(--space-1);
 }
 
-.bar__section--white {
+.bar__section--light {
   padding-bottom: var(--space-1);
 }
 
@@ -55,12 +55,12 @@
   margin-top: 2px;
 }
 
-.bar__badge--white {
+.bar__badge--light {
   background-color: var(--gray-00);
   color: var(--gray-90);
 }
 
-.bar__badge--black {
+.bar__badge--dark {
   background-color: var(--gray-75);
   color: var(--gray-05);
 }

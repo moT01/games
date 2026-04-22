@@ -1,14 +1,14 @@
 // Board orientation:
-// - Indices 0–23. Index 0 = Black's 1-point (Black's home). Index 23 = White's 1-point (White's home).
-// - White moves from LOW to HIGH (increasing index), bears off past index 23.
-// - Black moves from HIGH to LOW (decreasing index), bears off past index 0.
-// - White home board: indices 18–23. Black home board: indices 0–5.
-// - White re-enters from bar onto indices 0–5 (die d → index d-1).
-// - Black re-enters from bar onto indices 18–23 (die d → index 24-d).
-// - White pip count at index k = (24 - k). Black pip count at index k = (k + 1).
+// - Indices 0–23. Index 0 = Dark's 1-point (Dark's home). Index 23 = Light's 1-point (Light's home).
+// - Light moves from LOW to HIGH (increasing index), bears off past index 23.
+// - Dark moves from HIGH to LOW (decreasing index), bears off past index 0.
+// - Light home board: indices 18–23. Dark home board: indices 0–5.
+// - Light re-enters from bar onto indices 0–5 (die d → index d-1).
+// - Dark re-enters from bar onto indices 18–23 (die d → index 24-d).
+// - Light pip count at index k = (24 - k). Dark pip count at index k = (k + 1).
 // - Both players start at 167 total pips.
 
-export type Color = 'white' | 'black'
+export type Color = 'light' | 'dark'
 
 export type Point = {
   count: number
@@ -23,8 +23,8 @@ export type ValidMove = {
 
 export type GameState = {
   points: Point[]
-  bar: { white: number; black: number }
-  off: { white: number; black: number }
+  bar: { light: number; dark: number }
+  off: { light: number; dark: number }
   currentPlayer: Color
   dice: number[]
   diceRolled: boolean
@@ -37,27 +37,27 @@ export type GameState = {
 }
 
 // Standard starting position:
-// White: 2@0, 5@11, 3@16, 5@18
-// Black: 2@23, 5@12, 3@7,  5@5
+// Light: 2@0, 5@11, 3@16, 5@18
+// Dark:  2@23, 5@12, 3@7,  5@5
 export function initBoard(): Point[] {
   const points: Point[] = Array.from({ length: 24 }, () => ({ count: 0, color: null }))
-  points[0] = { count: 2, color: 'white' }
-  points[11] = { count: 5, color: 'white' }
-  points[16] = { count: 3, color: 'white' }
-  points[18] = { count: 5, color: 'white' }
-  points[23] = { count: 2, color: 'black' }
-  points[12] = { count: 5, color: 'black' }
-  points[7] = { count: 3, color: 'black' }
-  points[5] = { count: 5, color: 'black' }
+  points[0] = { count: 2, color: 'light' }
+  points[11] = { count: 5, color: 'light' }
+  points[16] = { count: 3, color: 'light' }
+  points[18] = { count: 5, color: 'light' }
+  points[23] = { count: 2, color: 'dark' }
+  points[12] = { count: 5, color: 'dark' }
+  points[7] = { count: 3, color: 'dark' }
+  points[5] = { count: 5, color: 'dark' }
   return points
 }
 
 export function initGame(mode: 'vs-ai' | 'two-player'): GameState {
   return {
     points: initBoard(),
-    bar: { white: 0, black: 0 },
-    off: { white: 0, black: 0 },
-    currentPlayer: 'white',
+    bar: { light: 0, dark: 0 },
+    off: { light: 0, dark: 0 },
+    currentPlayer: 'light',
     dice: [],
     diceRolled: false,
     phase: 'playing',
@@ -76,17 +76,17 @@ export function rollDice(): number[] {
 }
 
 // Returns [minIndex, maxIndex] of the player's home board.
-// White: 18–23 (White moves toward 23, bears off past 23)
-// Black: 0–5   (Black moves toward 0,  bears off past 0)
+// Light: 18–23 (Light moves toward 23, bears off past 23)
+// Dark:  0–5   (Dark moves toward 0,  bears off past 0)
 export function getHomeRange(player: Color): [number, number] {
-  return player === 'white' ? [18, 23] : [0, 5]
+  return player === 'light' ? [18, 23] : [0, 5]
 }
 
 export function getPipCount(state: GameState, player: Color): number {
   let total = 0
   for (let i = 0; i < 24; i++) {
     if (state.points[i].color === player && state.points[i].count > 0) {
-      const pips = player === 'white' ? 24 - i : i + 1
+      const pips = player === 'light' ? 24 - i : i + 1
       total += pips * state.points[i].count
     }
   }
@@ -117,22 +117,22 @@ function canLandOn(state: GameState, player: Color, index: number): boolean {
 // Over-roll (die > pipsNeeded): valid only if no checker is farther from bearing off.
 function isValidBearOff(state: GameState, from: number, die: number, player: Color): boolean {
   const [homeMin, homeMax] = getHomeRange(player)
-  if (player === 'white') {
+  if (player === 'light') {
     const pipsNeeded = 24 - from
     if (die < pipsNeeded) return false
     if (die === pipsNeeded) return true
-    // Over-roll: no checker at lower indices (farther from bearing off for White)
+    // Over-roll: no checker at lower indices (farther from bearing off for Light)
     for (let i = homeMin; i < from; i++) {
-      if (state.points[i].color === 'white' && state.points[i].count > 0) return false
+      if (state.points[i].color === 'light' && state.points[i].count > 0) return false
     }
     return true
   } else {
     const pipsNeeded = from + 1
     if (die < pipsNeeded) return false
     if (die === pipsNeeded) return true
-    // Over-roll: no checker at higher indices (farther from bearing off for Black)
+    // Over-roll: no checker at higher indices (farther from bearing off for Dark)
     for (let i = from + 1; i <= homeMax; i++) {
-      if (state.points[i].color === 'black' && state.points[i].count > 0) return false
+      if (state.points[i].color === 'dark' && state.points[i].count > 0) return false
     }
     return true
   }
@@ -143,7 +143,7 @@ function getBarMoves(state: GameState): ValidMove[] {
   const moves: ValidMove[] = []
   const uniqueDice = [...new Set(state.dice)]
   for (const die of uniqueDice) {
-    const toIndex = player === 'white' ? die - 1 : 24 - die
+    const toIndex = player === 'light' ? die - 1 : 24 - die
     if (canLandOn(state, player, toIndex)) {
       moves.push({ from: 'bar', to: toIndex, dieUsed: die })
     }
@@ -157,7 +157,7 @@ function getPointMoves(state: GameState, from: number): ValidMove[] {
   const bearing = canBearOff(state, player)
   const uniqueDice = [...new Set(state.dice)]
   for (const die of uniqueDice) {
-    if (player === 'white') {
+    if (player === 'light') {
       const to = from + die
       if (to <= 23) {
         if (canLandOn(state, player, to)) moves.push({ from, to, dieUsed: die })
@@ -218,7 +218,7 @@ export function getValidMovesForChecker(state: GameState, from: number | 'bar'):
 // turn transition is handled by App after detecting empty dice or no remaining moves.
 export function applyMove(state: GameState, move: ValidMove): GameState {
   const player = state.currentPlayer
-  const opponent: Color = player === 'white' ? 'black' : 'white'
+  const opponent: Color = player === 'light' ? 'dark' : 'light'
 
   const newPoints = state.points.map(p => ({ ...p }))
   const newBar = { ...state.bar }
@@ -264,13 +264,13 @@ export function applyMove(state: GameState, move: ValidMove): GameState {
 }
 
 export function checkWinner(state: GameState): Color | null {
-  if (state.off.white === 15) return 'white'
-  if (state.off.black === 15) return 'black'
+  if (state.off.light === 15) return 'light'
+  if (state.off.dark === 15) return 'dark'
   return null
 }
 
 export function scoreBoard(state: GameState, player: Color): number {
-  const opponent: Color = player === 'white' ? 'black' : 'white'
+  const opponent: Color = player === 'light' ? 'dark' : 'light'
   const [homeMin, homeMax] = getHomeRange(player)
   let score = 0
 
@@ -296,22 +296,22 @@ export function scoreBoard(state: GameState, player: Color): number {
   return score
 }
 
-// Exhaustively evaluates all legal move sequences for the AI (Black) and returns
+// Exhaustively evaluates all legal move sequences for the AI (Dark) and returns
 // the sequence producing the highest scoreBoard result.
 // App executes the sequence move-by-move with animation delays.
 export function getAIMove(state: GameState): ValidMove[] {
   const startTime = Date.now()
 
   function search(s: GameState): { moves: ValidMove[]; score: number } {
-    if (s.dice.length === 0) return { moves: [], score: scoreBoard(s, 'black') }
+    if (s.dice.length === 0) return { moves: [], score: scoreBoard(s, 'dark') }
 
     const moves = getAllValidMoves(s)
-    if (moves.length === 0) return { moves: [], score: scoreBoard(s, 'black') }
+    if (moves.length === 0) return { moves: [], score: scoreBoard(s, 'dark') }
 
     // Performance guard: fall back to greedy if search is taking too long
     if (Date.now() - startTime > 250) {
       const m = moves[0]
-      return { moves: [m], score: scoreBoard(applyMove(s, m), 'black') }
+      return { moves: [m], score: scoreBoard(applyMove(s, m), 'dark') }
     }
 
     let best: { moves: ValidMove[]; score: number } | null = null

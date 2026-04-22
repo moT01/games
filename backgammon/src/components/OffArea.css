@@ -44,10 +44,10 @@
 }
 
 /* Color indicator tints */
-.off-area--white .off-area__count {
+.off-area--light .off-area__count {
   color: var(--gray-05);
 }
 
-.off-area--black .off-area__count {
+.off-area--dark .off-area__count {
   color: var(--gray-45);
 }
