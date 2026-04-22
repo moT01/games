@@ -44,6 +44,9 @@ Before touching any files, introduce what you're about to build and ask focused 
 - Anything about the game's rules that has common variations you can't resolve yourself
 - Computer player requirements if the game type is ambiguous
 
+**Ask if the game has a complex or non-obvious UI** (multiple panels, multiple player areas, non-grid layouts):
+- "This game has a complex UI — want an HTML mockup to review before coding starts?"
+
 Format it like:
 
 > "I'm going to build **[known-game]** as **[game-name]**. 
@@ -216,14 +219,27 @@ Fix any gaps using the rules from step 4, then write the final plan to `<game-na
 
 ---
 
-## Step 6 - Get user approval
+## Step 6 — Get user approval
 
 Show the user:
 > "The <game-name> plan is ready for your review. Respond with 'plan approved' to start coding, or provide feedback for changes."
 
 Wait for explicit approval before proceeding. If the user requests changes, update the plan and ask again.
 
-Only proceed to the coding loop if the user replies with "plan approved". Any other response is treated as a change request — update the plan and ask again.
+Only proceed if the user replies with "plan approved". Any other response is treated as a change request — update the plan and ask again.
+
+---
+
+## Step 6b — HTML mockup (opt-in only)
+
+Skip this step unless the user requested mockups in step 2.
+
+Generate `<game-name>/context/mockup.html` — a single static HTML file showing each screen (home, play, game over, etc) as a rough visual layout. Use inline CSS. Show the right panels, elements, and proportions. No interactivity or game logic needed — layout only.
+
+Tell the user:
+> "Mockup saved to `<game-name>/context/mockup.html`. Open it in a browser and let me know if the layout looks right, or provide feedback. Respond with 'mockup approved' to start coding."
+
+Wait for explicit approval. If the user requests changes, update the mockup and ask again. Only proceed on "mockup approved".
 
 ---
 
