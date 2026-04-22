@@ -3,8 +3,6 @@
 
 ## Game Design
 
-**What we're building:** ...
-
 **Rules:** ...
 
 **Players:** ...
@@ -15,8 +13,6 @@
 
 **Special rules / one-off mechanics:**
 - ...
-
-**Captured / out-of-play pieces:** ...
 
 **UI flow:**
 1. ...
@@ -90,7 +86,6 @@ _(Include only if the game has a computer player)_
 ---
 
 ## Styling
-- [ ] `App.css`
 - [ ] All colors use semantic variables — no hardcoded values
 - [ ] All spacing uses `--space-*` variables
 - [ ] Numbers, scores, and timers use `--font-mono`
