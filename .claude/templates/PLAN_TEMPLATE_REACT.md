@@ -1,5 +1,5 @@
-# {game-name}
-> Based on: {known-game}
+# <game-name>
+> Based on: <known-game>
 
 ## Game Design
 

@@ -97,8 +97,8 @@ Always choose the simplest option that fits the game. Prefer simple if possible.
 
 1. Create a `context` directory in <game-name> - so you have `<game-name>/context/`.
 2. If using the simple boilerplate, copy `.claude/templates/PLAN_TEMPLATE_SIMPLE.md` to `<game-name>/context/PLAN.md`. If using the react boilerplate, copy `.claude/templates/PLAN_TEMPLATE_REACT.md` to `<game-name>/context/PLAN.md`. In the new file...
-3. Replace all `{game-name}` placeholders with the actual game name
-4. Replace all `{known-game}` placeholders with the known game name
+3. Replace all `<game-name>` placeholders with the actual game name
+4. Replace all `<known-game>` placeholders with the known game name
 
 ## Step 4b — Fill out the plan
 
