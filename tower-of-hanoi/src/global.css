@@ -61,7 +61,7 @@
   /* Pieces */
   --piece-blue: var(--blue-mid);
   --piece-gold: var(--yellow-gold);
-  --piece-highlight: rgba(255, 255, 255, 0.55);
+  --piece-highlight: rgba(255, 255, 255, 0.8);
 
   /* Semantic */
   --color-bg: var(--gray-90);
