@@ -186,7 +186,7 @@
 .records-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
 }
 
 .records-table th {
@@ -430,8 +430,8 @@
   top: var(--space-2);
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  bottom: 20px;
+  width: 10px;
+  bottom: 0;
   background: var(--gray-75);
   border-radius: var(--radius-full);
   box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.3);
@@ -462,6 +462,16 @@
   transition: transform 150ms ease, box-shadow 150ms ease;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+.disk::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, var(--piece-highlight) 0%, transparent 70%);
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 .disk.disk-top-selected {

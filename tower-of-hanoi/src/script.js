@@ -586,19 +586,12 @@ function renderHelpModal() {
             <li>The puzzle is solved when all disks are stacked on the right peg.</li>
           </ul>
 
-          <h3>Key Strategies</h3>
-          <ul>
-            <li>To move n disks from A to C using B: move the top n-1 disks from A to B, move disk n from A to C, then move the n-1 disks from B to C.</li>
-            <li>For odd-numbered disks, the first move is always to the target (right) peg. For even-numbered disks, the first move is to the auxiliary (middle) peg.</li>
-            <li>Always keep track of which peg the largest unmoved disk needs to go to.</li>
-          </ul>
-
           <h3>Tips</h3>
           <ul>
             <li>Start with 3 disks and solve it once before trying 5.</li>
-            <li>Label the pegs A, B, C in your head and always know where each disk belongs.</li>
-            <li>The optimal move count is shown below the counter as a reference.</li>
-            <li>Common mistake: moving the second-largest disk before clearing everything above the largest disk.</li>
+            <li>Focus on where the largest unmoved disk needs to go - everything else follows from that.</li>
+            <li>Don't move the second-largest disk until everything above the largest is out of the way.</li>
+            <li>The optimal move count is shown as a reference - try to match it.</li>
           </ul>
         </div>
       </div>
@@ -721,7 +714,7 @@ function attachEvents() {
 
   // Play screen
   document.getElementById('close-btn')?.addEventListener('click', () => {
-    if (state.gameStatus === 'playing') {
+    if (state._inGame && state.gameStatus !== 'won') {
       showConfirmModal(() => {
         if (state.timerInterval) stopTimer();
         state.gameStatus = 'idle';
