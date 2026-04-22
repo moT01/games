@@ -50,6 +50,14 @@
   --purple-mid: #9400d3;
   --purple-dark: #5a01a7;
 
+  /* Teal */
+  --teal-light: #7de8e8;
+  --teal-dark: #0a5c5c;
+
+  /* Orange */
+  --orange-light: #ffcc88;
+  --orange-dark: #8b3a00;
+
   /* Pieces */
   --piece-blue: var(--blue-mid);
   --piece-gold: var(--yellow-gold);
