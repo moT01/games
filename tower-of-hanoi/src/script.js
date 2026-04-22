@@ -441,14 +441,14 @@ function renderDisksHTML(disks, pegSelected) {
     const diskNum = disks[j];
     const isTop = j === disks.length - 1;
     const color = getDiskColor(diskNum);
-    const widthPx = 40 + (diskNum / state.diskCount) * 160;
+    const widthPct = 20 + (diskNum / state.diskCount) * 70;
     const isHighlighted = pegSelected && isTop;
     html += `
       <div
         class="disk${isHighlighted ? ' disk-top-selected' : ''}"
         data-size="${diskNum}"
         aria-label="Disk ${diskNum}"
-        style="width:${widthPx}px; background:${color};"
+        style="width:${widthPct}%; background:${color};"
       ></div>
     `;
   }
