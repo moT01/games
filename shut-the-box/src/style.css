@@ -491,16 +491,19 @@ body.light-palette .icon-moon { display: none; }
    ============================================================ */
 
 .dice-count-toggle {
-  display: none;
+  display: flex;
   gap: var(--space-2);
   justify-content: center;
   opacity: 0;
-  transition: opacity var(--transition-default);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-default), visibility var(--transition-default);
 }
 
 .dice-count-toggle.visible {
-  display: flex;
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .dice-toggle-btn {
